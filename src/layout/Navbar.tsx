@@ -1,14 +1,26 @@
 import Logo from '../../public/Images/Logo/ClearListing_Logo.png'
+import Button from '../components/ui/Button'
+import NavLink from '../components/ui/NavLink'
 
 function Navbar(){
     return(
-        <nav className='w-full px-12 py-4 shadow-2xl bg-blue-100 flex items-center justify-between'>
+        <nav className='rounded-full h-20 px-4
+         py-4 shadow-2xl bg-blue-100 flex items-center justify-between mx-8 my-10'>
 
-            <img src={Logo} alt="ClearListing Logo" className='w-24 rounded-full'/>
+            <img src={Logo} alt="ClearListing Logo" className='h-full rounded-full'/>
 
-            <a href="#" className='px-8 py-4 bg-blue-600 text-white rounded-full hover:bg-blue-400 transition-all ease-in duration-200 shadow-2xl shadow-blue-400'>View Listings</a>
+            <NavLink 
+                label='Listings'
+                link='#'
+            />
 
-            
+            <Button
+                label='Click me'
+                type='button'
+                variant='danger'
+            />
+
+
         </nav>
     )
 }
