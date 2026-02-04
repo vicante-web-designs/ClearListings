@@ -4,7 +4,7 @@ export interface ButtonProps{
     type: 'button' | 'submit' | 'reset'
 }
 
-export type Variant = 'primary' | 'secondary'
+export type Variant = 'primary' | 'secondary' | 'danger'
 
 export type ButtonVariant = Record<Variant, string>
 
