@@ -2,6 +2,7 @@ export interface ButtonProps{
     label: string;
     variant: Variant;
     type: 'button' | 'submit' | 'reset'
+    onClick: () => void
 }
 
 export type Variant = 'primary' | 'secondary' | 'danger'
