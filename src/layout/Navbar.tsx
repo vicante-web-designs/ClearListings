@@ -1,8 +1,11 @@
+import { useNavigate } from 'react-router-dom'
 import Logo from '../../public/Images/Logo/ClearListing_Logo.png'
 import Button from '../components/ui/Button'
 import NavLink from '../components/ui/NavLink'
 
 function Navbar(){
+    const navigate = useNavigate();
+
     return(
         <nav className='rounded-full h-20 px-4
          py-4 shadow-2xl bg-blue-100 flex items-center justify-between mx-8 my-10 fixed z-999 left-0 right-0 '>
@@ -15,12 +18,11 @@ function Navbar(){
             />
 
             <Button
-                label='Click me'
+                label='Create listings'
                 type='button'
-                variant='primary'
+                variant='danger'
+                onClick={() => navigate('/createListings')}
             />
-
-
         </nav>
     )
 }
