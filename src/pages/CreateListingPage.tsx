@@ -1,8 +1,8 @@
 function CreateListingPage(){
     return(
-        <>
-        
-        </>
+        <form>
+            
+        </form>
     )
 }
 
