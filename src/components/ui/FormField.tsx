@@ -2,12 +2,18 @@ import type { FormInputProps } from '../../types/UiTypes';
 
 function FormField({ id, type, label, placeholder }: FormInputProps){
     return(
-        <div>
-            <label htmlFor={id}>
+        <div className='flex flex-col w-full gap-2'>
+            <label htmlFor={id} className='font-bold'>
                 {label}
             </label>
 
-            <input type={type} id={id} title={id} placeholder={placeholder}/>
+            <input
+                type={type}
+                id={id}
+                title={id}
+                placeholder={placeholder}
+                className='bg-gray-200 rounded-full py-3 px-6 focus-visible:border focus-visible:border-blue-600'
+            />
         </div>
     )
 }
