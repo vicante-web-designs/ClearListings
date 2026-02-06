@@ -1,73 +1,73 @@
 import Button from '../components/ui/Button';
+import FormField from '../components/ui/FormField';
 
 function CreateListingPage(){
     return(
-        <form>
-            <article>
+        <form className='w-fit mx-auto bg-white rounded-4xl py-8 px-12 flex flex-col items-center gap-12 max-w-[60%]'>
+
+            <article className='*:text-center flex flex-col items-center gap-2'>
+
                 <h2 className='text-2xl font-bold'>
                     List Your Property with Ease
                 </h2>
 
-                <p>
+                <p className='max-w-[60%]'>
                     Fill out the form below to share your property with thousands of potential clients.
                 </p>
+
             </article>
 
-            <article>
-                <label htmlFor="">
-                    Title
-                </label>
-                <input type="text" />
-            </article>
+            <section className='flex flex-col gap-6 w-full mx-auto'>
+                <FormField
+                    id='Title'
+                    type='text'
+                    label='Title'
+                />
 
-            <article>
-                <label htmlFor="">
-                    Description
-                </label>
-                <input type="text" />
-            </article>
+                <FormField
+                    id='Description'
+                    type='text'
+                    label='Description'
+                />
 
-            <article>
-                <label htmlFor="">
-                    Location
-                </label>
-                <input type="text" />
-            </article>
+                <FormField
+                    id='Location'
+                    type='text'
+                    label='Location'
+                />
 
-            <article>
-                <label htmlFor="">
-                    Agent ID
-                </label>
-                <input type="text" />
-            </article>
+                <FormField
+                    id='Agent ID'
+                    type='number'
+                    label='Agent ID'
+                />
 
-             <article>
-                <label htmlFor="">
-                    Price
-                </label>
-                <input type="text" />
-            </article>
+                <FormField
+                    id='Price'
+                    type='number'
+                    label='Price'
+                />
 
-             <article>
-                <label htmlFor="">
-                    Tags
-                </label>
-                <input type="text" />
-            </article>
+                <article>
+                    <label htmlFor="">
+                        Tags
+                    </label>
+                    <input type="text" />
+                </article>
 
-             <article>
-                <label htmlFor="">
-                    Bedrooms
-                </label>
-                <input type="text" />
-            </article>
+                <FormField
+                    id='No. of Bedrooms'
+                    type='number'
+                    label='No. of Bedrooms'
+                />
 
-             <article>
-                <label htmlFor="">
-                    Type
-                </label>
-                <input type="text" />
-            </article>
+                <article>
+                    <label htmlFor="">
+                        Type
+                    </label>
+                    <input type="text" />
+                </article>
+            </section>
 
             <Button 
                 label='Publish Listing'
