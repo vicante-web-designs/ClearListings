@@ -1,7 +1,11 @@
+import { useContext } from 'react';
 import Button from '../components/ui/Button';
 import FormField from '../components/ui/FormField';
+import { ListingContext } from '../context/context';
 
 function CreateListingPage(){
+    const listing = useContext(ListingContext)
+
     return(
         <form className='w-fit mx-auto bg-white rounded-4xl py-8 px-12 flex flex-col items-center gap-12 max-w-[60%]'>
 
@@ -47,6 +51,7 @@ function CreateListingPage(){
                 label='Publish Listing'
                 variant='primary'
                 type='submit'
+                onClick={() => console.log(listing)}
             />
         </form>
     )
