@@ -37,12 +37,6 @@ function CreateListingPage(){
                 />
 
                 <FormField
-                    id='Agent ID'
-                    type='number'
-                    label='Agent ID'
-                />
-
-                <FormField
                     id='Price'
                     type='number'
                     label='Price'
