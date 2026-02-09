@@ -1,4 +1,4 @@
-import type { Listing } from '../types/UiTypes';
+import type { Listing } from '../types/Listing';
 
 export const mockListings: Listing[] = [
   {
