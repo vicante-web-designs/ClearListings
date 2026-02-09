@@ -6,6 +6,10 @@ import { ListingContext } from '../context/ListingContext/createListingContext'
 function HomePage(){
     const context = useContext(ListingContext)
 
+    if(!context){
+        throw new Error('No Context available yet')
+    }
+
     const { listings } = context;
     return(
         <main className='flex flex-col gap-40'>
