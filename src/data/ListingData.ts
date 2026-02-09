@@ -3,7 +3,7 @@ import type { Listing } from '../types/Listing';
 export const mockListings: Listing[] = [
   {
     id: "1",
-    title: "Modern 3-Bedroom Apartment in Lekki Phase 1",
+    title: "Modern 3-Bedroom Apartment",
     description: "Stunning modern apartment with ocean views, spacious living areas, and top-tier amenities. Features include a fully equipped kitchen, en-suite bathrooms, and a private balcony. Perfect for families or professionals seeking luxury living.",
     location: "Lekki Phase 1, Lagos",
     agentID: "agent-001",
@@ -22,7 +22,7 @@ export const mockListings: Listing[] = [
   },
   {
     id: "2",
-    title: "Luxurious 5-Bedroom Detached Duplex in Ikoyi",
+    title: "Luxurious 5-Bedroom Detached Duplex",
     description: "Exquisite detached duplex in the heart of Ikoyi. This property boasts contemporary design, a private swimming pool, landscaped garden, and smart home features. Ideal for executives and high-net-worth individuals.",
     location: "Ikoyi, Lagos",
     agentID: "agent-002",
@@ -40,7 +40,7 @@ export const mockListings: Listing[] = [
   },
   {
     id: "3",
-    title: "Cozy 2-Bedroom Flat in Yaba",
+    title: "Cozy 2-Bedroom Flat",
     description: "Affordable and comfortable 2-bedroom flat perfect for young professionals and small families. Located in a serene neighborhood with easy access to major roads, schools, and shopping centers.",
     location: "Yaba, Lagos",
     agentID: "agent-003",
@@ -58,7 +58,7 @@ export const mockListings: Listing[] = [
   },
   {
     id: "4",
-    title: "Elegant 4-Bedroom Terrace in Banana Island",
+    title: "Elegant 4-Bedroom Terrace",
     description: "Premium terrace house in the prestigious Banana Island estate. Features include marble flooring, high ceilings, a private gym, and 24/7 security. Experience luxury island living at its finest.",
     location: "Banana Island, Lagos",
     agentID: "agent-001",
@@ -77,7 +77,7 @@ export const mockListings: Listing[] = [
   },
   {
     id: "5",
-    title: "Spacious 1-Bedroom Studio in Victoria Island",
+    title: "Spacious 1-Bedroom Studio",
     description: "Modern studio apartment ideal for singles or couples. Open-plan design with contemporary finishes, fitted kitchen, and access to shared amenities including a rooftop lounge and fitness center.",
     location: "Victoria Island, Lagos",
     agentID: "agent-004",
