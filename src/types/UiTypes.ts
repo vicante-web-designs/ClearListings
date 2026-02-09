@@ -28,3 +28,7 @@ export interface Listing{
     price: string
 }
 
+export interface ListingContextType{
+    listings: Listing[];
+    setListings: React.Dispatch<React.SetStateAction<Listing[]>>;
+}
