@@ -10,6 +10,10 @@ function CreateListingPage(){
 
     const context = useContext(ListingContext)
 
+    if(!context){
+        throw new Error('ListingContext is not available')
+    }
+
    const { listings, setListings } = context
 
     function handleSubmit(e: FormEvent<HTMLFormElement>){
