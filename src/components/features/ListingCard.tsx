@@ -1,12 +1,14 @@
-function ListingCard({id, images, title, location, price, bedrooms, type, availability }){
+import type { ListingCardProps } from '../../types/Listing'
+
+function ListingCard({id, images, title, location, price, bedrooms, type, availability }: ListingCardProps){
     return(
-        <article className='w-full max-w-sm h-105 bg-white rounded-3xl shadow-md overflow-hidden relative'> 
+        <article className='w-full max-w-sm h-105 bg-white rounded-3xl shadow-md overflow-hidden relative' id={id}> 
             <img
                 src={images[0]} alt="" 
                 className='w-full h-full object-cover relative z-0'
             />
 
-            <div className='absolute z-2  h-fit top-0 left-0 right-0 m-4 flex justify-between items-center'>
+            <div className='absolute z-10  h-fit top-0 left-0 right-0 m-4 flex justify-between items-center'>
                 <p className={
                     ` bg-[rgba(255,255,255,0.9)] font-bold py-2 px-4 rounded-full ${availability === "available"
                         ? "text-[rgba(21,128,61,0.8)]"
@@ -20,7 +22,7 @@ function ListingCard({id, images, title, location, price, bedrooms, type, availa
             </div>
 
             <div className='absolute z-2 bg-[rgba(255,255,255,0.9)] h-fit bottom-0 left-0 right-0 m-3 rounded-2xl py-4 px-6 flex flex-col gap-2'>
-                <h3 className='text-xl font-bold'>
+                <h3 className='text-xl font-bold line-clamp-2 capitalize'>
                     {title}
                 </h3>
 
@@ -31,13 +33,13 @@ function ListingCard({id, images, title, location, price, bedrooms, type, availa
                     </p>
 
                     <p>
-                        {location}
+                        <span>📍</span> {location}
                     </p>
                 </div>
 
                 <div className="flex justify-between">
-                    <p className='text-gray-700'>
-                        Bedrooms: <span className='font-bold text-black'>{bedrooms}</span>
+                    <p className='text-gray-700 flex items-center gap-1'>
+                        <span className='font-bold text-black'>{bedrooms}</span> 🛏️
                     </p>
 
                     
