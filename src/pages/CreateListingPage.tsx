@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import Button from '../components/ui/Button';
 import FormField from '../components/ui/FormField';
-import { ListingContext } from '../context/context';
+import { ListingContext } from '../context/ListingContext/createListingContext';
 
 function CreateListingPage(){
     const listing = useContext(ListingContext)
@@ -51,7 +51,10 @@ function CreateListingPage(){
                 label='Publish Listing'
                 variant='primary'
                 type='submit'
-                onClick={() => console.log(listing)}
+                onClick={(e) => {
+                    e.preventDefault();
+                    console.log(listing)
+                }}
             />
         </form>
     )
