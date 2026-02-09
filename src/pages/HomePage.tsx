@@ -17,7 +17,7 @@ function HomePage(){
             <Navbar />
             <HeroSection />
 
-            <section className='flex w-full gap-6 justify-between flex-wrap px-15'>
+            <section className='flex w-full flex-wrap px-10 items-center justify-center gap-10'>
                 {
                     listings && listings.map(listing => (
                         <ListingCard 
