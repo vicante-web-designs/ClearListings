@@ -1,5 +1,6 @@
 import Navbar from '../layout/Navbar'
 import HeroSection from '../layout/HeroSection'
+import ListingCard from '../components/features/ListingCard'
 import { useContext } from 'react'
 import { ListingContext } from '../context/ListingContext/createListingContext'
 
@@ -16,15 +17,20 @@ function HomePage(){
             <Navbar />
             <HeroSection />
 
-            <section className='flex w-full justify-between'>
+            <section className='flex w-full gap-6 justify-between flex-wrap px-15'>
                 {
                     listings && listings.map(listing => (
-                        <article>
-                            <p>{listing.title}</p>
-                            <p>{listing.description}</p>
-                            <p>{listing.location}</p>
-                            <p>{listing.price}</p>
-                        </article>
+                        <ListingCard 
+                            key={listing.id}
+                            id={listing.id}
+                            images={listing.images}
+                            title={listing.title}
+                            location={listing.location}
+                            price={listing.price}  
+                            bedrooms={listing.bedrooms}
+                            type={listing.type}
+                            availability={listing.availability}
+                        />
                     ))
                 }
             </section>
