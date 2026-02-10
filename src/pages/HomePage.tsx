@@ -9,9 +9,10 @@ function HomePage(){
 
     if(!context){
         throw new Error('No Context available yet')
-    }
+    }//To make sure that the context is available before trying to access it
 
-    const { listings } = context;
+    const { listings } = context; //Destructuring the listings from the context
+
     return(
         <main className='flex flex-col gap-40'>
             <Navbar />
