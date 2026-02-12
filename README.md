@@ -67,6 +67,26 @@ src/
 
 ---
 
+## Commit Message Conventions
+
+This section explains the style and structure I use for commit messages. The goal is to keep them clear, consistent, and easy to understand, so anyone reviewing the project history can quickly grasp what each change represents. By following these conventions, the commit log becomes a reliable record of progress and decisions.
+
+### Commit Prefixes
+
+| Prefix        | Purpose                                                      | Example                                       |
+|-------------  |---------------------------------------------------           |---------------------------------------------- |
+| **feat:**     | A new feature                                                | `feat: add property search filter`            |
+| **fix:**      | A bug fix                                                    | `fix: correct listing image upload error`     |
+| **docs:**     | Documentation changes (README, comments, guides)             | `docs: update README with setup instructions` |
+| **style:**    | Code style changes (formatting, whitespace, no logic impact) | `style: reformat CSS for listing cards`       |
+| **refactor:** | Code restructuring without changing functionality            | `refactor: move auth logic to services`       |
+| **perf:**     | Performance improvements                                     | `perf: optimize property query speed`         |
+| **test:**     | Adding or updating tests                                     | `test: add unit tests for listing form`       |
+| **chore:**    | Maintenance tasks (dependencies, configs, file moves)        | `chore: update dependencies`                  |
+| **ci:**       | Continuous integration changes                               | `ci: update GitHub Actions workflow`          |
+| **build:**    | Build system changes (webpack, npm, etc.)                    | `build: configure webpack for production`     |
+| **revert:**   | Reverting a previous commit                                  | `revert: undo listing form refactor`          |
+
 ## ⚙️ Installation & Setup
 
 ### 1. Clone the Repository
