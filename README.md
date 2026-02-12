@@ -36,7 +36,7 @@ This MVP is structured to smoothly transition into a full-stack system later:
 ## 🧱 Tech Stack
 
 - **React (Vite)**
-- **TypeScript** (if enabled)
+- **TypeScript**
 - **TailwindCSS**
 - **React Router**
 - **Context API** (global state)
@@ -63,7 +63,7 @@ src/
 ├── context/
 │ └── ListingsContext
 │
-└── App.jsx
+└── App.tsx
 
 ---
 
