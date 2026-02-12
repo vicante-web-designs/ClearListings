@@ -16,30 +16,31 @@ This is a list of every component used in this project. They are organized accor
 
 - Logo
 - NavLinks
-- Listing Card
-- Form Card
-- Login Form
-- Sign Up Form
-- CreateListing Forms
-- Search Bar
-- Filter Form
-- Contact Info
+- ListingCard
+- FormCard
+- LoginForm
+- SignUpForm
+- CreateListingForms
+- SearchBar
+- FilterForm
+- ContactInfo
 
 ## Sections (Combined Molecules)
 
 - Navbar
-- Hero Section
-- Listing Section
-- Footer Section
-- Search and Filter Section
+- HeroSection
+- ListingSection
+- FooterSection
+- SearchSection
+- FilterSection
 
 ## Pages (Combined Sections)
 
-1. Home Page
-2. About Page
-3. Listings Page
-4. Listing Details Page
-5. Contact Page
-6. Login Page
-7. Sign Up page
-8. Create Listings Page
+1. HomePage
+2. AboutPage
+3. ListingsPage
+4. ListingDetailsPage
+5. ContactPage
+6. LoginPage
+7. SignUppage
+8. CreateListingsPage
