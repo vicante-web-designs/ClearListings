@@ -20,7 +20,6 @@ This app allows users to view, search and filter property listings with images &
 10. bedrooms
 11. type
 12. availability
-13. isArchived
 
 ### Agent
 
@@ -30,12 +29,6 @@ This app allows users to view, search and filter property listings with images &
 4. role (Agent | Admin)
 5. password
 6. createdAt
-
-### Images
-
-1. ID
-2. url
-3. listingId
 
 ## Relationships
 
