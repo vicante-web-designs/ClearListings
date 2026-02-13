@@ -16,7 +16,6 @@ export interface Listing{
     sizeSqft?: number;
     propertyType?: string;
     status?: string;
-    isArchived?: boolean;
 }
 
 export interface ListingContextType{
