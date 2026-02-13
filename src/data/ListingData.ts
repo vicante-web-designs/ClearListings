@@ -1,6 +1,6 @@
 import type { Listing } from '../types/Listing';
 
-export const listings: Listing[] = [
+export const mockListings: Listing[] = [
   {
     id: "1",
     title: "Luxury 5-Bedroom Duplex in Banana Island",
@@ -12,7 +12,9 @@ export const listings: Listing[] = [
     bedrooms: 5,
     bathrooms: 6,
     sizeSqft: 4200,
-    images: ["https://source.unsplash.com/featured/?luxury-house"],
+    images: [
+            "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800"
+        ],
     description: "A premium waterfront duplex with modern finishes and private amenities.",
     features: ["Swimming Pool", "Smart Home", "Private Parking"],
     status: "For Sale",
@@ -29,7 +31,9 @@ export const listings: Listing[] = [
     bedrooms: 3,
     bathrooms: 3,
     sizeSqft: 1800,
-    images: ["https://source.unsplash.com/featured/?apartment"],
+    images: [
+            "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800"
+        ],
     description: "Stylish apartment with ocean views and contemporary design.",
     features: ["Balcony", "Gym Access", "24/7 Security"],
     status: "For Sale",
@@ -46,7 +50,7 @@ export const listings: Listing[] = [
     bedrooms: 2,
     bathrooms: 2,
     sizeSqft: 1200,
-    images: ["https://source.unsplash.com/featured/?flat"],
+    images: ["https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800"],
     description: "Cozy flat ideal for small families in a central location.",
     features: ["Parking Space", "Proximity to Schools"],
     status: "For Rent",
@@ -63,7 +67,7 @@ export const listings: Listing[] = [
     bedrooms: 4,
     bathrooms: 5,
     sizeSqft: 3000,
-    images: ["https://source.unsplash.com/featured/?detached-house"],
+    images: ["https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800"],
     description: "Spacious home with modern finishes and private garden.",
     features: ["Garden", "Private Garage", "Smart Lighting"],
     status: "For Sale",
@@ -80,7 +84,7 @@ export const listings: Listing[] = [
     bedrooms: 1,
     bathrooms: 1,
     sizeSqft: 600,
-    images: ["https://source.unsplash.com/featured/?studio-apartment"],
+    images: ["https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800"],
     description: "Compact studio perfect for professionals.",
     features: ["Furnished", "24/7 Power", "Secure Entry"],
     status: "For Rent",
@@ -97,7 +101,7 @@ export const listings: Listing[] = [
     bedrooms: 4,
     bathrooms: 5,
     sizeSqft: 5000,
-    images: ["https://source.unsplash.com/featured/?penthouse"],
+    images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&w=800"],
     description: "Exclusive penthouse with panoramic city views.",
     features: ["Infinity Pool", "Private Elevator", "Home Theater"],
     status: "For Sale",
@@ -114,7 +118,7 @@ export const listings: Listing[] = [
     bedrooms: 3,
     bathrooms: 3,
     sizeSqft: 2000,
-    images: ["https://source.unsplash.com/featured/?bungalow"],
+    images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800"],
     description: "Comfortable bungalow in a serene neighborhood.",
     features: ["Garden", "Parking", "Proximity to Market"],
     status: "For Sale",
@@ -131,7 +135,7 @@ export const listings: Listing[] = [
     bedrooms: 2,
     bathrooms: 2,
     sizeSqft: 1500,
-    images: ["https://source.unsplash.com/featured/?apartment-building"],
+    images: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800"],
     description: "Modern apartment close to business district.",
     features: ["Balcony", "Gym", "Underground Parking"],
     status: "For Sale",
@@ -148,7 +152,7 @@ export const listings: Listing[] = [
     bedrooms: 6,
     bathrooms: 7,
     sizeSqft: 7000,
-    images: ["https://source.unsplash.com/featured/?villa"],
+    images: ["https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800"],
     description: "Elegant villa with expansive grounds and premium amenities.",
     features: ["Swimming Pool", "Tennis Court", "Guest House"],
     status: "For Sale",
@@ -165,7 +169,7 @@ export const listings: Listing[] = [
     bedrooms: 1,
     bathrooms: 1,
     sizeSqft: 700,
-    images: ["https://source.unsplash.com/featured/?shortlet-apartment"],
+    images: ["https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800"],
     description: "Fully furnished shortlet apartment with modern amenities.",
     features: ["WiFi", "Housekeeping", "Secure Parking"],
     status: "For Rent",
