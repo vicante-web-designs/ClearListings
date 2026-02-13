@@ -1,5 +1,5 @@
-import Navbar from '../layout/Navbar'
-import HeroSection from '../layout/HeroSection'
+import Navbar from '../layouts/Navbar'
+import HeroSection from '../layouts/HeroSection'
 import ListingCard from '../components/features/ListingCard'
 import { useContext } from 'react'
 import { ListingContext } from '../context/ListingContext/createListingContext'
