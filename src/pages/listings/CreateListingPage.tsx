@@ -25,7 +25,7 @@ function CreateListingPage(){
             title: formData.get('title') as string,
             description: formData.get('description') as string,
             location: formData.get('location') as string,
-            price: formData.get('price') as string,
+            price: Number(formData.get('price')) as number,
         }
 
         setListings([...listings, newListing])
