@@ -1,4 +1,5 @@
 import type { ListingCardProps } from '../../types/Listing'
+import { formatPrice } from '../../utils/formatPrice'
 
 function ListingCard({id, images, title, location, price, bedrooms, propertyType, status }: ListingCardProps){
     return(
@@ -33,7 +34,9 @@ function ListingCard({id, images, title, location, price, bedrooms, propertyType
                 <div className="flex justify-between">
                         
                     <p className='font-bold text-blue-600'>
-                        &#8358;{Number(price).toLocaleString()}
+                        {
+                            price && formatPrice(price)
+                        }
                     </p>
 
                     <p>
