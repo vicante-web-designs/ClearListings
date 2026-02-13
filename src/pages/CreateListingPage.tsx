@@ -2,7 +2,7 @@ import { useContext, type FormEvent } from 'react';
 import Button from '../components/ui/Button';
 import FormField from '../components/ui/FormField';
 import { ListingContext } from '../context/ListingContext/createListingContext';
-import type { Listing } from '../types/UiTypes';
+import type { Listing } from '../types/Listing';
 import { useNavigate } from 'react-router-dom';
 
 function CreateListingPage(){
