@@ -3,10 +3,16 @@ import type { ListingCardProps } from '../../types/Listing'
 function ListingCard({id, images, title, location, price, bedrooms, type, availability }: ListingCardProps){
     return(
         <article className='w-full max-w-sm h-105 bg-white rounded-3xl shadow-md overflow-hidden relative' id={id}> 
-            <img
-                src={images[0]} alt="" 
-                className='w-full h-full object-cover relative z-0'
-            />
+            {
+                images && images.length > 0 ? (
+                    <img
+                        src={images[0]} alt="" 
+                        className='w-full h-full object-cover relative z-0'
+                    />
+                ) : (
+                    <img src="" alt="" />
+                )
+            }
 
             <div className='absolute z-10  h-fit top-0 left-0 right-0 m-4 flex justify-between items-center'>
                 <p className={
