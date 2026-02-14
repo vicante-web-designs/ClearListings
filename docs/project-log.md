@@ -33,3 +33,9 @@
 
 - Create CONVENTIONS.md to ensure consistency across codebase
 - Create COMPONENTS.md to show full list of all components used
+
+## Day 3
+
+- Refactor listing data
+- Refactor folder structure
+- Create utils folder and helper function for formatting price
