@@ -41,3 +41,5 @@
 - Create utils folder and helper function for formatting price
 
 ## Day 4
+
+## Day 5
