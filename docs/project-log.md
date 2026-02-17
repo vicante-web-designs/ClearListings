@@ -42,4 +42,12 @@
 
 ## Day 4
 
+- Took a break
+
 ## Day 5
+
+- Recovering from illness and stress
+
+## Day 6
+
+- Get back into the flow
