@@ -1,5 +1,29 @@
 @import 'tailwindcss';
 
-body{
-    font-family: 'Manrope', sans-serif;
+@theme{
+
+    /* Colour themes */
+    --color-primary: #2C2F5A;
+    --color-secondary: #C5A46D;
+    --color-neutral-100: #fff
+    --color-neutral-200: #F7F7F7;
+    --color-neutral-400: #C4C4C4;
+    --color-neutral-600: #6B6B6B;
+    --color-neutral-900: #000;
+
+    
+}
+
+@layer base{
+    body{
+        font-family: 'Manrope', sans-serif;
+    }
+}
+
+@layer components{
+
+}
+
+@layer utilities{
+
 }
