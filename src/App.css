@@ -9,9 +9,11 @@
     --color-neutral-200: #F7F7F7;
     --color-neutral-400: #C4C4C4;
     --color-neutral-600: #6B6B6B;
-    --color-neutral-900: #000;
+    --color-success: #3BA55D;
+    --color-error: #D93025;
+    --color-warning: #F5A623;
 
-    
+
 }
 
 @layer base{
