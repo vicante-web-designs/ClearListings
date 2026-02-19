@@ -13,8 +13,16 @@
     --color-error: #D93025;
     --color-warning: #F5A623;
 
-    /* Colour themes */
+    /* Font themes */
     --font-main: 'Manrope', sans-serif;
+
+    /* Font weight themes */
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semi-bold: 600;
+    --font-weight-bold: 700;
+
+
 
 
 }
