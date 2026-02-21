@@ -1,7 +1,7 @@
 import type { ListingCardProps } from '../../types/Listing'
 import { formatPrice } from '../../utils/formatPrice'
 
-function ListingCard({id, images, title, location, city, state, price }: ListingCardProps){
+function ListingCard({id, images, title, location, city, state, price, description }: ListingCardProps){
     return(
         <article
             id={id}
@@ -33,6 +33,10 @@ function ListingCard({id, images, title, location, city, state, price }: Listing
                             </p>
                         )
                     }
+
+                    <p>
+                        {description}
+                    </p>
                 </div>
 
                 <p className='font-semibold text-neutral-500'>
