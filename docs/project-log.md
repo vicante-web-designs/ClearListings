@@ -55,3 +55,7 @@
 ## Day 7
 
 - Create style components in figma
+
+## Day 8
+
+- Refactor listing card
