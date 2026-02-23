@@ -1,5 +1,6 @@
 import type { ListingCardProps } from '../../types/Listing'
 import { formatPrice } from '../../utils/formatPrice'
+import Button from '../ui/Button'
 
 function ListingCard({id, images, title, location, city, state, price, description }: ListingCardProps){
     return(
@@ -44,6 +45,14 @@ function ListingCard({id, images, title, location, city, state, price, descripti
                 </p>
 
             </article>
+
+            <div className='flex justify-center *:w-full px-16 pb-16'>
+                <Button 
+                    label='View details'
+                    type='button'
+                    variant='secondary'
+                />
+            </div>
 
 
         </article>
