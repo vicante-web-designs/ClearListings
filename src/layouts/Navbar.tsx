@@ -12,10 +12,28 @@ function Navbar(){
 
             <img src={Logo} alt="ClearListing Logo" className='h-full rounded-full'/>
 
-            <NavLink 
-                label='Listings'
-                link='#'
-            />
+            <div>
+                <NavLink 
+                    label='Home'
+                    link='#'
+                />
+                <NavLink 
+                    label='Listings'
+                    link='#'
+                />
+                <NavLink 
+                    label='About'
+                    link='#'
+                />
+                <NavLink 
+                    label='Contact'
+                    link='#'
+                />
+                <NavLink 
+                    label='Admin'
+                    link='#'
+                />
+            </div>
 
             <Button
                 label='Create listings'
