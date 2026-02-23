@@ -1,10 +1,7 @@
-import { useNavigate } from 'react-router-dom'
 import Logo from '../../public/Images/Logo/ClearListing_Logo.png'
-import Button from '../components/ui/Button'
 import NavLink from '../components/ui/NavLink'
 
 function Navbar(){
-    const navigate = useNavigate();
 
     return(
         <nav className='rounded-full h-20 px-24
@@ -12,7 +9,7 @@ function Navbar(){
 
             <img src={Logo} alt="ClearListing Logo" className='h-full rounded-full'/>
 
-            <div>
+            <div className='flex w-full border justify-between'>
                 <NavLink 
                     label='Home'
                     link='#'
@@ -34,13 +31,6 @@ function Navbar(){
                     link='#'
                 />
             </div>
-
-            <Button
-                label='Create listings'
-                type='button'
-                variant='danger'
-                onClick={() => navigate('/createListings')}
-            />
         </nav>
     )
 }
