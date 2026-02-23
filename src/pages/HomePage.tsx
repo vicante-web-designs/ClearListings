@@ -3,6 +3,7 @@ import HeroSection from '../layouts/HeroSection'
 import ListingCard from '../components/features/ListingCard'
 import { useContext } from 'react'
 import { ListingContext } from '../context/ListingContext/createListingContext'
+import Footer from '../layouts/Footer'
 
 function HomePage(){
     const context = useContext(ListingContext)
@@ -35,6 +36,8 @@ function HomePage(){
                     ))
                 }
             </section>
+
+            <Footer />
         </main>
     )
 }
