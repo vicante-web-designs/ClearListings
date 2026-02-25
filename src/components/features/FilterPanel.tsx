@@ -1,4 +1,4 @@
-function Filter(){
+function FilterPanel(){
     return (
         <>
         
@@ -6,4 +6,4 @@ function Filter(){
     )
 }
 
-export default Filter;
+export default FilterPanel;
