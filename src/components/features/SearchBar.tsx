@@ -1,5 +1,4 @@
 import { ListingContext } from '../../context/ListingContext/createListingContext'
-import Button from '../ui/Button'
 import { useContext, useState } from 'react'
 
 function SearchBar(){
