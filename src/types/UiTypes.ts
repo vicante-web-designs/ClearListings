@@ -1,4 +1,3 @@
-import type { Dispatch, SetStateAction } from 'react';
 import type { Listing } from './Listing';
 export interface ButtonProps{
     label: string;
@@ -26,5 +25,5 @@ export interface FormFieldProps{
 }
 
 export interface SearchBarProps{
-    searchFunction: () => Dispatch<SetStateAction<Listing[]>>
+    searchFunction: (listings: Listing[]) => void
 }

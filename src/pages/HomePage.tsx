@@ -1,12 +1,15 @@
 import Navbar from '../layouts/Navbar'
 import HeroSection from '../layouts/HeroSection'
 import ListingCard from '../components/features/ListingCard'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ListingContext } from '../context/ListingContext/createListingContext'
 import Footer from '../layouts/Footer'
 import SearchBar from '../components/features/SearchBar'
+import type { Listing } from '../types/Listing'
 
 function HomePage(){
+    const [listingDisplay, setListingDisplay] = useState<Listing[]>([]);
+
     const context = useContext(ListingContext)
 
     if(!context){
@@ -15,16 +18,22 @@ function HomePage(){
 
     const { listings } = context; //Destructuring the listings from the context
 
+    useEffect(() => {
+        setListingDisplay(listings)
+    }, [listings])
+
     return(
         <main className='flex flex-col gap-40'>
             <Navbar />
             <HeroSection />
 
-            <SearchBar />
+            <SearchBar 
+                searchFunction={setListingDisplay}
+            />
 
             <section className='flex w-full flex-wrap px-10 items-center justify-center gap-10'>
                 {
-                    listings && listings.map(listing => (
+                    listingDisplay && listingDisplay.map(listing => (
                         <ListingCard 
                             key={listing.id}
                             id={listing.id}
@@ -39,6 +48,7 @@ function HomePage(){
                     ))
                 }
             </section>
+
 
             <Footer />
         </main>

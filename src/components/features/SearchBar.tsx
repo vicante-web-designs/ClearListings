@@ -1,7 +1,8 @@
 import { ListingContext } from '../../context/ListingContext/createListingContext'
 import { useContext, useState } from 'react'
+import type { SearchBarProps } from '../../types/UiTypes'
 
-function SearchBar(){
+function SearchBar({ searchFunction }: SearchBarProps){
     const [search, setSearch] = useState<string>('')
     const context = useContext(ListingContext)
 
@@ -9,13 +10,14 @@ function SearchBar(){
 
     const { listings } = context;
 
-    function handleSearch(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>){
+    function handleSearch(e: React.ChangeEvent<HTMLInputElement>){
+        const value = e.target.value;
 
-        setSearch(e.target.value)
+        setSearch(value)
 
-        const newListings = listings.filter(listing => listing.title.toLowerCase().includes(search.toLowerCase()))
+        const filtered = listings.filter(listing => listing.title.toLowerCase().includes(search.toLowerCase().trim()))
 
-        console.log(newListings)
+        searchFunction(filtered)
 
     }
 
