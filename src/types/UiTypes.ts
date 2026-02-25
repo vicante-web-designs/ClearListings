@@ -1,3 +1,5 @@
+import type { Dispatch, SetStateAction } from 'react';
+import type { Listing } from './Listing';
 export interface ButtonProps{
     label: string;
     variant: Variant;
@@ -21,4 +23,8 @@ export interface FormFieldProps{
     placeholder?: string;
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+export interface SearchBarProps{
+    searchFunction: () => Dispatch<SetStateAction<Listing[]>>
 }
