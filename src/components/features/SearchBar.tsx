@@ -10,42 +10,30 @@ function SearchBar(){
 
     const { listings } = context;
 
-    function handleSubmit(e){
-        e.preventDefault();
+    function handleSearch(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>){
 
-        const newListings = listings.filter(listing => listing.title.includes(search))
+        setSearch(e.target.value)
+
+        const newListings = listings.filter(listing => listing.title.toLowerCase().includes(search.toLowerCase()))
 
         console.log(newListings)
-
-        setSearch('')
 
     }
 
     return (
         <div>
-            <form className=' mx-30' onSubmit={(e) => {
-                handleSubmit(e)
-            }}>
-                <label className='flex flex-col gap-16'>
-                    <h3>
-                        Search Listing
-                    </h3>
-                    <input
-                        type="text"
-                        className='rounded-full w-full p-3 bg-white shadow-lg'
-                        onChange={(e) => {
-                            setSearch(e.target.value)
-                        }}
-                        value={search}
-                    />
-                </label>
-
-                <Button
-                    label='Search'
-                    variant='primary'
-                    type='submit'
-                />
-            </form>
+            <h3>
+                Search Listing
+            </h3>
+            <input
+                type="text"
+                title='search'
+                className='rounded-full w-full p-3 bg-white shadow-lg'
+                onChange={(e) => {
+                    handleSearch(e)
+                }}
+                value={search}
+            />
         </div>
     )
 }
