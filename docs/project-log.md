@@ -59,3 +59,7 @@
 ## Day 8
 
 - Refactor listing card
+
+## Day 9
+
+- Add search functionality
