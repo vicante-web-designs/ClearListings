@@ -63,3 +63,7 @@
 ## Day 9
 
 - Add search functionality
+
+## Day 10
+
+- Add dynamic routing for listing detail pages
