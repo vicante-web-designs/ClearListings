@@ -111,8 +111,10 @@ const ListingDetails = () => {
 
                             <div className='flex w-fit gap-16'>
                             {
-                                listing.features.map(feature => (
-                                    <p className='border px-16 py-8 rounded-lg border-secondary bg-neutral-200'>
+                                listing.features.map((feature, index) => (
+                                    <p 
+                                    key={index}
+                                    className='border px-16 py-8 rounded-lg border-secondary bg-neutral-200'>
                                         {feature}
                                     </p>
                                 ))
