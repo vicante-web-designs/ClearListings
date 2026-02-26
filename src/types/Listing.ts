@@ -1,30 +1,30 @@
 
 export interface Listing{
-    id?: string;
+    id: string;
     title: string;
     price: number;
     location: string;
-    city?: string;
-    state?: string;
+    city: string;
+    state: string;
 
-    propertyType?: string;
+    propertyType: string;
 
-    bedrooms?: number;
-    bathrooms?: number;
-    sizeSqft?: number;
+    bedrooms: number;
+    bathrooms: number;
+    sizeSqft: number;
 
-    images?: string[];
+    images: string[];
 
     description: string;
-    agentID?: string;
+    agentID: string;
     
-    features?: string[];
+    features: string[];
     
     
     
-    status?: "For Sale" | "For Rent";
+    status: "For Sale" | "For Rent";
     
-    createdAt?: string;
+    createdAt: string;
 }
 
 export interface ListingContextType{
