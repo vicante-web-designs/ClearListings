@@ -2,7 +2,6 @@ import HeroSection from '../layouts/HeroSection'
 import ListingCard from '../components/features/ListingCard'
 import { useContext, useEffect, useState } from 'react'
 import { ListingContext } from '../context/ListingContext/createListingContext'
-import SearchBar from '../components/features/SearchBar'
 import type { Listing } from '../types/Listing'
 import FilterPanel from '../components/features/FilterPanel'
 import ListingLoadingState from '../components/ui/LoadingStates/ListingLoadingState'
@@ -26,10 +25,6 @@ const HomePage = () => {
         <main className='flex flex-col gap-40'>
             
             <HeroSection />
-
-            <SearchBar 
-                filterFunction={setListingDisplay}
-            />
 
             <FilterPanel 
                 filterFunction={setListingDisplay}

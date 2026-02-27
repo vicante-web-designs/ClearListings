@@ -1,12 +1,16 @@
 import type { FilterProp } from '../../types/UiTypes';
 import { useState, useEffect, useContext } from 'react';
 import { ListingContext } from '../../context/ListingContext/createListingContext';
+import { Search } from 'lucide-react'
+
 
 type PriceFilterKey = 'under-10m' | '10m-20m' | '20m-30m' | 'above-30m';
 
 function FilterPanel({ filterFunction }: FilterProp){
     const [priceFilter, setPriceFilter] = useState<PriceFilterKey>(); 
     const [locationFilter, setLocationFilter] = useState<string>('');
+    const [searchValue, setSearchValue] = useState<string>('');
+
     const context = useContext(ListingContext);
 
     if(! context){
@@ -17,11 +21,11 @@ function FilterPanel({ filterFunction }: FilterProp){
 
     useEffect(() => {
         const priceMatch: Record<string, (price: number) => boolean> = {
-        'under-10m': (price: number) => price < 10000000,
-        '10m-20m': (price: number) => 10000000 <= price && price <= 20000000,
-        '20m-30m': (price: number) => 20000000 <= price && price <= 30000000,
-        'above-30m': (price: number) => price > 30000000
-    }
+            'under-10m': (price: number) => price < 10000000,
+            '10m-20m': (price: number) => 10000000 <= price && price <= 20000000,
+            '20m-30m': (price: number) => 20000000 <= price && price <= 30000000,
+            'above-30m': (price: number) => price > 30000000
+        }
 
         const handleFilter = () => {
         const filtered = listings.filter(listing => {
@@ -29,16 +33,18 @@ function FilterPanel({ filterFunction }: FilterProp){
 
             const matchesPrice = !priceFilter || priceMatch[priceFilter]?.(listing.price);
 
-            const matchesLocation = !locationFilter || fullLocation.toLowerCase().includes(locationFilter.toLowerCase())
+            const matchesLocation = !locationFilter || fullLocation.toLowerCase().includes(locationFilter.toLowerCase());
 
-            return matchesPrice && matchesLocation;
+            const matchesSearch = !searchValue || listing.title.toLowerCase().includes(searchValue.toLowerCase().trim());
+
+            return matchesPrice && matchesLocation && matchesSearch;
         });
 
         filterFunction(filtered)
     }
 
         handleFilter()
-    }, [priceFilter, locationFilter, listings, filterFunction])
+    }, [priceFilter, locationFilter, listings, filterFunction, searchValue])
 
     return (
         <section>
@@ -79,6 +85,20 @@ function FilterPanel({ filterFunction }: FilterProp){
                         value={locationFilter}
                     />
                 </article>
+            </div>
+
+            <div className='flex items-center gap-16 rounded-full w-full bg-white shadow-lg p-16 w-max-lg hover:outline'>
+                <Search color='gray' size={24} />
+                <input
+                    type="text"
+                    title='search'
+                    className='w-full outline-0'
+                    placeholder='Search by name'
+                    onChange={(e) => {
+                        setSearchValue(e.target.value)
+                    }}
+                    value={searchValue}
+                />
             </div>
         </section>
     )
