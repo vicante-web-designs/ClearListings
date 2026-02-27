@@ -20,7 +20,7 @@ function SearchPanel({ filterFunction }: FilterProp){
     const { listings } = context;
 
     useEffect(() => {
-        const priceMatch: Record<string, (price: number) => boolean> = {
+        const priceMatch: Record<PriceFilterKey, (price: number) => boolean> = {
             'under-10m': (price: number) => price < 10000000,
             '10m-20m': (price: number) => 10000000 <= price && price <= 20000000,
             '20m-30m': (price: number) => 20000000 <= price && price <= 30000000,
