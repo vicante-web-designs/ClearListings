@@ -3,7 +3,7 @@ import ListingCard from '../components/features/ListingCard'
 import { useContext, useEffect, useState } from 'react'
 import { ListingContext } from '../context/ListingContext/createListingContext'
 import type { Listing } from '../types/Listing'
-import FilterPanel from '../components/features/FilterPanel'
+import SearchPanel from '../components/features/SearchPanel'
 import ListingLoadingState from '../components/ui/LoadingStates/ListingLoadingState'
 
 const HomePage = () => {
@@ -26,7 +26,7 @@ const HomePage = () => {
             
             <HeroSection />
 
-            <FilterPanel 
+            <SearchPanel 
                 filterFunction={setListingDisplay}
             />
 
