@@ -18,7 +18,7 @@ const Navbar = () => {
     return(
         <>
             {/* placeholder to prevent content jump when navbar becomes fixed */}
-            <div className='h-36'/>
+            <div className='h-0'/>
 
             <nav className={`rounded-full h-20 px-24 py-16 flex items-center justify-between mx-8 z-50 left-0 right-0 fixed transition-all duration-500 ease-in-out ${
                 isSticky
