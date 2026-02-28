@@ -26,6 +26,17 @@ const CreateListingPage = () => {
             description: formData.get('description') as string,
             location: formData.get('location') as string,
             price: Number(formData.get('price')) as number,
+            id: crypto.randomUUID(),
+            city: formData.get('city') as string,
+            state: formData.get('state') as string,
+            propertyType: formData.get('propertyType') as string,
+            bedrooms: Number(formData.get('bedrooms')) as number,
+            bathrooms: Number(formData.get('bathrooms')) as number,
+            sizeSqft: Number(formData.get('sizeSqFt')) as number,
+            images: [],
+            features: [],
+            status: 'For Sale',
+            createdAt: ''
         }
 
         setListings([...listings, newListing])
