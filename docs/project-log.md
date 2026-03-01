@@ -74,3 +74,8 @@
 - Make all listing types mandatory
 - Add vercel analytics to production site
 - SOlve production deployment bugs
+
+## Day 12
+
+- Use react-router navigation on return button
+- Remove link import
