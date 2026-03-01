@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useContext } from 'react';
 import { ListingContext } from '../../context/ListingContext/createListingContext';
 import type { Listing } from '../../types/Listing';
@@ -7,6 +7,7 @@ import { MapPin, Bed, Bath, Maximize, Home, ArrowLeft } from 'lucide-react'
 import Footer from '../../layouts/Footer';
 
 const ListingDetails = () => {
+    const navigate = useNavigate();
     const { listingId } = useParams();
 
     const context = useContext(ListingContext)
@@ -26,13 +27,17 @@ const ListingDetails = () => {
             listing ? (
                 <section className='max-w-3xl mx-auto'>
 
-                    <button type='button' className='w-fit mb-8 text-sm text-blue-800 hover:text-gray-700 transition-colors duration-300 flex items-center gap-2'>
+                    <button
+                        type='button'
+                        className='w-fit mb-8 text-sm text-blue-800 hover:text-gray-700 transition-colors duration-300 flex items-center gap-2'
+                        onClick={() => navigate(-1)}
+                    >
             
                         <ArrowLeft size={16}/>
                         
-                        <Link to='/' className='underline underline-offset-2 font-bold decoration-2'>
-                            Back to home
-                        </Link>
+                        <p className='underline underline-offset-2 font-bold decoration-2'>
+                            Return
+                        </p>
                     </button>
 
                     {/* Listing Image */}
