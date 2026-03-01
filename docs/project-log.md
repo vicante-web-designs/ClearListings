@@ -67,3 +67,10 @@
 ## Day 10
 
 - Add dynamic routing for listing detail pages
+
+## Day 11
+
+- Refactor search and filter component into one single logic
+- Make all listing types mandatory
+- Add vercel analytics to production site
+- SOlve production deployment bugs
