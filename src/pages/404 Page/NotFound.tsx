@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import Button from '../../components/ui/Button'
 
-const ErrorPage = () => {
+const NotFound = () => {
   return (
     <section className='min-h-screen items-center justify-center flex mx-20'>
         <section className='flex flex-col gap-32 items-center'>
@@ -26,4 +26,4 @@ const ErrorPage = () => {
   )
 }
 
-export default ErrorPage
+export default NotFound
