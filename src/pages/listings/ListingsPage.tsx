@@ -49,7 +49,7 @@ const ListingsPage = () => {
             }
         </section>
 
-        <PageLink to='/listings' children={'Return Home'} />
+        <PageLink to='/' children={'Return Home'} />
     </section>
   )
 }
