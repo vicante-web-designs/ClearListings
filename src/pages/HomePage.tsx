@@ -6,7 +6,7 @@ import type { Listing } from '../types/Listing'
 import SearchPanel from '../components/features/SearchPanel'
 import ListingLoadingState from '../components/ui/LoadingStates/ListingLoadingState'
 import { Analytics } from '@vercel/analytics/react'
-import NavLink from '../components/ui/NavLink'
+import PageLink from '../components/ui/PageLink'
 
 const HomePage = () => {
     const [listingDisplay, setListingDisplay] = useState<Listing[]>([]);
@@ -55,7 +55,7 @@ const HomePage = () => {
                     }
                 </section>
 
-                <NavLink to='/listings' children={'View all Listings'} />
+                <PageLink to='/listings' children={'View all Listings'} />
             </section>
             < Analytics />
         </main>
