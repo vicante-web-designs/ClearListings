@@ -138,10 +138,6 @@
                lg:text-base lg:leading-body-desktop;
     }
 
-    small {
-        @apply font-regular text-2xs leading-small tracking-wide-2;
-    }
-
     a {
         @apply font-medium text-xs leading-link tracking-wide-2
                md:text-sm;
@@ -155,6 +151,15 @@
         @apply font-bold text-6xl leading-display-mobile tracking-tight-2
                md:text-8xl md:leading-display-tablet md:tracking-tight-3
                lg:text-9xl lg:leading-display-desktop lg:tracking-tight-4;
+    }
+
+    .small-body-copy {
+        @apply font-regular text-2xs leading-small tracking-wide-2;
+    }
+
+    .link {
+        @apply font-medium text-xs leading-link tracking-wide-2
+               md:text-sm;
     }
 
 }
