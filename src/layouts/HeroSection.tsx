@@ -19,14 +19,14 @@ const HeroSection = () => {
                 ></div>
             </div>
 
-            <article className='absolute z-2 *:text-white *:text-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/12 w-full h-fit flex flex-col gap-8 items-center'>
-                <h1 className='font-bold'>
+            <article className='absolute z-2 *:text-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/12 w-full h-fit flex flex-col gap-8 items-center'>
+                <h1 className='text-white'>
                     Find Your Next Home, <span className='text-primary'>
                         Faster.
                     </span>
                 </h1>
 
-                <h2 className='font-light text-secondary'>
+                <h2 className='text-neutral-300'>
                     Browse verified listings in real estate and architecture, designed for modern buyers and sellers.
                 </h2>
             </article>

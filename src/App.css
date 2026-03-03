@@ -162,6 +162,10 @@
                md:text-sm;
     }
 
+    .secondary-copy{
+        @apply text-text-secondary
+    }
+
 }
 
 @layer utilities {
