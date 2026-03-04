@@ -86,7 +86,7 @@
     --leading-h3-tablet: 1.32em;
     --leading-h3-desktop: 1.3em;
 
-    --leading-display-mobile: 1.2em;
+    --leading-display-mobile: 1em;
     --leading-display-tablet: 1.15em;
     --leading-display-desktop: 1.1em;
 
@@ -147,10 +147,16 @@
 
 @layer components {
 
-    .display {
+    .display-heading {
         @apply font-bold text-6xl leading-display-mobile tracking-tight-2
                md:text-8xl md:leading-display-tablet md:tracking-tight-3
                lg:text-9xl lg:leading-display-desktop lg:tracking-tight-4;
+    }
+
+    .sub-heading{
+        @apply font-light text-lg leading-h2-mobile tracking-none
+               md:text-4xl md:leading-h2-tablet
+               lg:text-5xl lg:leading-h2-desktop;
     }
 
     .small-body-copy {
