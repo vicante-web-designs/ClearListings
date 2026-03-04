@@ -33,7 +33,7 @@ const Navbar = () => {
 
                 <NavLink children='LISTINGS' to='/listings' />
                 
-                <NavLink children='ABOUT' to='/' />
+                <NavLink children='ABOUT' to='/about' />
                 
                 
 
