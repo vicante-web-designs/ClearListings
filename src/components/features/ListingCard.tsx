@@ -3,7 +3,7 @@ import type { ListingCardProps } from '../../types/Listing'
 import { formatPrice } from '../../utils/formatPrice'
 import Button from '../ui/Button'
 
-function ListingCard({id, images, title, location, city, state, price, description }: ListingCardProps){
+function ListingCard({id, images, title, location, city, state, price }: ListingCardProps){
     return(
         
            <Link to={`/listings/${id}`} className='w-100 h-full'>
