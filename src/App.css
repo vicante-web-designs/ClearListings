@@ -208,6 +208,10 @@
         @apply text-secondary font-regular italic;
     }
 
+    .nav-link{
+        @apply font-light text-2xs tracking-widest uppercase hover:font-bold
+    }
+
 }
 
 @layer utilities {

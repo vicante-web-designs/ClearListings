@@ -40,7 +40,7 @@ const Navbar = () => {
                 <Button 
                     label='Contact'
                     type='button'
-                    variant='secondary'
+                    variant='outline'
                 />
 
             </nav>
