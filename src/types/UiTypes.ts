@@ -6,7 +6,7 @@ export interface ButtonProps{
     onClick?: (e: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>) => void
 }
 
-export type Variant = 'primary' | 'secondary' | 'danger'
+export type Variant = 'primary' | 'secondary' | 'danger' | 'outline';
 
 export type ButtonVariant = Record<Variant, string>
 
