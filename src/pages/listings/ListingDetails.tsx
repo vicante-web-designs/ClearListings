@@ -5,6 +5,7 @@ import type { Listing } from '../../types/Listing';
 import { formatPrice } from '../../utils/formatPrice';
 import { MapPin, Bed, Bath, Maximize, Home, ArrowLeft } from 'lucide-react'
 import Footer from '../../layouts/Footer';
+import IconSet from '../../components/ui/IconSet';
 
 const ListingDetails = () => {
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ const ListingDetails = () => {
 
         {
             listing ? (
-                <section className='max-w-3xl mx-auto'>
+                <section className='max-w-[90%] mx-auto flex flex-col gap-8'>
 
                     <button
                         type='button'
@@ -40,82 +41,66 @@ const ListingDetails = () => {
                         </p>
                     </button>
 
-                    {/* Listing Image */}
-                    <img src={listing.images[0]} alt={`Image of ${listing.title}`} className='object-cover w-full h-112.5 rounded-2xl'/>
+                    {/* listing image, title and price */}
+                    <div>
+                        {/* Listing Image */}
+                        <img src={listing.images[0]} alt={`Image of ${listing.title}`} className='object-cover w-full h-full rounded-2xl'/>
 
-                    {/* Listing content */}
-                    <div className='flex flex-col gap-16 my-16'>
-                        <div className='flex w-full justify-between items-end'>
-                            <h1 className='text-5xl'>
+                        <div className='flex w-full justify-between items-start'>
+                            <h1 className='text-5xl text-black'>
                                 {listing.title}
                             </h1>
 
-                            <h3 className='text-green-700 font-bold'>
+                            <h3 className='text-primary font-bold'>
                                 {formatPrice(listing.price)}
                             </h3>
                         </div>
+                    </div>
 
-                        <div className='flex justify-between items-center my-16'>
+                    {/* Listing content */}
+                    <div className='flex flex-col gap-8'>
+                        <div className='flex justify-between items-start'>
                             {/* Listing description */}
-                            <p className='text-xl max-w-[50%]'>
+                            <p className='text-xl max-w-[60%]'>
                                 {listing.description}
                             </p>
 
-                            <div className={`${listing.status.toLowerCase() === 'for sale' ? 'text-[#FF5733]' : 'text-[#20C997]'} w-fit rounded-lg bg-white shadow-lg font-bold`}>
-                                <p className='py-8 px-16'>
-                                    {listing.status}
+                            {/* Listing location */}
+                            <div className='flex gap-4'>
+                                <MapPin color='#ff6666' size={24}/>
+                                <p>
+                                    {`${listing.location}, ${listing.city}, ${listing.state}`}
                                 </p>
                             </div>
                         </div>
 
-                        {/* Listing location */}
-                        <div className='flex gap-4'>
-                            <MapPin color='#ff6666' size={24}/>
-                            <p>
-                                {`${listing.location}, ${listing.city}, ${listing.state}`}
-                            </p>
-                        </div>
+                        
+                        {/* Listing Icons */}
+                        <div className='flex justify-between'>
 
-                        <div className='flex justify-between my-32'>
-                            <article className='w-fit'>
-                                <div className='flex justify-between'>
-                                    <Home color='gray' size={24}/>
-                                    <p className='font-bold'>
-                                        {listing.propertyType}
-                                    </p>
-                                </div>
-                                <p>Property Type</p>
-                            </article>
+                            <IconSet 
+                                title={'Property Type'}
+                                icon={<Home color='gray' size={24}/>}
+                                value={listing.propertyType}
+                            />
 
-                            <article className='w-fit'>
-                                <div className='flex justify-between'>
-                                    <Bed color='gray' size={24}/>
-                                    <p className='font-bold'>
-                                        {listing.bedrooms}
-                                    </p>
-                                </div>
-                                <p>Bedrooms</p>
-                            </article>
+                            <IconSet 
+                                title={'Bedrooms'}
+                                icon={<Bed color='gray' size={24}/>}
+                                value={listing.bedrooms}
+                            />
 
-                            <article className='w-fit'>
-                                <div className='flex justify-between'>
-                                    <Bath color='gray' size={24}/>
-                                    <p className='font-bold'>
-                                        {listing.bathrooms}
-                                    </p>
-                                </div>
-                                <p>Bathrooms</p>
-                            </article>
+                            <IconSet 
+                                title={'Bathrooms'}
+                                icon={<Bath color='gray' size={24}/>}
+                                value={listing.bathrooms}
+                            />
 
-                            <article className='w-fit'>
-                                <div className='flex justify-between'>
-                                    <Maximize color='gray' size={24}/>
-                                    <p className='font-bold'>
-                                        {`${listing.sizeSqft}`}
-                                    </p>
-                                </div>
-                                <p>Square Feet</p>
-                            </article>
+                            <IconSet 
+                                title={'Square Feet'}
+                                icon={<Maximize color='gray' size={24}/>}
+                                value={`${listing.sizeSqft}`}
+                            />
                         </div>
 
                         <div className='flex flex-col gap-4'>

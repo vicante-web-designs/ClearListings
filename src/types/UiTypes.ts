@@ -33,3 +33,9 @@ export interface HeroSectionImageProps{
     srcSet?: string;
     src: string;
 }
+
+export interface IconSetProps{
+    title: string;
+    icon: React.ReactNode;
+    value: string | number;
+}
