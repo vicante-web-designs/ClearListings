@@ -40,7 +40,7 @@ const HeroSection = () => {
                 <Divider />
 
                 {/* Subheading */}
-                <p className='text-neutral-300 text-sm md:text-base font-light leading-relaxed'>
+                <p className='text-neutral-300 text-sm md:text-base font-light leading-relaxed max-w-[80%]'>
                     Explore verified real estate and architectural listings designed for modern buyers and sellers. Every property is presented with clarity, helping you discover spaces that match your lifestyle.
                 </p>
 
