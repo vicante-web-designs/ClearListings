@@ -29,7 +29,7 @@ export interface FilterProp{
 }
 
 export interface HeroSectionImageProps{
-    sizes: string;
-    srcSet: string;
+    sizes?: string;
+    srcSet?: string;
     src: string;
 }
