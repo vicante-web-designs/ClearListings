@@ -42,7 +42,7 @@ const ListingDetails = () => {
                     </button>
 
                     {/* listing image, title and price */}
-                    <div>
+                    <div className='flex flex-col gap-4'>
                         {/* Listing Image */}
                         <img src={listing.images[0]} alt={`Image of ${listing.title}`} className='object-cover w-full h-full rounded-2xl'/>
 
@@ -103,20 +103,26 @@ const ListingDetails = () => {
                             />
                         </div>
 
-                        <div className='flex flex-col gap-4'>
-                            <p className='font-bold'>Features:</p>
-
-                            <div className='flex w-fit gap-16'>
-                            {
-                                listing.features.map((feature, index) => (
-                                    <p 
+                        {/* Listing features */}
+                        <div className='flex w-fit gap-2 flex-wrap'>
+                            {listing.features.map((feature, index) => (
+                                <span
                                     key={index}
-                                    className='border px-16 py-8 rounded-lg border-secondary bg-neutral-200'>
-                                        {feature}
-                                    </p>
-                                ))
-                            }
-                        </div>
+                                    className='
+                                        inline-flex items-center
+                                        px-4 py-1.5
+                                        border border-secondary/40
+                                        text-2xs uppercase tracking-wide-2 font-regular text-text-secondary
+                                        rounded-none
+                                        bg-secondary/5
+                                        hover:bg-secondary/10 hover:border-secondary
+                                        transition-all duration-300
+                                        cursor-default
+                                    '
+                                >
+                                    {feature}
+                                </span>
+                            ))}
                         </div>
                     </div>
 

@@ -145,7 +145,7 @@
     }
 
     p {
-        @apply font-light text-text-secondary
+        @apply font-light text-neutral-700
                text-xs leading-body-mobile tracking-wide-1
                md:text-sm md:leading-body-tablet
                lg:text-base lg:leading-body-desktop;
