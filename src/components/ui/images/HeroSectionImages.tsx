@@ -1,9 +1,14 @@
-const HeroSectionImages = () => {
+import type { HeroSectionImageProps } from '../../../types/UiTypes'
+
+const HeroSectionImage = ({ sizes, srcSet, src }: HeroSectionImageProps) => {
   return (
-    <div>
-      
-    </div>
+    <img
+        sizes={sizes}
+        srcSet={srcSet}
+        src={src}
+        alt="Hero Section Image"
+        className='absolute -z-1 w-full h-full object-cover'></img>
   )
 }
 
-export default HeroSectionImages
+export default HeroSectionImage
