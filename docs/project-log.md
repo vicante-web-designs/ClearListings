@@ -92,3 +92,4 @@
 ## Day 15
 
 - Learn Redux
+- Prepare to replace context with Redux
