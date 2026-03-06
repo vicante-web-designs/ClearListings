@@ -88,3 +88,7 @@
 ## Day 14
 
 - Adjust styling themes to fit project design
+
+## Day 15
+
+- Learn Redux
