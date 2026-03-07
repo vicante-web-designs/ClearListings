@@ -1,23 +1,17 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useContext } from 'react';
-import { ListingContext } from '../../context/ListingContext/createListingContext';
 import type { Listing } from '../../types/Listing';
 import { formatPrice } from '../../utils/formatPrice';
 import { MapPin, Bed, Bath, Maximize, Home, ArrowLeft } from 'lucide-react'
 import Footer from '../../layouts/Footer';
 import IconSet from '../../components/ui/IconSet';
+import { useSelector } from 'react-redux'
+import type { RootState } from '../../state/store'
 
 const ListingDetails = () => {
+    const listings = useSelector((state: RootState) => state.listings.listingValue);
+    
     const navigate = useNavigate();
     const { listingId } = useParams();
-
-    const context = useContext(ListingContext)
-
-    if(!context){
-        throw new Error('Context not found')
-    }
-
-    const { listings } = context;
 
     const listing = listings.find((listing: Listing) => listing.id.toString() === listingId)
 
