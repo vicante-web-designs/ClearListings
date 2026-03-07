@@ -93,3 +93,7 @@
 
 - Learn Redux
 - Prepare to replace context with Redux
+
+## Day 16
+
+- Install Redux
