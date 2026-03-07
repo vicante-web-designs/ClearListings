@@ -1,23 +1,19 @@
 import type { FilterProp } from '../../types/UiTypes';
-import { useState, useEffect, useContext } from 'react';
-import { ListingContext } from '../../context/ListingContext/createListingContext';
+import { useState, useEffect } from 'react';
 import { Search, ChevronDown, MapPin } from 'lucide-react'
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../state/store';
+
 
 // Type of price filter options, ensuring type safety when setting the price filter state
 type PriceFilterKey = 'under-10m' | '10m-20m' | '20m-30m' | 'above-30m';
 
-function SearchPanel({ filterFunction }: FilterProp){
+const SearchPanel = ({ filterFunction }: FilterProp) => {
+    const listings = useSelector((state: RootState) => state.listings.listingValue)
+
     const [priceFilter, setPriceFilter] = useState<PriceFilterKey>(); // State for the selected price filter option
     const [locationFilter, setLocationFilter] = useState<string>('');  // State for the location filter input
     const [searchValue, setSearchValue] = useState<string>(''); // State for the search input value
-
-    const context = useContext(ListingContext);
-
-    if(! context){
-        throw new Error('No Context available yet')
-    } 
-
-    const { listings } = context;
 
     useEffect(() => {
         const priceMatch: Record<PriceFilterKey, (price: number) => boolean> = {
