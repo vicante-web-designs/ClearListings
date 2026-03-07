@@ -2,9 +2,10 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import './App.css'
+import { Provider } from 'react-redux'
+import { store } from './state/store.ts'
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import HomePage from './pages/HomePage.tsx';
-import { ListingProvider } from './context/ListingContext/context.tsx';
 import ListingDetails from './pages/listings/ListingDetails.tsx';
 import MainLayout from './layouts/MainLayout.tsx';
 import NotFound from './pages/404 Page/NotFound.tsx';
@@ -34,8 +35,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ListingProvider>
+    <Provider store={store}>
       <RouterProvider router={router}/>
-    </ListingProvider>
+    </Provider>
   </StrictMode>,
 )
