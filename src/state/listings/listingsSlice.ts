@@ -16,6 +16,14 @@ const listingSlice = createSlice({
     reducers: {
         addListing: (state, action: PayloadAction<Listing>) => {
             state.listingValue.push(action.payload)
+        },
+
+        updateListing: (state, action: PayloadAction<Listing>) => {
+            const matchingListing = state.listingValue.find(listing => listing.id === action.payload.id);
+
+            if (matchingListing){
+                Object.assign(matchingListing, action.payload)
+            }
         }
     }
 })
