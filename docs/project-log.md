@@ -97,3 +97,7 @@
 ## Day 16
 
 - Install Redux
+
+## Day 17
+
+- Replace context with Redux
