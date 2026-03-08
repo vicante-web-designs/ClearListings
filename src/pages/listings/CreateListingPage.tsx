@@ -1,20 +1,11 @@
-import { useContext, type FormEvent } from 'react';
+import { type FormEvent } from 'react';
 import Button from '../../components/ui/Button';
 import FormField from '../../components/ui/FormField';
-import { ListingContext } from '../../context/ListingContext/createListingContext';
 import type { Listing } from '../../types/Listing';
 import { useNavigate } from 'react-router-dom';
 
 const CreateListingPage = () => {
     const navigate = useNavigate();
-
-    const context = useContext(ListingContext)
-
-    if(!context){
-        throw new Error('ListingContext is not available')
-    }
-
-   const { listings, setListings } = context
 
     function handleSubmit(e: FormEvent<HTMLFormElement>){
         e.preventDefault();
@@ -38,8 +29,7 @@ const CreateListingPage = () => {
             status: 'For Sale',
             createdAt: ''
         }
-
-        setListings([...listings, newListing])
+        console.log(newListing);
         
         e.currentTarget.reset();
     }
