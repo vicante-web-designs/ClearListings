@@ -101,3 +101,4 @@
 ## Day 17
 
 - Replace context with Redux
+- Add create, update and delete reducers for listings
