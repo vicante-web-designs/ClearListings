@@ -14,7 +14,7 @@ const listingSlice = createSlice({
     name: 'listing',
     initialState,
     reducers: {
-        addListing: (state, action: PayloadAction<Listing>) => {
+        createListing: (state, action: PayloadAction<Listing>) => {
             state.listingValue.push(action.payload)
         },
 
@@ -24,6 +24,10 @@ const listingSlice = createSlice({
             if (matchingListing){
                 Object.assign(matchingListing, action.payload)
             }
+        },
+
+        deleteListing: (state, action: PayloadAction<Listing>) => {
+
         }
     }
 })
