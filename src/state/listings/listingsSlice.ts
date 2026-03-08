@@ -27,7 +27,7 @@ const listingSlice = createSlice({
         },
 
         deleteListing: (state, action: PayloadAction<Listing>) => {
-
+            state.listingValue = state.listingValue.filter(listing => listing.id !== action.payload.id)
         }
     }
 })
