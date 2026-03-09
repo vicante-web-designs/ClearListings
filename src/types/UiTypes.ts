@@ -15,7 +15,7 @@ export interface NavLinkProps{
     link: string;
 }
 
-export interface FormFieldProps{
+export interface InputFieldProps{
     id: string;
     type: string;
     label:string;
