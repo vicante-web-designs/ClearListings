@@ -1,5 +1,41 @@
 import type { Listing } from '../types/Listing';
 
+class ListingObj {
+  constructor(
+    public id: string,
+    public title: string,
+    public price: number,
+    public location: string,
+    public city: string,
+    public state: string,
+    public propertyType: string,
+    public bedrooms: number,
+    public bathrooms: number,
+    public sizeSqft: number,
+    public images: string[],
+    public description: string,
+    public features: string[],
+    public status: string,
+    public createdAt: string,
+  ){
+    this.id = id;
+    this.title = title;
+    this.price = price;
+    this.location = location;
+    this.city = city;
+    this.state = state;
+    this.propertyType = propertyType;
+    this.bedrooms = bedrooms;
+    this.bathrooms = bathrooms;
+    this.sizeSqft = sizeSqft;
+    this.images = images;
+    this.description = description;
+    this.features = features;
+    this.status = status;
+    this.createdAt = createdAt;
+  }
+}
+
 export const mockListings: Listing[] = [
   {
     id: "1",
