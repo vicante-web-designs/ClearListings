@@ -86,6 +86,12 @@ const CreateListingForm = () => {
                 type='number'
                 label='Price'
             />
+
+            <InputField
+                id='status'
+                type='radio'
+                label='Status'
+            />
         </section>
 
         <Button 
