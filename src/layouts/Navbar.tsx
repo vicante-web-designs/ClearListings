@@ -29,11 +29,13 @@ const Navbar = () => {
 
                 <img src={Logo} alt='ClearListing Logo' className='h-12 w-auto rounded-full'/>
 
-                <NavLink children='HOME' to='/' />
+                <NavLink children='home' to='/' />
 
-                <NavLink children='LISTINGS' to='/listings' />
+                <NavLink children='listings' to='/listings' />
                 
-                <NavLink children='ABOUT' to='/about' />
+                <NavLink children='about' to='/about' />
+
+                <NavLink children='create listings' to='/createListing' />
                 
                 
 
