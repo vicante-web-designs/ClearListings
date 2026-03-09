@@ -1,104 +1,236 @@
-import { Button } from '@/components/ui/Buttons/button';
-import InputField from '../ui/FormFields/InputField';
-import { type FormEvent } from 'react';
-// import type { Listing } from '../../types/Listing';
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Button } from '@/components/ui/Buttons/button'
+import { Field } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
+import { useState } from 'react'
+
+const formSchema = z.object({
+    title: z.string().min(1, 'Title is required'),
+    description: z.string().min(10, 'Description must be at least 10 characters'),
+    location: z.string().min(1, 'Location is required'),
+    city: z.string().min(1, 'City is required'),
+    state: z.string().min(1, 'State is required'),
+    propertyType: z.string().min(1, 'Property type is required'),
+    bedrooms: z.coerce.number().min(1, 'At least 1 bedroom required'),
+    bathrooms: z.coerce.number().min(1, 'At least 1 bathroom required'),
+    sizeSqft: z.coerce.number().min(1, 'Size is required'),
+    price: z.coerce.number().min(1, 'Price is required'),
+    status: z.enum(['For Sale', 'For Rent'], { message: 'Status is required' }),
+    features: z.array(z.string()).min(1, 'Select at least one feature'),
+})
+
+type FormValues = z.infer<typeof formSchema>
+
+const propertyTypes = [
+    'Apartment', 'Duplex', 'Flat', 'Detached House',
+    'Studio', 'Penthouse', 'Bungalow', 'Villa',
+    'Shortlet', 'Terraced House', 'Semi-Detached'
+]
+
+const listingFeatures = [
+    'Swimming Pool', 'Gym', 'Garden', 'Garage',
+    'Balcony', 'Fireplace', 'Air Conditioning',
+    'Security System', 'Solar Panels', 'Smart Home Features'
+]
 
 const CreateListingForm = () => {
+    const [images, setImages] = useState<File[]>([])
+    const [previews, setPreviews] = useState<string[]>([])
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log('it is working') 
+    const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<FormValues>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            title: '',
+            description: '',
+            location: '',
+            city: '',
+            state: '',
+            propertyType: '',
+            bedrooms: 0,
+            bathrooms: 0,
+            sizeSqft: 0,
+            price: 0,
+            status: 'For Sale',
+            features: [],
+        }
+    })
+
+    const selectedFeatures = watch('features')
+
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = Array.from(e.target.files || [])
+        setImages(prev => [...prev, ...files])
+        const newPreviews = files.map(file => URL.createObjectURL(file))
+        setPreviews(prev => [...prev, ...newPreviews])
     }
 
-   
-  return (
-    <form className='w-fit mx-auto bg-white py-8 px-12 flex flex-col items-center gap-12 max-w-[60%]' onSubmit={(e) => handleSubmit(e)}>
+    const removeImage = (index: number) => {
+        setImages(prev => prev.filter((_, i) => i !== index))
+        setPreviews(prev => {
+            URL.revokeObjectURL(prev[index])
+            return prev.filter((_, i) => i !== index)
+        })
+    }
 
-        <article className='*:text-center flex flex-col items-center gap-2'>
+    const onSubmit = (values: FormValues) => {
+        console.log({ ...values, images })
+    }
 
-            <h2 className='text-2xl font-bold'>
-                List Your Property with Ease
-            </h2>
+    return (
+        <div className='w-full max-w-2xl mx-auto py-12 px-6'>
 
-            <p className='max-w-[80%]'>
-                Fill out the form below to share your property with thousands of potential clients.
-            </p>
+            <article className='text-center flex flex-col items-center gap-2 mb-12'>
+                <h2>List Your Property</h2>
+                <p className='max-w-md'>
+                    Fill out the form below to share your property with thousands of potential clients.
+                </p>
+            </article>
 
-        </article>
+            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-8'>
 
-        <section className='flex flex-col gap-6 w-full mx-auto'>
-            <InputField
-                id='title'
-                type='text'
-                label='Title'
-            />
+                {/* Title */}
+                <Field label="Title" errorText={errors.title?.message} invalid={!!errors.title}>
+                    <Input placeholder="e.g. Luxury 4-Bedroom Duplex" {...register('title')} />
+                </Field>
 
-            <InputField
-                id='description'
-                type='text'
-                label='Description'
-            />
+                {/* Description */}
+                <Field label="Description" errorText={errors.description?.message} invalid={!!errors.description}>
+                    <Textarea placeholder="Describe the property..." rows={4} {...register('description')} />
+                </Field>
 
-            <InputField
-                id='loction'
-                type='text'
-                label='Location'
-            />
+                {/* Location + City + State */}
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                    <Field label="Location" errorText={errors.location?.message} invalid={!!errors.location}>
+                        <Input placeholder="e.g. Banana Island" {...register('location')} />
+                    </Field>
+                    <Field label="City" errorText={errors.city?.message} invalid={!!errors.city}>
+                        <Input placeholder="e.g. Lagos" {...register('city')} />
+                    </Field>
+                    <Field label="State" errorText={errors.state?.message} invalid={!!errors.state}>
+                        <Input placeholder="e.g. Lagos" {...register('state')} />
+                    </Field>
+                </div>
 
-            <InputField
-                id='city'
-                type='text'
-                label='City'
-            />
+                {/* Property Type */}
+                <Field label="Property Type" errorText={errors.propertyType?.message} invalid={!!errors.propertyType}>
+                    <Select onValueChange={(val) => setValue('propertyType', val)}>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Select property type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {propertyTypes.map(type => (
+                                <SelectItem key={type} value={type}>{type}</SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </Field>
 
-            <InputField
-                id='state'
-                type='text'
-                label='State'
-            />
+                {/* Bedrooms + Bathrooms + Size */}
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                    <Field label="Bedrooms" errorText={errors.bedrooms?.message} invalid={!!errors.bedrooms}>
+                        <Input type="number" min={0} {...register('bedrooms')} />
+                    </Field>
+                    <Field label="Bathrooms" errorText={errors.bathrooms?.message} invalid={!!errors.bathrooms}>
+                        <Input type="number" min={0} {...register('bathrooms')} />
+                    </Field>
+                    <Field label="Size (sqft)" errorText={errors.sizeSqft?.message} invalid={!!errors.sizeSqft}>
+                        <Input type="number" min={0} {...register('sizeSqft')} />
+                    </Field>
+                </div>
 
-            <InputField
-                id='propertyType'
-                type='text'
-                label='Property Type'
-            />
+                {/* Price */}
+                <Field label="Price (₦)" errorText={errors.price?.message} invalid={!!errors.price}>
+                    <Input type="number" min={0} placeholder="e.g. 25000000" {...register('price')} />
+                </Field>
 
-            <InputField
-                id='bedrooms'
-                type='number'
-                label='Bedrooms'
-            />
+                {/* Status */}
+                <Field label="Status" errorText={errors.status?.message} invalid={!!errors.status}>
+                    <Select onValueChange={(val) => setValue('status', val as 'For Sale' | 'For Rent')} defaultValue='For Sale'>
+                        <SelectTrigger>
+                            <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="For Sale">For Sale</SelectItem>
+                            <SelectItem value="For Rent">For Rent</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </Field>
 
-            <InputField
-                id='bathrooms'
-                type='number'
-                label='Bathrooms'
-            />
+                {/* Features */}
+                <Field label="Features" errorText={errors.features?.message} invalid={!!errors.features}>
+                    <div className='grid grid-cols-2 md:grid-cols-3 gap-3 mt-2'>
+                        {listingFeatures.map(feature => (
+                            <div key={feature} className='flex items-center gap-2'>
+                                <Checkbox
+                                    id={feature}
+                                    checked={selectedFeatures?.includes(feature)}
+                                    onCheckedChange={(checked) => {
+                                        if (checked) {
+                                            setValue('features', [...selectedFeatures, feature])
+                                        } else {
+                                            setValue('features', selectedFeatures.filter(f => f !== feature))
+                                        }
+                                    }}
+                                />
+                                <Label htmlFor={feature} className='font-light text-2xs tracking-wide-2 cursor-pointer'>
+                                    {feature}
+                                </Label>
+                            </div>
+                        ))}
+                    </div>
+                </Field>
 
-            <InputField
-                id='sizeSqFt'
-                type='number'
-                label='Square Ft'
-            />
+                {/* Images */}
+                <Field label="Images">
+                    <div className='border border-dashed border-border p-8 text-center hover:border-secondary transition-colors duration-300'>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            id="images"
+                            className='hidden'
+                            onChange={handleImageUpload}
+                        />
+                        <label htmlFor="images" className='cursor-pointer text-muted-foreground text-xs tracking-wide-2 uppercase'>
+                            Click to upload images
+                        </label>
+                    </div>
 
-            <InputField
-                id='Price'
-                type='number'
-                label='Price'
-            />
+                    {previews.length > 0 && (
+                        <div className='flex flex-wrap gap-3 mt-2'>
+                            {previews.map((preview, index) => (
+                                <div key={index} className='relative w-24 h-24'>
+                                    <img
+                                        src={preview}
+                                        alt={`preview ${index}`}
+                                        className='w-full h-full object-cover'
+                                    />
+                                    <button
+                                        type='button'
+                                        onClick={() => removeImage(index)}
+                                        className='absolute -top-2 -right-2 bg-primary text-white w-5 h-5 text-xs flex items-center justify-center'
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </Field>
 
-            <InputField
-                id='status'
-                type='radio'
-                label='Status'
-            />
-        </section>
+                <Button variant='default' type='submit' className='w-full mt-4'>
+                    Publish Listing
+                </Button>
 
-        <Button variant='default' type='submit'>
-            Publish Listing
-        </Button>
-    </form>
-  )
+            </form>
+        </div>
+    )
 }
 
 export default CreateListingForm
