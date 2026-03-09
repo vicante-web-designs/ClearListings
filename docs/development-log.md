@@ -4,49 +4,49 @@
 
 ### High Level System Design
 
-**- What I built**  
+**What I built**  
 Defined the foundational system design for the application.
 
 *** Why it matters**  
 Understanding the system structure early ensures the application is scalable and logically organized before development begins.
 
-**- Problem faced**  
+**Problem faced**  
 Needed clarity on the main entities and how users would interact with the system.
 
-**- Solution**  
+**Solution**  
 Mapped the user journey, identified core domains and entities, and defined relationships between them.
 
-**- Next step**  
+**Next step**  
 Set up the project environment and repository.
 
 ### Project Scaffolding
 
-**- What I built**  
+**What I built**  
 Initialized the project and prepared the development environment.
 
-**- Why it matters**  
+**Why it matters**  
 A proper project setup ensures consistent development and easier collaboration.
 
-**- Problem faced**  
+**Problem faced**  
 Needed a reliable modern development setup.
 
-**- Solution**  
+**Solution**  
 Created the repository, bootstrapped the project with Vite, set up the basic file structure, connected the project to GitHub, and created basic test features to verify the setup.
 
-**- Next step**  
+**Next step**  
 Define the application's page structure and component planning.
 
 ## Day 2
 
 ### Site Mapping
 
-**- What I built**  
+**What I built**  
 Defined the full page structure of the application.
 
-**- Why it matters**  
+**Why it matters**  
 A clear site map helps organize navigation and ensures all user flows are planned before building UI components.
 
-**- Pages defined**  
+**Pages defined**  
 
 1. Home Page
 2. About Page
@@ -57,167 +57,167 @@ A clear site map helps organize navigation and ensures all user flows are planne
 7. Sign Up Page
 8. Create Listing Page
 
-**- Problem faced**  
+**Problem faced**  
 Needed to ensure both browsing and listing management flows were covered.
 
-**- Solution**  
+**Solution**  
 Mapped out all required pages supporting both visitors and authenticated users.
 
-**- Next step**  
+**Next step**  
 Establish project conventions and component tracking.
 
 ### Project Conventions & Component Inventory
 
-**- What I built**  
+**What I built**  
 Created documentation files to enforce consistency across the project.
 
-**- Why it matters**  
+**Why it matters**  
 Maintaining consistent naming, structure, and reusable components improves maintainability as the project grows.
 
-**- Problem faced**  
+**Problem faced**  
 Needed a way to track reusable components and enforce code standards.
 
-**- Solution**  
+**Solution**  
 Created two documentation files
 
 * `CONVENTIONS.md` to define coding and project structure standards
 * `COMPONENTS.md` to maintain an inventory of all reusable components
 
-**- Next step**  
+**Next step**  
 Improve data structure and folder organization.
 
 ## Day 3
 
 ### Data and Structure Refactoring
 
-**- What I built**  
+**What I built**  
 Improved the internal data structure and project organization.
 
-**- Why it matters**  
+**Why it matters**  
 Better structure makes the application easier to scale and maintain.
 
-**- Problem faced**  
+**Problem faced**  
 Listing data and folder structure needed better organization for future development.
 
-**- Solution**  
+**Solution**  
 Refactored listing data, reorganized the folder structure, and created a `utils` directory with a helper function to format listing prices.
 
-**- Next step**  
+**Next step**  
 Continue building features on the improved structure.
 
 ## Day 4
 
 ### Development Pause
 
-**- What happened**  
+**What happened**  
 Development paused for a break.
 
-**- Why it matters**  
+**Why it matters**  
 Taking breaks helps maintain productivity and avoid burnout.
 
-**- Next step**  
+**Next step**  
 Resume development once rested.
 
 ## Day 5
 
 ### Health Recovery
 
-**- What happened**  
+**What happened**  
 Development paused due to illness and stress.
 
-**- Why it matters**  
+**Why it matters**  
 Recovery was necessary before continuing work.
 
-**- Next step**  
+**Next step**  
 Gradually return to development workflow.
 
 ## Day 6
 
 ### Returning to Development
 
-**- What I did**  
+**What I did**  
 Resumed work on the project after recovery.
 
-**- Why it matters**  
+**Why it matters**  
 Re-entering development flow helps rebuild momentum and continue progress.
 
-**- Next step**  
+**Next step**  
 Continue building UI components and refining the design system.
 
 ## Day 7
 
 ### UI Styling Preparation
 
-**- What I built**  
+**What I built**  
 Created styled components and UI references in Figma.
 
-**- Why it matters**  
+**Why it matters**  
 Defining visual styles early helps maintain design consistency across the application.
 
-**- Problem faced**  
+**Problem faced**  
 Needed a clear visual direction before implementing additional UI components.
 
-**- Solution**  
+**Solution**  
 Designed component styles and visual references in Figma.
 
-**- Next step**  
+**Next step**  
 Refactor UI components to match the new design.
 
 ## Day 8
 
 ### Listing Card Refactor
 
-**- What I built**  
+**What I built**  
 Refactored the Listing Card component.
 
-**- Why it matters**  
+**Why it matters**  
 Listing cards are a core component used across the platform to display property summaries.
 
-**- Problem faced**  
+**Problem faced**  
 The initial component structure needed improvement for flexibility and styling consistency.
 
-**- Solution**  
+**Solution**  
 Reworked the component layout and styling.
 
-**- Next step**  
+**Next step**  
 Implement search functionality for listings.
 
 ## Day 9
 
 ### Search Functionality
 
-**- What I built**  
+**What I built**  
 Implemented search functionality for property listings.
 
-**- Why it matters**  
+**Why it matters**  
 Search improves the user experience by allowing users to quickly find relevant listings.
 
-**- Problem faced**  
+**Problem faced**  
 Needed a way to filter listings dynamically based on user input.
 
-**- Solution**  
+**Solution**  
 Implemented search logic connected to the listings data.
 
-**- Next step**  
+**Next step**  
 Add dynamic routing for listing detail pages.
 
 ## Day 10
 
 ### Dynamic Routing
 
-**- What I built**  
+**What I built**  
 Implemented dynamic routes for individual listing detail pages.
 
-**- Why it matters**  
+**Why it matters**  
 Each listing needs its own dedicated page with detailed information.
 
-**- Problem faced**  
+**Problem faced**  
 Needed a scalable routing solution for dynamically generated listing pages.
 
-**- Solution**  
+**Solution**  
 Used React Router to create dynamic routes based on listing IDs.
 
-**- Next step**  
+**Next step**  
 Improve search and filtering logic.
 
 ## Day 11
