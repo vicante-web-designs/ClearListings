@@ -50,13 +50,11 @@ function ListingCard({id, images, title, location, city, state, price }: Listing
                                 {`${location}, ${city}, ${state}`}
                         </p>
  
-                        <Link to={`/listings/${id}`}>
-                            <div className='flex justify-center *:w-full'>
-                                <Button variant='secondary' type='button'>
-                                    Explore Listings
-                                </Button>
-                            </div>
-                        </Link>
+                        <div className='flex justify-center *:w-full'>
+                            <Button variant='secondary' type='button'>
+                                Explore Listings
+                            </Button>
+                        </div>
                     </div>
 
 
