@@ -13,7 +13,7 @@ function InputField({ id, type, label, placeholder, value, onChange }: InputFiel
                 id={id}
                 title={id}
                 placeholder={placeholder}
-                className='bg-gray-200 rounded-full py-3 px-6 focus:bg-blue-200 outline-0 caret-blue-800'
+                className='bg-gray-200 py-3 px-6 focus:bg-blue-200 outline-0 caret-blue-800'
                 value={value}
                 onChange={onChange}
             />
