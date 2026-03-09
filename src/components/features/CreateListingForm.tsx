@@ -1,17 +1,18 @@
 import Button from '../ui/Buttons/Button';
 import InputField from '../ui/FormFields/InputField';
 import { type FormEvent } from 'react';
-import type { Listing } from '../../types/Listing';
+// import type { Listing } from '../../types/Listing';
 
 const CreateListingForm = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        return 'it is working'
+        e.preventDefault();
+        console.log('it is working') 
     }
 
    
   return (
-    <form className='w-fit mx-auto bg-white py-8 px-12 flex flex-col items-center gap-12 max-w-[60%]' onSubmit={handleSubmit}>
+    <form className='w-fit mx-auto bg-white py-8 px-12 flex flex-col items-center gap-12 max-w-[60%]' onSubmit={(e) => handleSubmit(e)}>
 
         <article className='*:text-center flex flex-col items-center gap-2'>
 
