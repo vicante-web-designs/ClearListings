@@ -1,5 +1,5 @@
 import Logo from '../../public/Images/Logo/ClearListing_Logo.png'
-import Button from '../components/ui/Buttons/Button'
+import { Button } from '@/components/ui/Buttons/button'
 import NavLink from '../components/ui/NavLink'
 import { useState, useEffect } from 'react'
 
@@ -39,11 +39,9 @@ const Navbar = () => {
                 
                 
 
-                <Button 
-                    label='Contact'
-                    type='button'
-                    variant='outline'
-                />
+                <Button variant='outline' type='button'>
+                    Explore Listings
+                </Button>
 
             </nav>
         </>

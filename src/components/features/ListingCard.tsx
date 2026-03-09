@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import type { ListingCardProps } from '../../types/Listing'
 import { formatPrice } from '../../utils/formatPrice'
-import Button from '../ui/Buttons/Button'
+import { Button } from '../ui/Buttons/button'
 
 function ListingCard({id, images, title, location, city, state, price }: ListingCardProps){
     return(
@@ -52,11 +52,9 @@ function ListingCard({id, images, title, location, city, state, price }: Listing
  
                         <Link to={`/listings/${id}`}>
                             <div className='flex justify-center *:w-full'>
-                                <Button 
-                                    label='View details'
-                                    type='button'
-                                    variant='secondary'
-                                />
+                                <Button variant='secondary' type='button'>
+                                    Explore Listings
+                                </Button>
                             </div>
                         </Link>
                     </div>

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import Button from '../../components/ui/Buttons/Button'
+import { Button } from '@/components/ui/Buttons/button'
 
 const NotFound = () => {
   return (
@@ -14,11 +14,9 @@ const NotFound = () => {
             </p>
 
                 <Link to='/'> 
-                   <Button 
-                    label='Go Back Home'
-                    variant='primary'
-                    type='button'
-                   />
+                   <Button variant='default' type='button'>
+                        Go back home
+                    </Button>
                 </Link>      
             
         </section>  

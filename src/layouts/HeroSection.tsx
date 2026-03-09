@@ -1,4 +1,4 @@
-import Button from '../components/ui/Buttons/Button';
+import { Button } from '@/components/ui/Buttons/button';
 import Divider from '../components/ui/Divider';
 import HeroSectionImage from '../components/ui/images/HeroSectionImages';
 
@@ -47,17 +47,13 @@ const HeroSection = () => {
                 {/* CTA */}
                 <div className='flex gap-4 mt-4'>
 
-                    <Button 
-                        variant='primary'
-                        label='Explore Listings'
-                        type='button'
-                    />
+                    <Button variant='default' type='button'>
+                        Explore Listings
+                    </Button>
 
-                    <Button 
-                        variant='outline'
-                        label='Learn More'
-                        type='button'
-                    />
+                    <Button variant='outline' type='button'>
+                        Learn More
+                    </Button>
                 </div>
 
             </article>

@@ -1,4 +1,4 @@
-import Button from '../ui/Buttons/Button';
+import { Button } from '@/components/ui/Buttons/button';
 import InputField from '../ui/FormFields/InputField';
 import { type FormEvent } from 'react';
 // import type { Listing } from '../../types/Listing';
@@ -94,11 +94,9 @@ const CreateListingForm = () => {
             />
         </section>
 
-        <Button 
-                label='Publish Listing'
-                variant='primary'
-                type='submit'
-            />
+        <Button variant='default' type='submit'>
+            Publish Listing
+        </Button>
     </form>
   )
 }
