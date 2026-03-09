@@ -1,6 +1,6 @@
-import type { FormFieldProps } from '../../types/UiTypes';
+import type { InputFieldProps } from '../../../types/UiTypes';
 
-function FormField({ id, type, label, placeholder, value, onChange }: FormFieldProps){
+function InputField({ id, type, label, placeholder, value, onChange }: InputFieldProps){
     return(
         <div className='flex flex-col w-full gap-2'>
             <label htmlFor={id} className='font-bold'>
@@ -21,4 +21,4 @@ function FormField({ id, type, label, placeholder, value, onChange }: FormFieldP
     )
 }
 
-export default FormField;
+export default InputField;
