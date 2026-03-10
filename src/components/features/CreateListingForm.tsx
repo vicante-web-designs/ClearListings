@@ -13,6 +13,7 @@ import { ListingObj } from '@/data/ListingData'
 import { useDispatch } from 'react-redux'
 import { createListing } from '@/state/listings/listingsSlice'
 
+// ✅ Zod v4 schema
 const formSchema = z.object({
     title: z.string().min(1, 'Title is required'),
     description: z.string().min(10, 'Description must be at least 10 characters'),
@@ -20,14 +21,15 @@ const formSchema = z.object({
     city: z.string().min(1, 'City is required'),
     state: z.string().min(1, 'State is required'),
     propertyType: z.string().min(1, 'Property type is required'),
-    bedrooms: z.coerce.number().min(1, 'At least 1 bedroom required'),
-    bathrooms: z.coerce.number().min(1, 'At least 1 bathroom required'),
-    sizeSqft: z.coerce.number().min(1, 'Size is required'),
-    price: z.coerce.number().min(1, 'Price is required'),
-    status: z.enum(['For Sale', 'For Rent'], { message: 'Status is required' }),
+    bedrooms: z.number({ coerce: true }).min(1, 'At least 1 bedroom required'),
+    bathrooms: z.number({ coerce: true }).min(1, 'At least 1 bathroom required'),
+    sizeSqft: z.number({ coerce: true }).min(1, 'Size is required'),
+    price: z.number({ coerce: true }).min(1, 'Price is required'),
+    status: z.enum(['For Sale', 'For Rent']),  // ✅ message handled differently in v4
     features: z.array(z.string()).min(1, 'Select at least one feature'),
 })
 
+// ✅ z.infer now correctly returns number instead of unknown
 type FormValues = z.infer<typeof formSchema>
 
 const propertyTypes = [
@@ -43,7 +45,7 @@ const listingFeatures = [
 ]
 
 const CreateListingForm = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const [images, setImages] = useState<File[]>([])
     const [previews, setPreviews] = useState<string[]>([])
@@ -100,7 +102,7 @@ const CreateListingForm = () => {
             values.features,
             values.status,
             new Date().toISOString(),
-        );
+        )
 
         dispatch(createListing(newListing))
     }
@@ -110,47 +112,43 @@ const CreateListingForm = () => {
 
             <article className='text-center flex flex-col items-center gap-2 mb-12'>
                 <h2>List Your Property</h2>
-                <p className='max-w-6xl border'>
+                <p className='max-w-6xl'>
                     Fill out the form below to share your property with thousands of potential clients.
                 </p>
             </article>
 
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-8'>
 
-                {/* Title */}
                 <Field>
                     <FieldLabel>Title</FieldLabel>
                     <Input placeholder="e.g. Luxury 4-Bedroom Duplex" {...register('title')} />
-                    <FieldError errors={[errors.title]}/>
+                    <FieldError errors={[errors.title]} />
                 </Field>
 
-                {/* Description */}
                 <Field>
                     <FieldLabel>Description</FieldLabel>
                     <Textarea placeholder="Describe the property..." rows={4} {...register('description')} />
-                    <FieldError errors={[errors.description]}/>
+                    <FieldError errors={[errors.description]} />
                 </Field>
 
-                {/* Location + City + State */}
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                     <Field>
                         <FieldLabel>Location</FieldLabel>
                         <Input placeholder="e.g. GRA" {...register('location')} />
-                        <FieldError errors={[errors.location]}/>
+                        <FieldError errors={[errors.location]} />
                     </Field>
                     <Field>
                         <FieldLabel>City</FieldLabel>
                         <Input placeholder="e.g. Port Harcourt" {...register('city')} />
-                        <FieldError errors={[errors.city]}/>
+                        <FieldError errors={[errors.city]} />
                     </Field>
                     <Field>
                         <FieldLabel>State</FieldLabel>
                         <Input placeholder="e.g. Rivers State" {...register('state')} />
-                        <FieldError errors={[errors.state]}/>
+                        <FieldError errors={[errors.state]} />
                     </Field>
                 </div>
 
-                {/* Property Type */}
                 <Field>
                     <FieldLabel>Property Type</FieldLabel>
                     <Select onValueChange={(val) => setValue('propertyType', val)}>
@@ -166,33 +164,30 @@ const CreateListingForm = () => {
                     <FieldError errors={[errors.propertyType]} />
                 </Field>
 
-                {/* Bedrooms + Bathrooms + Size */}
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                     <Field>
                         <FieldLabel>Bedrooms</FieldLabel>
-                        <Input type="number" min={0} {...register('bedrooms')} />
+                        <Input type="number" min={0} {...register('bedrooms', { valueAsNumber: true })} />
                         <FieldError errors={[errors.bedrooms]} />
                     </Field>
                     <Field>
                         <FieldLabel>Bathrooms</FieldLabel>
-                        <Input type="number" min={0} {...register('bathrooms')} />
+                        <Input type="number" min={0} {...register('bathrooms', { valueAsNumber: true })} />
                         <FieldError errors={[errors.bathrooms]} />
                     </Field>
                     <Field>
                         <FieldLabel>Size (sqft)</FieldLabel>
-                        <Input type="number" min={0} {...register('sizeSqft')} />
+                        <Input type="number" min={0} {...register('sizeSqft', { valueAsNumber: true })} />
                         <FieldError errors={[errors.sizeSqft]} />
                     </Field>
                 </div>
 
-                {/* Price */}
                 <Field>
                     <FieldLabel>Price (₦)</FieldLabel>
-                    <Input type="number" min={0} placeholder="e.g. 25000000" {...register('price')} />
+                    <Input type="number" min={0} placeholder="e.g. 25000000" {...register('price', { valueAsNumber: true })} />
                     <FieldError errors={[errors.price]} />
                 </Field>
 
-                {/* Status */}
                 <Field>
                     <FieldLabel>Status</FieldLabel>
                     <Select onValueChange={(val) => setValue('status', val as 'For Sale' | 'For Rent')} defaultValue='For Sale'>
@@ -207,7 +202,6 @@ const CreateListingForm = () => {
                     <FieldError errors={[errors.status]} />
                 </Field>
 
-                {/* Features */}
                 <Field>
                     <FieldLabel>Features</FieldLabel>
                     <div className='grid grid-cols-2 md:grid-cols-3 gap-3 mt-2'>
@@ -233,7 +227,6 @@ const CreateListingForm = () => {
                     <FieldError errors={[errors.features]} />
                 </Field>
 
-                {/* Images */}
                 <Field>
                     <FieldLabel>Images</FieldLabel>
                     <div className='border border-dashed border-border p-8 text-center hover:border-secondary transition-colors duration-300'>
