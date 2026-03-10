@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Buttons/button'
 import Divider from '../components/ui/Divider';
 import HeroSectionImage from '../components/ui/images/HeroSectionImages';
 
