@@ -1,5 +1,5 @@
 import { z } from 'zod/v3'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/Buttons/button'
 import { Field, FieldLabel, FieldError } from '@/components/ui/field'
@@ -50,7 +50,7 @@ const CreateListingForm = () => {
     const [images, setImages] = useState<File[]>([])
     const [previews, setPreviews] = useState<string[]>([])
 
-    const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<FormValues>({
+    const { register, handleSubmit, formState: { errors }, setValue, control } = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: '',
@@ -68,7 +68,7 @@ const CreateListingForm = () => {
         }
     })
 
-    const selectedFeatures = watch('features')
+    const selectedFeatures = useWatch({ control, name: 'features'})
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || [])
