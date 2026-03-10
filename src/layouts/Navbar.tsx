@@ -1,5 +1,5 @@
 import Logo from '../../public/Images/Logo/ClearListing_Logo.png'
-import { Button } from '@/components/ui/Buttons/button'
+import { Button } from '@/components/ui/button'
 import NavLink from '../components/ui/NavLink'
 import { useState, useEffect } from 'react'
 
