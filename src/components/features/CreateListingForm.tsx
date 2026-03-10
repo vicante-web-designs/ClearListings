@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/Buttons/button'
-import { Field } from '@/components/ui/field'
+import { Field, FieldLabel, FieldError } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -95,30 +95,41 @@ const CreateListingForm = () => {
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-8'>
 
                 {/* Title */}
-                <Field label="Title" errorText={errors.title?.message} invalid={!!errors.title}>
+                <Field>
+                    <FieldLabel>Title</FieldLabel>
                     <Input placeholder="e.g. Luxury 4-Bedroom Duplex" {...register('title')} />
+                    <FieldError errors={[errors.title]}/>
                 </Field>
 
                 {/* Description */}
-                <Field label="Description" errorText={errors.description?.message} invalid={!!errors.description}>
+                <Field>
+                    <FieldLabel>Description</FieldLabel>
                     <Textarea placeholder="Describe the property..." rows={4} {...register('description')} />
+                    <FieldError errors={[errors.description]}/>
                 </Field>
 
                 {/* Location + City + State */}
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                    <Field label="Location" errorText={errors.location?.message} invalid={!!errors.location}>
-                        <Input placeholder="e.g. Banana Island" {...register('location')} />
+                    <Field>
+                        <FieldLabel>Location</FieldLabel>
+                        <Input placeholder="e.g. GRA" {...register('location')} />
+                        <FieldError errors={[errors.location]}/>
                     </Field>
-                    <Field label="City" errorText={errors.city?.message} invalid={!!errors.city}>
-                        <Input placeholder="e.g. Lagos" {...register('city')} />
+                    <Field>
+                        <FieldLabel>City</FieldLabel>
+                        <Input placeholder="e.g. Port Harcourt" {...register('city')} />
+                        <FieldError errors={[errors.city]}/>
                     </Field>
-                    <Field label="State" errorText={errors.state?.message} invalid={!!errors.state}>
-                        <Input placeholder="e.g. Lagos" {...register('state')} />
+                    <Field>
+                        <FieldLabel>State</FieldLabel>
+                        <Input placeholder="e.g. Rivers State" {...register('state')} />
+                        <FieldError errors={[errors.state]}/>
                     </Field>
                 </div>
 
                 {/* Property Type */}
-                <Field label="Property Type" errorText={errors.propertyType?.message} invalid={!!errors.propertyType}>
+                <Field>
+                    <FieldLabel>Property Type</FieldLabel>
                     <Select onValueChange={(val) => setValue('propertyType', val)}>
                         <SelectTrigger>
                             <SelectValue placeholder="Select property type" />
@@ -129,28 +140,38 @@ const CreateListingForm = () => {
                             ))}
                         </SelectContent>
                     </Select>
+                    <FieldError errors={[errors.propertyType]} />
                 </Field>
 
                 {/* Bedrooms + Bathrooms + Size */}
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                    <Field label="Bedrooms" errorText={errors.bedrooms?.message} invalid={!!errors.bedrooms}>
+                    <Field>
+                        <FieldLabel>Bedrooms</FieldLabel>
                         <Input type="number" min={0} {...register('bedrooms')} />
+                        <FieldError errors={[errors.bedrooms]} />
                     </Field>
-                    <Field label="Bathrooms" errorText={errors.bathrooms?.message} invalid={!!errors.bathrooms}>
+                    <Field>
+                        <FieldLabel>Bathrooms</FieldLabel>
                         <Input type="number" min={0} {...register('bathrooms')} />
+                        <FieldError errors={[errors.bathrooms]} />
                     </Field>
-                    <Field label="Size (sqft)" errorText={errors.sizeSqft?.message} invalid={!!errors.sizeSqft}>
+                    <Field>
+                        <FieldLabel>Size (sqft)</FieldLabel>
                         <Input type="number" min={0} {...register('sizeSqft')} />
+                        <FieldError errors={[errors.sizeSqft]} />
                     </Field>
                 </div>
 
                 {/* Price */}
-                <Field label="Price (₦)" errorText={errors.price?.message} invalid={!!errors.price}>
+                <Field>
+                    <FieldLabel>Price (₦)</FieldLabel>
                     <Input type="number" min={0} placeholder="e.g. 25000000" {...register('price')} />
+                    <FieldError errors={[errors.price]} />
                 </Field>
 
                 {/* Status */}
-                <Field label="Status" errorText={errors.status?.message} invalid={!!errors.status}>
+                <Field>
+                    <FieldLabel>Status</FieldLabel>
                     <Select onValueChange={(val) => setValue('status', val as 'For Sale' | 'For Rent')} defaultValue='For Sale'>
                         <SelectTrigger>
                             <SelectValue placeholder="Select status" />
@@ -160,10 +181,12 @@ const CreateListingForm = () => {
                             <SelectItem value="For Rent">For Rent</SelectItem>
                         </SelectContent>
                     </Select>
+                    <FieldError errors={[errors.status]} />
                 </Field>
 
                 {/* Features */}
-                <Field label="Features" errorText={errors.features?.message} invalid={!!errors.features}>
+                <Field>
+                    <FieldLabel>Features</FieldLabel>
                     <div className='grid grid-cols-2 md:grid-cols-3 gap-3 mt-2'>
                         {listingFeatures.map(feature => (
                             <div key={feature} className='flex items-center gap-2'>
@@ -184,10 +207,12 @@ const CreateListingForm = () => {
                             </div>
                         ))}
                     </div>
+                    <FieldError errors={[errors.features]} />
                 </Field>
 
                 {/* Images */}
-                <Field label="Images">
+                <Field>
+                    <FieldLabel>Images</FieldLabel>
                     <div className='border border-dashed border-border p-8 text-center hover:border-secondary transition-colors duration-300'>
                         <input
                             type="file"
