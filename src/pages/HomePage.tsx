@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux'
 import type { RootState } from '../state/store'
 import type { Listing } from '../types/Listing'
 import priceMatch from '@/utils/priceMatch';
-import type { PriceFilterKey } from '@/types/filter'
 
 const HomePage = () => {
     const listings = useSelector((state: RootState) => state.listings.listingValue);
