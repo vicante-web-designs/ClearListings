@@ -1,6 +1,6 @@
 import type { Listing } from '../types/Listing';
 
-class ListingObj {
+export class ListingObj {
   constructor(
     public id: string,
     public title: string,
@@ -12,7 +12,7 @@ class ListingObj {
     public bedrooms: number,
     public bathrooms: number,
     public sizeSqft: number,
-    public images: string[],
+    public images: File[] | string[] ,
     public description: string,
     public features: string[],
     public status: 'For Sale' | 'For Rent',
