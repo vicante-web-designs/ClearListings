@@ -34,7 +34,7 @@ const SearchPanel = () => {
                         <select
                             name="price" id="price" title='price' className='bg-white shadow-lg py-4 px-6 rounded-md appearance-none text-neutral-600'
                             onChange={(e) => {
-                                setPriceFilter(e.target.value as PriceFilterKey)
+                                dispatch(setPriceFilter(e.target.value as PriceFilterKey))
                             }}
                         >
                             <option value="">All Prices</option>
@@ -60,7 +60,7 @@ const SearchPanel = () => {
                             placeholder='Enter location' 
                             className='w-full outline-0'
                             onChange={(e) => {
-                                setLocationFilter(e.target.value)
+                                dispatch(setLocationFilter(e.target.value))
                             }}
                         />
                     </div>

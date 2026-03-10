@@ -34,19 +34,19 @@ const listingSlice = createSlice({
             }
         },
 
-        deleteListing: (state, action: PayloadAction<Listing>) => {
-            state.listingValue = state.listingValue.filter(listing => listing.id !== action.payload.id)
+        deleteListing: (state, action: PayloadAction<string>) => {
+            state.listingValue = state.listingValue.filter(listing => listing.id !== action.payload)
         },
 
-        setSearchTerm: (state, action) => {
+        setSearchTerm: (state, action: PayloadAction<string>) => {
             state.searchTerm = action.payload
         },
 
-        setLocationFilter: (state, action) => {
+        setLocationFilter: (state, action: PayloadAction<string>) => {
             state.locationFilter = action.payload
         },
 
-        setPriceFilter: (state, action) => {
+        setPriceFilter: (state, action: PayloadAction<PriceFilterKey>) => {
             state.priceFilter = action.payload
         }
     }
