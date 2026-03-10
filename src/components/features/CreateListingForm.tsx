@@ -83,11 +83,11 @@ const CreateListingForm = () => {
     }
 
     return (
-        <div className='w-full max-w-2xl mx-auto py-12 px-6'>
+        <div className='w-full max-w-7xl mx-auto py-12 px-6'>
 
             <article className='text-center flex flex-col items-center gap-2 mb-12'>
                 <h2>List Your Property</h2>
-                <p className='max-w-md'>
+                <p className='max-w-6xl border'>
                     Fill out the form below to share your property with thousands of potential clients.
                 </p>
             </article>
