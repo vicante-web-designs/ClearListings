@@ -110,6 +110,8 @@ const CreateListingForm = () => {
         dispatch(createListing(newListing))
     }
 
+    const current = selectedFeatures ?? [] // Get current features or default to empty array if undefined
+
     return (
         <div className='w-full max-w-7xl mx-auto py-12 px-6'>
 
@@ -215,7 +217,7 @@ const CreateListingForm = () => {
                                     checked={selectedFeatures?.includes(feature)}
                                     onCheckedChange={(checked) => {
                                         if (checked) {
-                                            setValue('features', [...selectedFeatures, feature])
+                                            setValue('features', [...current, feature])
                                         } else {
                                             setValue('features', selectedFeatures.filter(f => f !== feature))
                                         }
