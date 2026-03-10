@@ -435,5 +435,11 @@ I solved it by
 * Converting the file objects to strings before passing them to the new listingObj.
 * Explicitly setting the image type on listingObj to "string[]" to ensure it always accepts images as strings before using it anywhere.
 
+### Added feature for creating new listings
+
+### Moved all filter logic to Redux
+
+### Fixed Image memory leak
+
 **Next step**  
 Use shadcn field component to create CreateListingForm component
