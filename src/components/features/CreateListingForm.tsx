@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v3'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/Buttons/button'
@@ -21,10 +21,10 @@ const formSchema = z.object({
     city: z.string().min(1, 'City is required'),
     state: z.string().min(1, 'State is required'),
     propertyType: z.string().min(1, 'Property type is required'),
-    bedrooms: z.number({ coerce: true }).min(1, 'At least 1 bedroom required'),
-    bathrooms: z.number({ coerce: true }).min(1, 'At least 1 bathroom required'),
-    sizeSqft: z.number({ coerce: true }).min(1, 'Size is required'),
-    price: z.number({ coerce: true }).min(1, 'Price is required'),
+    bedrooms: z.coerce.number().min(1, 'At least 1 bedroom required'),
+    bathrooms: z.coerce.number().min(1, 'At least 1 bathroom required'),
+    sizeSqft: z.coerce.number().min(1, 'Size is required'),
+    price: z.coerce.number().min(1, 'Price is required'),
     status: z.enum(['For Sale', 'For Rent']),  // ✅ message handled differently in v4
     features: z.array(z.string()).min(1, 'Select at least one feature'),
 })
