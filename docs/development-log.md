@@ -398,3 +398,25 @@ I solved it by
 
 **Next step**  
 Use shadcn field component to create CreateListingForm component
+
+## Day 19 (10/03/2026)
+
+### Debugged shadcn form
+
+**What I did**  
+I learnt how shadcn field component works and implemented it correctly
+
+**Why it matters**  
+I had to learn it in order to debug it and add custom features in the future if needed
+
+**Problems faced**  
+The new Field component didn't support label props, this caused none of the form fields to have labels
+
+**Solution**  
+I solved it by
+
+* Importing the FormLabel and FormError component
+* Adding it to every FormField component and removing the error and label props
+
+**Next step**  
+Use shadcn field component to create CreateListingForm component
