@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { useState } from 'react'
+import { ListingObj } from '@/data/ListingData'
 
 const formSchema = z.object({
     title: z.string().min(1, 'Title is required'),
@@ -79,7 +80,25 @@ const CreateListingForm = () => {
     }
 
     const onSubmit = (values: FormValues) => {
-        console.log({ ...values, images })
+        const newListing = new ListingObj(
+            crypto.randomUUID(),
+            values.title,
+            values.price,
+            values.location,
+            values.city,
+            values.state,
+            values.propertyType,
+            values.bedrooms,
+            values.bathrooms,
+            values.sizeSqft,
+            images,
+            values.description,
+            values.features,
+            values.status,
+            new Date().toISOString(),
+        );
+        
+        console.log(newListing)
     }
 
     return (
