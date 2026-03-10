@@ -1,47 +1,11 @@
-import type { FilterProp } from '../../types/UiTypes';
-import { useState, useEffect } from 'react';
 import { Search, ChevronDown, MapPin } from 'lucide-react'
-import { useSelector } from 'react-redux';
-import type { RootState } from '../../state/store';
+import { useDispatch } from 'react-redux';
+import { setSearchTerm, setPriceFilter, setLocationFilter } from '@/state/listings/listingsSlice';
+import type { PriceFilterKey } from '@/types/filter';
 
 
-// Type of price filter options, ensuring type safety when setting the price filter state
-type PriceFilterKey = 'under-10m' | '10m-20m' | '20m-30m' | 'above-30m';
-
-const SearchPanel = ({ filterFunction }: FilterProp) => {
-    const listings = useSelector((state: RootState) => state.listings.listingValue)
-
-    const [priceFilter, setPriceFilter] = useState<PriceFilterKey>(); // State for the selected price filter option
-    const [locationFilter, setLocationFilter] = useState<string>('');  // State for the location filter input
-    const [searchValue, setSearchValue] = useState<string>(''); // State for the search input value
-
-    useEffect(() => {
-        const priceMatch: Record<PriceFilterKey, (price: number) => boolean> = {
-            'under-10m': (price: number) => price < 10000000,
-            '10m-20m': (price: number) => 10000000 <= price && price <= 20000000,
-            '20m-30m': (price: number) => 20000000 <= price && price <= 30000000,
-            'above-30m': (price: number) => price > 30000000
-        } // Object mapping price filter keys to their corresponding filtering functions
-
-        // Filtering the listings based on the selected price filter, location filter, and search value
-        const handleFilter = () => {
-        const filtered = listings.filter(listing => {
-            const fullLocation = `${listing.location}${listing.state}${listing.city}`
-
-            const matchesPrice = !priceFilter || priceMatch[priceFilter]?.(listing.price);
-
-            const matchesLocation = !locationFilter || fullLocation.toLowerCase().includes(locationFilter.toLowerCase());
-
-            const matchesSearch = !searchValue || listing.title.toLowerCase().includes(searchValue.toLowerCase().trim());
-
-            return matchesPrice && matchesLocation && matchesSearch;
-        });
-
-        filterFunction(filtered)
-    }
-
-        handleFilter();
-    }, [priceFilter, locationFilter, listings, filterFunction, searchValue])
+const SearchPanel = () => {
+    const dispatch = useDispatch();
 
     return (
         <section className='flex justify-center'>
@@ -56,9 +20,8 @@ const SearchPanel = ({ filterFunction }: FilterProp) => {
                         className='w-full outline-0'
                         placeholder='Search by name'
                         onChange={(e) => {
-                            setSearchValue(e.target.value)
+                            dispatch(setSearchTerm(e.target.value))
                         }}
-                        value={searchValue}
                     />
                 </div>
 
@@ -69,7 +32,7 @@ const SearchPanel = ({ filterFunction }: FilterProp) => {
                     <div className='relative'>
             
                         <select
-                            name="price" id="price" title='price' className='bg-white shadow-lg py-4 px-6 rounded-md appearance-none text-neutral-600' value={priceFilter}
+                            name="price" id="price" title='price' className='bg-white shadow-lg py-4 px-6 rounded-md appearance-none text-neutral-600'
                             onChange={(e) => {
                                 setPriceFilter(e.target.value as PriceFilterKey)
                             }}
@@ -99,7 +62,6 @@ const SearchPanel = ({ filterFunction }: FilterProp) => {
                             onChange={(e) => {
                                 setLocationFilter(e.target.value)
                             }}
-                            value={locationFilter}
                         />
                     </div>
 
