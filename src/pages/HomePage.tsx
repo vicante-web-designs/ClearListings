@@ -6,7 +6,7 @@ import { Analytics } from '@vercel/analytics/react'
 import PageLink from '../components/ui/links/PageLink'
 import { useSelector } from 'react-redux'
 import type { RootState } from '../state/store'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Listing } from '../types/Listing'
 
 const HomePage = () => {
@@ -14,6 +14,9 @@ const HomePage = () => {
 
     const [listingDisplay, setListingDisplay] = useState<Listing[]>(listings) // For controlling the display of listings
 
+    useEffect(() => {
+        setListingDisplay(listings)
+    }, [listings])
 
     return(
         <main className='flex flex-col gap-40'>
