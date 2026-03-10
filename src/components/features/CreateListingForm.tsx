@@ -8,10 +8,11 @@ import { Textarea } from '@/components/ui/forms/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/forms/select'
 import { Checkbox } from '@/components/ui/forms/checkbox'
 import { Label } from '@/components/ui/forms/label'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ListingObj } from '@/data/ListingData'
 import { useDispatch } from 'react-redux'
 import { createListing } from '@/state/listings/listingsSlice'
+import type { AppDispatch } from '@/state/store'
 
 // ✅ Zod v4 schema
 const formSchema = z.object({
@@ -45,12 +46,12 @@ const listingFeatures = [
 ]
 
 const CreateListingForm = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
 
     const [images, setImages] = useState<File[]>([])
     const [previews, setPreviews] = useState<string[]>([])
 
-    const { register, handleSubmit, formState: { errors }, setValue, control } = useForm<FormValues>({
+    const { register, handleSubmit, formState: { errors }, setValue, control, reset } = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: '',
@@ -68,15 +69,17 @@ const CreateListingForm = () => {
         }
     })
 
-    const selectedFeatures = useWatch({ control, name: 'features'})
+    // Feature Handling
+    const selectedFeatures = useWatch({ control, name: 'features'});
+    const current = selectedFeatures ?? [] // Get current features or default to empty array if undefined
 
+    // Image handling
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || [])
         setImages(prev => [...prev, ...files])
         const newPreviews = files.map(file => URL.createObjectURL(file))
         setPreviews(prev => [...prev, ...newPreviews])
     }
-
     const removeImage = (index: number) => {
         setImages(prev => prev.filter((_, i) => i !== index))
         setPreviews(prev => {
@@ -84,6 +87,21 @@ const CreateListingForm = () => {
             return prev.filter((_, i) => i !== index)
         })
     }
+
+    // Reseting form after submission
+    const resetForm = () => {
+
+        reset();
+        setImages([]);
+        setPreviews([]);
+
+    }
+
+    useEffect(() => {
+        return () => {
+            previews.forEach(url => URL.revokeObjectURL(url))
+        }
+    }, [previews])
 
     const onSubmit = (values: FormValues) => {
         const listingID = crypto.randomUUID(); // Create a unique ID for listing;
@@ -108,9 +126,12 @@ const CreateListingForm = () => {
         )
 
         dispatch(createListing(newListing))
+
+        resetForm()
+        
     }
 
-    const current = selectedFeatures ?? [] // Get current features or default to empty array if undefined
+    
 
     return (
         <div className='w-full max-w-7xl mx-auto py-12 px-6'>
