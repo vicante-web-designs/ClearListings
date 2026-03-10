@@ -1,7 +1,7 @@
 import { z } from 'zod/v3'
 import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '@/components/ui/Buttons/button'
+import { Button } from '../ui/Buttons/button'
 import { Field, FieldLabel, FieldError } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -86,8 +86,11 @@ const CreateListingForm = () => {
     }
 
     const onSubmit = (values: FormValues) => {
+        const listingID = crypto.randomUUID(); // Create a unique ID for listing;
+        const imageUrls = images.map(file => URL.createObjectURL(file)); // Turn images files to URL strings
+
         const newListing = new ListingObj(
-            crypto.randomUUID(),
+            listingID,
             values.title,
             values.price,
             values.location,
@@ -97,7 +100,7 @@ const CreateListingForm = () => {
             values.bedrooms,
             values.bathrooms,
             values.sizeSqft,
-            images,
+            imageUrls,
             values.description,
             values.features,
             values.status,

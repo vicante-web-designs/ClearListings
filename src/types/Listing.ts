@@ -13,7 +13,7 @@ export interface Listing{
     bathrooms: number;
     sizeSqft: number;
 
-    images: File[] | string[];
+    images: string[];
 
     description: string;
     

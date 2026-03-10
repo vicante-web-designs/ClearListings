@@ -12,7 +12,7 @@ export class ListingObj {
     public bedrooms: number,
     public bathrooms: number,
     public sizeSqft: number,
-    public images: File[] | string[] ,
+    public images: string[] ,
     public description: string,
     public features: string[],
     public status: 'For Sale' | 'For Rent',
