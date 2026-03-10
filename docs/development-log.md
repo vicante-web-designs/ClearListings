@@ -418,5 +418,22 @@ I solved it by
 * Importing the FormLabel and FormError component
 * Adding it to every FormField component and removing the error and label props
 
+### Fixed production bug
+
+**What I did**  
+I converted listing image files to URLs
+
+**Why it matters**  
+The src attribute for images only accepts strings, not file objects.
+
+**Problems faced**  
+I had a little trouble with specifying the image type. I initially set it to "File[] | string[]", but that kept conflicting with the src attribute as it specifically only takes strings.
+
+**Solution**  
+I solved it by
+
+* Converting the file objects to strings before passing them to the new listingObj.
+* Explicitly setting the image type on listingObj to "string[]" to ensure it always accepts images as strings before using it anywhere.
+
 **Next step**  
 Use shadcn field component to create CreateListingForm component
