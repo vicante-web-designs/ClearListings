@@ -1,6 +1,6 @@
 import Logo from '../../public/Images/Logo/ClearListing_Logo.png'
 import { Button } from '@/components/ui/Buttons/button'
-import NavLink from '../components/ui/NavLink'
+import NavLink from '../components/ui/links/NavLink'
 import { useState, useEffect } from 'react'
 
 const Navbar = () => {

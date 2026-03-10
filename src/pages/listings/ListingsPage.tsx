@@ -1,7 +1,7 @@
 import ListingCard from '../../components/features/ListingCard'
 import ListingLoadingState from '../../components/ui/LoadingStates/ListingLoadingState'
 import SearchPanel from '../../components/features/SearchPanel'
-import PageLink from '../../components/ui/PageLink'
+import PageLink from '../../components/ui/links/PageLink'
 import { useSelector } from 'react-redux'
 import type { RootState } from '../../state/store'
 import { useState } from 'react'
