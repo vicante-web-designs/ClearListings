@@ -3,27 +3,10 @@ import ListingLoadingState from '../../components/ui/LoadingStates/ListingLoadin
 import SearchPanel from '../../components/features/SearchPanel'
 import PageLink from '../../components/ui/links/PageLink'
 import { useSelector } from 'react-redux'
-import type { RootState } from '../../state/store'
-import type { Listing } from '../../types/Listing'
-import priceMatch from '@/utils/priceMatch'
+import { selectFilteredListings } from '@/state/listings/listingsSlice'
 
 const ListingsPage = () => {
-    const listings = useSelector((state: RootState) => state.listings.listingValue);
-    const searchTerm = useSelector((state: RootState) => state.listings.searchTerm)
-    const priceFilter = useSelector((state: RootState) => state.listings.priceFilter)
-    const locationFilter = useSelector((state: RootState) => state.listings.locationFilter)
-
-    const filteredListings: Listing[] = listings.filter(listing => {
-            const fullLocation = `${listing.location}${listing.state}${listing.city}`
-
-            const matchesPrice = !priceFilter || priceMatch[priceFilter]?.(listing.price);
-
-            const matchesLocation = !locationFilter || fullLocation.toLowerCase().includes(locationFilter.toLowerCase());
-
-            const matchesSearch = !searchTerm || listing.title.toLowerCase().includes(searchTerm.toLowerCase().trim());
-
-            return matchesPrice && matchesLocation && matchesSearch;
-        });
+    const filteredListings = useSelector(selectFilteredListings)
 
   return (
     <section className='mt-42 flex flex-col gap-48 items-center'>

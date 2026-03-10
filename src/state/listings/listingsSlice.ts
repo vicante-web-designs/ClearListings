@@ -2,6 +2,8 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import type { Listing } from '../../types/Listing';
 import { mockListings } from '../../data/ListingData';
 import type { PriceFilterKey } from '@/types/filter';
+import type { RootState } from '../store';
+import priceMatch from '@/utils/priceMatch';
 
 interface ListingState {
     listingValue: Listing[];
@@ -52,3 +54,15 @@ const listingSlice = createSlice({
 
 export const { createListing, updateListing, deleteListing, setSearchTerm, setLocationFilter, setPriceFilter } = listingSlice.actions;
 export default listingSlice.reducer;
+
+export const selectFilteredListings = (state: RootState) => {
+    const { listingValue, searchTerm, locationFilter, priceFilter } = state.listings
+
+    return listingValue.filter(listing => {
+        const fullLocation = `${listing.location}${listing.city}${listing.state}`
+        const matchesPrice = !priceFilter || priceMatch[priceFilter]?.(listing.price)
+        const matchesLocation = !locationFilter || fullLocation.toLowerCase().includes(locationFilter.toLowerCase())
+        const matchesSearch = !searchTerm || listing.title.toLowerCase().includes(searchTerm.toLowerCase().trim())
+        return matchesPrice && matchesLocation && matchesSearch
+    })
+}
