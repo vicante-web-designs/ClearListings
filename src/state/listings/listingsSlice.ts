@@ -32,4 +32,5 @@ const listingSlice = createSlice({
     }
 })
 
+export const { createListing, updateListing, deleteListing } = listingSlice.actions;
 export default listingSlice.reducer;
