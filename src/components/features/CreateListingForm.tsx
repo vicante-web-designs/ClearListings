@@ -10,6 +10,8 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { useState } from 'react'
 import { ListingObj } from '@/data/ListingData'
+import { useDispatch } from 'react-redux'
+import { createListing } from '@/state/listings/listingsSlice'
 
 const formSchema = z.object({
     title: z.string().min(1, 'Title is required'),
@@ -41,6 +43,8 @@ const listingFeatures = [
 ]
 
 const CreateListingForm = () => {
+    const dispatch = useDispatch();
+
     const [images, setImages] = useState<File[]>([])
     const [previews, setPreviews] = useState<string[]>([])
 
@@ -97,8 +101,8 @@ const CreateListingForm = () => {
             values.status,
             new Date().toISOString(),
         );
-        
-        console.log(newListing)
+
+        dispatch(createListing(newListing))
     }
 
     return (
