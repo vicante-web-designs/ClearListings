@@ -10,11 +10,11 @@ import { Checkbox } from '@/components/ui/forms/checkbox'
 import { Label } from '@/components/ui/forms/label'
 import { useEffect, useState } from 'react'
 import { ListingObj } from '@/data/ListingData'
-import { useDispatch } from 'react-redux'
-import { createListing } from '@/state/listings/listingsSlice'
-import type { AppDispatch } from '@/state/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { createListing, updateListing } from '@/state/listings/listingsSlice'
+import type { AppDispatch, RootState } from '@/state/store'
+import { useNavigate } from 'react-router-dom'
 
-// ✅ Zod v4 schema
 const formSchema = z.object({
     title: z.string().min(1, 'Title is required'),
     description: z.string().min(10, 'Description must be at least 10 characters'),
@@ -26,11 +26,10 @@ const formSchema = z.object({
     bathrooms: z.coerce.number().min(1, 'At least 1 bathroom required'),
     sizeSqft: z.coerce.number().min(1, 'Size is required'),
     price: z.coerce.number().min(1, 'Price is required'),
-    status: z.enum(['For Sale', 'For Rent']),  // ✅ message handled differently in v4
+    status: z.enum(['For Sale', 'For Rent']),
     features: z.array(z.string()).min(1, 'Select at least one feature'),
 })
 
-// ✅ z.infer now correctly returns number instead of unknown
 type FormValues = z.infer<typeof formSchema>
 
 const propertyTypes = [
@@ -45,41 +44,54 @@ const listingFeatures = [
     'Security System', 'Solar Panels', 'Smart Home Features'
 ]
 
-const CreateListingForm = () => {
+interface CreateListingFormProps {
+    listingId?: string // optional — if provided, form is in edit mode
+}
+
+const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
     const dispatch = useDispatch<AppDispatch>()
+    const navigate = useNavigate()
+
+    // if listingId is provided, find the existing listing from Redux
+    const existingListing = useSelector((state: RootState) =>
+        listingId ? state.listings.listingValue.find(l => l.id === listingId) : undefined
+    )
+
+    const isEditMode = !!existingListing
 
     const [images, setImages] = useState<File[]>([])
-    const [previews, setPreviews] = useState<string[]>([])
+    const [previews, setPreviews] = useState<string[]>(
+        existingListing?.images ?? [] // pre-fill previews with existing images
+    )
 
     const { register, handleSubmit, formState: { errors }, setValue, control, reset } = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: '',
-            description: '',
-            location: '',
-            city: '',
-            state: '',
-            propertyType: '',
-            bedrooms: 0,
-            bathrooms: 0,
-            sizeSqft: 0,
-            price: 0,
-            status: 'For Sale',
-            features: [],
+            title: existingListing?.title ?? '',
+            description: existingListing?.description ?? '',
+            location: existingListing?.location ?? '',
+            city: existingListing?.city ?? '',
+            state: existingListing?.state ?? '',
+            propertyType: existingListing?.propertyType ?? '',
+            bedrooms: existingListing?.bedrooms ?? 0,
+            bathrooms: existingListing?.bathrooms ?? 0,
+            sizeSqft: existingListing?.sizeSqft ?? 0,
+            price: existingListing?.price ?? 0,
+            status: existingListing?.status as 'For Sale' | 'For Rent' ?? 'For Sale',
+            features: existingListing?.features ?? [],
         }
     })
 
-    // Feature Handling
-    const selectedFeatures = useWatch({ control, name: 'features'});
-    const current = selectedFeatures ?? [] // Get current features or default to empty array if undefined
+    const selectedFeatures = useWatch({ control, name: 'features' })
+    const current = selectedFeatures ?? []
 
-    // Image handling
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || [])
         setImages(prev => [...prev, ...files])
         const newPreviews = files.map(file => URL.createObjectURL(file))
         setPreviews(prev => [...prev, ...newPreviews])
     }
+
     const removeImage = (index: number) => {
         setImages(prev => prev.filter((_, i) => i !== index))
         setPreviews(prev => {
@@ -88,13 +100,10 @@ const CreateListingForm = () => {
         })
     }
 
-    // Reseting form after submission
     const resetForm = () => {
-
-        reset();
-        setImages([]);
-        setPreviews([]);
-
+        reset()
+        setImages([])
+        setPreviews([])
     }
 
     useEffect(() => {
@@ -104,42 +113,56 @@ const CreateListingForm = () => {
     }, [previews])
 
     const onSubmit = (values: FormValues) => {
-        const listingID = crypto.randomUUID(); // Create a unique ID for listing;
-        const imageUrls = images.map(file => URL.createObjectURL(file)); // Turn images files to URL strings
+        // new image files converted to URLs, merged with existing string URLs
+        const newImageUrls = images.map(file => URL.createObjectURL(file))
+        const allImages = [
+            ...previews.filter(p => typeof p === 'string' && !p.startsWith('blob:')), // keep existing non-blob URLs
+            ...newImageUrls
+        ]
 
-        const newListing = new ListingObj(
-            listingID,
-            values.title,
-            values.price,
-            values.location,
-            values.city,
-            values.state,
-            values.propertyType,
-            values.bedrooms,
-            values.bathrooms,
-            values.sizeSqft,
-            imageUrls,
-            values.description,
-            values.features,
-            values.status,
-            new Date().toISOString(),
-        )
-
-        dispatch(createListing(newListing))
-
-        resetForm()
-        
+        if (isEditMode && existingListing) {
+            // update existing listing
+            const updatedListing = {
+                ...existingListing,
+                ...values,
+                images: allImages.length > 0 ? allImages : existingListing.images,
+            }
+            dispatch(updateListing(updatedListing))
+            navigate(`/listings/${existingListing.id}`)
+        } else {
+            // create new listing
+            const newListing = new ListingObj(
+                crypto.randomUUID(),
+                values.title,
+                values.price,
+                values.location,
+                values.city,
+                values.state,
+                values.propertyType,
+                values.bedrooms,
+                values.bathrooms,
+                values.sizeSqft,
+                allImages,
+                values.description,
+                values.features,
+                values.status,
+                new Date().toISOString(),
+            )
+            dispatch(createListing(newListing))
+            resetForm()
+        }
     }
-
-    
 
     return (
         <div className='w-full max-w-7xl mx-auto py-12 px-6'>
 
             <article className='text-center flex flex-col items-center gap-2 mb-12'>
-                <h2>List Your Property</h2>
+                <h2>{isEditMode ? 'Edit Listing' : 'List Your Property'}</h2>
                 <p className='max-w-6xl'>
-                    Fill out the form below to share your property with thousands of potential clients.
+                    {isEditMode
+                        ? 'Update your listing details below.'
+                        : 'Fill out the form below to share your property with thousands of potential clients.'
+                    }
                 </p>
             </article>
 
@@ -177,7 +200,10 @@ const CreateListingForm = () => {
 
                 <Field>
                     <FieldLabel>Property Type</FieldLabel>
-                    <Select onValueChange={(val) => setValue('propertyType', val)}>
+                    <Select
+                        onValueChange={(val) => setValue('propertyType', val)}
+                        defaultValue={existingListing?.propertyType}
+                    >
                         <SelectTrigger>
                             <SelectValue placeholder="Select property type" />
                         </SelectTrigger>
@@ -216,7 +242,10 @@ const CreateListingForm = () => {
 
                 <Field>
                     <FieldLabel>Status</FieldLabel>
-                    <Select onValueChange={(val) => setValue('status', val as 'For Sale' | 'For Rent')} defaultValue='For Sale'>
+                    <Select
+                        onValueChange={(val) => setValue('status', val as 'For Sale' | 'For Rent')}
+                        defaultValue={existingListing?.status ?? 'For Sale'}
+                    >
                         <SelectTrigger>
                             <SelectValue placeholder="Select status" />
                         </SelectTrigger>
@@ -235,12 +264,12 @@ const CreateListingForm = () => {
                             <div key={feature} className='flex items-center gap-2'>
                                 <Checkbox
                                     id={feature}
-                                    checked={selectedFeatures?.includes(feature)}
+                                    checked={current.includes(feature)}
                                     onCheckedChange={(checked) => {
                                         if (checked) {
                                             setValue('features', [...current, feature])
                                         } else {
-                                            setValue('features', selectedFeatures.filter(f => f !== feature))
+                                            setValue('features', current.filter((f: string) => f !== feature))
                                         }
                                     }}
                                 />
@@ -291,9 +320,21 @@ const CreateListingForm = () => {
                     )}
                 </Field>
 
-                <Button variant='default' type='submit' className='w-full mt-4'>
-                    Publish Listing
-                </Button>
+                <div className='flex gap-4 w-full'>
+                    {isEditMode && (
+                        <Button
+                            variant='outline'
+                            type='button'
+                            className='mt-4'
+                            onClick={() => navigate(`/listings/${existingListing?.id}`)}
+                        >
+                            Cancel
+                        </Button>
+                    )}
+                    <Button variant='default' type='submit' className=' mt-4'>
+                        {isEditMode ? 'Save Changes' : 'Publish Listing'}
+                    </Button>
+                </div>
 
             </form>
         </div>

@@ -12,6 +12,7 @@ import NotFound from './pages/404 Page/NotFound.tsx';
 import ListingsPage from './pages/listings/ListingsPage.tsx';
 import AboutPage from './pages/AboutPage.tsx';
 import CreateListingPage from './pages/listings/CreateListingPage.tsx'
+import EditListing from './components/features/listingFeatures/EditListing.tsx'
 
 const router = createBrowserRouter([
   {
@@ -32,7 +33,10 @@ const router = createBrowserRouter([
   },
   {
     path: 'listings/:listingId', element: <ListingDetails />
-    },
+  },
+  {
+    path: 'listings/:listingId/edit', element: <EditListing />
+  },
 
 ])
 

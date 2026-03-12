@@ -1,11 +1,12 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import type { ListingCardProps } from '../../../types/Listing'
 import { formatPrice } from '../../../utils/formatPrice'
 import { Button } from '@/components/ui/Buttons/button'
 import { Eye, Pencil } from 'lucide-react'
-import DeleteListingsModal from '../deleteListingsModal'
+import DeleteListingsModal from '../listingFeatures/DeleteListingsModal'
 
 function AdminListingCard({id, images, title, location, city, state, price }: ListingCardProps){
+    const navigate = useNavigate();
     return(
          
         <section>
@@ -60,7 +61,7 @@ function AdminListingCard({id, images, title, location, city, state, price }: Li
                                 <Eye color='black' size={18} />
                             </Button>
                         </Link>
-                        <Button variant='outline' type='button'
+                        <Button variant='outline' type='button' onClick={() => navigate(`/listings/${id}/edit`)}
                         >
                             Edit
                             <Pencil color='black' size={18} />
@@ -73,8 +74,6 @@ function AdminListingCard({id, images, title, location, city, state, price }: Li
                     </div>
                 </div>
             </article>
-
-            {/* Edit modals */}
 
         </section>
             

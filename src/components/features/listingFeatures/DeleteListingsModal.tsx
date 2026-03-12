@@ -9,7 +9,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { Button } from '../ui/Buttons/button'
+import { Button } from '../../ui/Buttons/button'
 import { deleteListing } from '@/state/listings/listingsSlice'
 import { useDispatch } from 'react-redux'
 import type { DeleteListingModalProps } from '@/types/Listing'
