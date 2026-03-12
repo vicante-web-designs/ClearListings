@@ -32,3 +32,7 @@ export interface ListingContextType{
 }
 
 export type ListingCardProps = Partial<Listing>
+
+export interface DeleteListingModalProps {
+    listingId: string
+}
