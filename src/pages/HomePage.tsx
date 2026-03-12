@@ -1,11 +1,12 @@
 import HeroSection from '../layouts/HeroSection'
-import ListingCard from '@/components/features/cards/ListingCard'
+// import ListingCard from '@/components/features/cards/ListingCard'
 import SearchPanel from '../components/features/SearchPanel'
 import ListingLoadingState from '../components/ui/LoadingStates/ListingLoadingState'
 import { Analytics } from '@vercel/analytics/react'
 import PageLink from '../components/ui/links/PageLink'
 import { useSelector } from 'react-redux'
 import { selectFilteredListings } from '@/state/listings/listingsSlice';
+import AdminListingCard from '@/components/features/cards/AdminListingCard'
 
 const HomePage = () => {
     const filteredListings = useSelector(selectFilteredListings)
@@ -22,7 +23,7 @@ const HomePage = () => {
                     {
                         filteredListings.length !== 0 ? (
                             filteredListings.map(listing => (
-                            <ListingCard 
+                            <AdminListingCard 
                                 key={listing.id}
                                 id={listing.id}
                                 images={listing.images}
