@@ -1,11 +1,13 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import type { Listing } from '../../types/Listing';
 import { formatPrice } from '../../utils/formatPrice';
-import { MapPin, Bed, Bath, Maximize, Home, ArrowLeft } from 'lucide-react'
+import { MapPin, Bed, Bath, Maximize, Home, ArrowLeft, Pencil } from 'lucide-react'
 import Footer from '../../layouts/Footer';
 import IconSet from '../../components/ui/IconSet';
 import { useSelector } from 'react-redux'
 import type { RootState } from '../../state/store'
+import { Button } from '@/components/ui/Buttons/button';
+import DeleteListingsModal from '@/components/features/listingFeatures/DeleteListingsModal';
 
 const ListingDetails = () => {
     const listings = useSelector((state: RootState) => state.listings.listingValue);
@@ -120,7 +122,18 @@ const ListingDetails = () => {
                         </div>
                     </div>
 
-                    
+                    <div>
+                        <Button variant='outline' type='button' onClick={() => navigate(`/listings/${listingId}/edit`)}
+                        >
+                            Edit
+                            <Pencil color='black' size={18} />
+                        </Button>
+
+                        {
+                            // Delete modal 
+                            listingId && <DeleteListingsModal listingId={listingId}/>
+                        }
+                    </div>
                 </section>
             ) : (
                 <p>
