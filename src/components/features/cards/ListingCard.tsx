@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import type { ListingCardProps } from '../../types/Listing'
-import { formatPrice } from '../../utils/formatPrice'
+import type { ListingCardProps } from '../../../types/Listing'
+import { formatPrice } from '../../../utils/formatPrice'
 import { Button } from '@/components/ui/Buttons/button'
 
 function ListingCard({id, images, title, location, city, state, price }: ListingCardProps){

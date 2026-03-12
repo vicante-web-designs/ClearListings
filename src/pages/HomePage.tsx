@@ -1,5 +1,5 @@
 import HeroSection from '../layouts/HeroSection'
-import ListingCard from '../components/features/ListingCard'
+import ListingCard from '@/components/features/cards/ListingCard'
 import SearchPanel from '../components/features/SearchPanel'
 import ListingLoadingState from '../components/ui/LoadingStates/ListingLoadingState'
 import { Analytics } from '@vercel/analytics/react'

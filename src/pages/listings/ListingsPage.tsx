@@ -1,4 +1,4 @@
-import ListingCard from '../../components/features/ListingCard'
+import ListingCard from '@/components/features/cards/ListingCard'
 import ListingLoadingState from '../../components/ui/LoadingStates/ListingLoadingState'
 import SearchPanel from '../../components/features/SearchPanel'
 import PageLink from '../../components/ui/links/PageLink'
