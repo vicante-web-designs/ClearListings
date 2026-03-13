@@ -1,9 +1,9 @@
-import ListingCard from '@/components/features/cards/ListingCard'
 import ListingLoadingState from '../../components/ui/LoadingStates/ListingLoadingState'
 import SearchPanel from '../../components/features/SearchPanel'
 import PageLink from '../../components/ui/links/PageLink'
 import { useSelector } from 'react-redux'
 import { selectFilteredListings } from '@/state/listings/listingsSlice'
+import AdminListingCard from '@/components/features/cards/AdminListingCard'
 
 const AdminListingsPage = () => {
     const filteredListings = useSelector(selectFilteredListings)
@@ -17,7 +17,7 @@ const AdminListingsPage = () => {
             {
                 filteredListings.length !== 0 ? (
                     filteredListings.map(listing => (
-                    <ListingCard 
+                    <AdminListingCard 
                         key={listing.id}
                         id={listing.id}
                         images={listing.images}
