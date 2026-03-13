@@ -448,3 +448,17 @@ Final tweaks I made for core MVP:
 Create admin listings dashboard
 
 ## Day 20 (11/03/2026)
+
+### Created full admin features
+
+**What I did**  
+I created an AdminListings Dashboard which showcases all listings with CRUD operations
+
+**Why it matters**  
+This is to allow admins to handle CRUD operations like editting and deleting listings.
+
+**Problems faced**  
+I needed to figure out a way to handle the routing and state and CRUD operations while still using the same listing component. That way, both user and admin based features could work with one component, rather than building a seperate component for each.
+
+**Solution**  
+I solved it by
