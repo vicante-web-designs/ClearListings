@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import type { RootState } from '../../state/store'
 import { Button } from '@/components/ui/Buttons/button';
 import DeleteListingsModal from '@/components/features/listingFeatures/DeleteListingsModal';
+import { useState } from 'react';
 
 const ListingDetails = () => {
     const listings = useSelector((state: RootState) => state.listings.listingValue);
@@ -15,7 +16,11 @@ const ListingDetails = () => {
     const navigate = useNavigate();
     const { listingId } = useParams();
 
-    const listing = listings.find((listing: Listing) => listing.id.toString() === listingId)
+    const listing = listings.find((listing: Listing) => listing.id.toString() === listingId);
+    
+    const [mainImage, setMainImage] = useState<number>(0)
+
+    const getCurrentImage = () => listing && listing.images[mainImage];
 
   return (
     <section className='flex flex-col mt-20'>
@@ -40,7 +45,16 @@ const ListingDetails = () => {
                     {/* listing image, title and price */}
                     <div className='flex flex-col gap-4'>
                         {/* Listing Image */}
-                        <img src={listing.images[0]} alt={`Image of ${listing.title}`} className='object-cover w-full h-full rounded-2xl'/>
+                        <img src={getCurrentImage()} alt={`Image of ${listing.title}`} className='object-cover w-full h-full rounded-2xl'/>
+                        
+                        {/* Thumbnail images */}
+                        <div className='flex w-full justify-between'>
+                            <img src={listing.images[0]} alt={`Image of ${listing.title}`} className='object-cover w-30 h-full rounded-2xl' onClick={() => setMainImage(0)}/>
+
+                            <img src={listing.images[1]} alt={`Image of ${listing.title}`} className='object-cover w-30 h-full rounded-2xl' onClick={() => setMainImage(1)}/>
+                            <img src={listing.images[2]} alt={`Image of ${listing.title}`} className='object-cover w-30 h-full rounded-2xl' onClick={() => setMainImage(2)}/>
+                            <img src={listing.images[3]} alt={`Image of ${listing.title}`} className='object-cover w-30 h-full rounded-2xl' onClick={() => setMainImage(3)}/>
+                        </div>
 
                         <div className='flex w-full justify-between items-start'>
                             <h1 className='text-5xl text-black'>
