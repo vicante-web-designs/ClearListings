@@ -459,6 +459,3 @@ This is to allow admins to handle CRUD operations like editting and deleting lis
 
 **Problems faced**  
 I needed to figure out a way to handle the routing and state and CRUD operations while still using the same listing component. That way, both user and admin based features could work with one component, rather than building a seperate component for each.
-
-**Solution**  
-I solved it by
