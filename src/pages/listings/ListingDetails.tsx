@@ -44,16 +44,39 @@ const ListingDetails = () => {
 
                     {/* listing image, title and price */}
                     <div className='flex flex-col gap-4'>
-                        {/* Listing Image */}
-                        <img src={getCurrentImage()} alt={`Image of ${listing.title}`} className='object-cover w-full h-full rounded-2xl'/>
+                        <div className="overflow-hidden rounded-2xl h-125">
+                            {/* Main Listing Image */}
+                            <img
+                                src={getCurrentImage()}
+                                alt={`Image of ${listing.title}`} className='object-cover w-full h-full transition-all duration-500 ease-in-out'
+                            />
+                        </div>
                         
                         {/* Thumbnail images */}
-                        <div className='flex w-full justify-between'>
-                            <img src={listing.images[0]} alt={`Image of ${listing.title}`} className='object-cover w-30 h-full rounded-2xl' onClick={() => setMainImage(0)}/>
-
-                            <img src={listing.images[1]} alt={`Image of ${listing.title}`} className='object-cover w-30 h-full rounded-2xl' onClick={() => setMainImage(1)}/>
-                            <img src={listing.images[2]} alt={`Image of ${listing.title}`} className='object-cover w-30 h-full rounded-2xl' onClick={() => setMainImage(2)}/>
-                            <img src={listing.images[3]} alt={`Image of ${listing.title}`} className='object-cover w-30 h-full rounded-2xl' onClick={() => setMainImage(3)}/>
+                        <div className='flex w-full justify-between gap-16'>
+                            {
+                                listing.images.map((image, index) => (
+                                    <div
+                                        key={index}
+                                        onClick={() => {
+                                            setMainImage(index)
+                                        }}
+                                        className={`object-cover overflow-hidden rounded-xl cursor-pointer flex-1 h-24
+                                        transition-all duration-300
+                                        ${mainImage === index
+                                            ? 'ring-2 ring-primary ring-offset-2 opacity-100'
+                                            : 'opacity-70 hover:opacity-100'
+                                        }`}
+                                    >
+                                        <img
+                                            src={image}
+                                            className='object-cover w-full h-full hover:scale-110 transition-transform duration-500'
+                                            alt={`Thumbnail ${index + 1} of ${listing.title}`} 
+                                        
+                                        />
+                                    </div>
+                                ))
+                            }
                         </div>
 
                         <div className='flex w-full justify-between items-start'>
