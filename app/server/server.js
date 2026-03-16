@@ -10,7 +10,20 @@ import { dirname, join } from 'path';
 const app = express();
 const PORT = process.env.PORT || 3000
 
-app.use(cors({ origin: 'http://localhost:5173' }))
+const allowedOrigins = [
+    'http://localhost:5173', //development origin
+  'https://lasio.vercel.app' //production origin
+]
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}));
 app.use(express.json())
 
 const __filename = fileURLToPath(import.meta.url);
