@@ -17,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 app.get('/api/test', (req, res) => {
-    res.json({message: "It's working"})
+    res.json({message: "It's working, Time to restress"})
 })
 
 app.listen(PORT, () => {
