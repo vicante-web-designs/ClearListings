@@ -460,4 +460,28 @@ This is to allow admins to handle CRUD operations like editting and deleting lis
 **Problems faced**  
 I needed to figure out a way to handle the routing and state and CRUD operations while still using the same listing component. That way, both user and admin based features could work with one component, rather than building a seperate component for each.
 
-## Day 21 (11/03/2026)
+## Day 21 (12/03/2026)
+
+### Improved UX loading states
+
+**What I did**  
+I added additional meassages to guide the user
+
+**Why it matters**  
+This is to ensure the users don't become confused about the next step
+
+## Day 22 (13/03/2026)
+
+### Learnt how to use Express
+
+## Day 23 (14/03/2026)
+
+### Experimented by building some APIs
+
+## Day 24 (15/03/2026)
+
+### Took a break
+
+## Day 25 (16/03/2026)
+
+### Create backend foundation
