@@ -34,7 +34,7 @@ const HomePage = () => {
             <section className='flex flex-col gap-48 items-center'>
                 <section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 w-full max-w-7xl mx-auto px-6 place-items-center py-16'>
                     {
-                        filteredListings.length == 0 ? (
+                        filteredListings.length !== 0 ? (
                             filteredListings.map(listing => (
                             <ListingCard 
                                 key={listing.id}
