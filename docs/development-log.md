@@ -485,3 +485,7 @@ This is to ensure the users don't become confused about the next step
 ## Day 25 (16/03/2026)
 
 ### Create backend foundation
+
+## Day 26 (17/03/26)
+
+### Plan database schema
