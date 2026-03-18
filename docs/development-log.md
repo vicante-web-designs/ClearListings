@@ -531,7 +531,3 @@ I designed and wrote the database schema for listings — defining the fields, d
 
 **Why it matters**
 The schema is the backbone of the listings feature. Getting this right early means the API endpoints and frontend can be built around a solid, predictable data structure rather than having to refactor the database down the line.
-
-## Day 26 (17/03/26)
-
-### Plan database schema
