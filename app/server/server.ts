@@ -4,8 +4,7 @@ dotenv.config()
 import express from 'express';
 import cors from 'cors';
 
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import listingRouter from './src/routes/listingRouter.ts'
 
 const app = express();
 const PORT = process.env.PORT || 3000
@@ -26,12 +25,7 @@ app.use(cors({
 }));
 app.use(express.json())
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-app.get('/api/test', (req, res) => {
-    res.json({message: "It's working, Time to restress"})
-})
+app.use('/api/listings', listingRouter)
 
 app.listen(PORT, () => {
     console.log(`Server running on Port ${PORT}`)
