@@ -451,37 +451,83 @@ Create admin listings dashboard
 
 ### Created full admin features
 
-**What I did**  
+**What I did**
 I created an AdminListings Dashboard which showcases all listings with CRUD operations
 
-**Why it matters**  
-This is to allow admins to handle CRUD operations like editting and deleting listings.
+**Why it matters**
+This is to allow admins to handle CRUD operations like editing and deleting listings.
 
-**Problems faced**  
-I needed to figure out a way to handle the routing and state and CRUD operations while still using the same listing component. That way, both user and admin based features could work with one component, rather than building a seperate component for each.
+**Problems faced**
+I needed to figure out a way to handle the routing and state and CRUD operations while still using the same listing component. That way, both user and admin based features could work with one component, rather than building a separate component for each.
+
+---
 
 ## Day 21 (12/03/2026)
 
 ### Improved UX loading states
 
-**What I did**  
-I added additional meassages to guide the user
+**What I did**
+I added additional messages to guide the user through different loading states across the app.
 
-**Why it matters**  
-This is to ensure the users don't become confused about the next step
+**Why it matters**
+This is to ensure users don't become confused about what's happening or what the next step is — especially on slower connections where blank screens can feel like something broke.
+
+---
 
 ## Day 22 (13/03/2026)
 
 ### Learnt how to use Express
 
+**What I did**
+I spent the day going through Express fundamentals — setting up a basic server, understanding middleware, and how routing works on the backend.
+
+**Why it matters**
+The project is going to need a proper backend, so getting comfortable with Express now means I can start building out the API layer with confidence rather than figuring it out as I go.
+
+---
+
 ## Day 23 (14/03/2026)
 
 ### Experimented by building some APIs
+
+**What I did**
+I built a few simple API endpoints to test what I'd learned — mostly GET and POST routes to see how data flows between the frontend and backend.
+
+**Why it matters**
+Hands-on experimentation is the fastest way for me to solidify new concepts. Building throwaway APIs helped me understand things like request/response cycles and how to structure routes cleanly before writing production code.
+
+---
 
 ## Day 24 (15/03/2026)
 
 ### Took a break
 
+**What I did**
+I stepped away from the project entirely and didn't write any code today.
+
+**Why it matters**
+I'd covered a lot of new ground over the past few days and felt the mental fatigue building up. Taking a deliberate break helped me come back the next day with a clearer head and fresher perspective.
+
+---
+
 ## Day 25 (16/03/2026)
 
-### Create backend foundation
+### Created backend foundation
+
+**What I did**
+I set up the core backend structure — initialising the Express server, organising the folder structure, and connecting the basic pieces needed to start building real features on top of.
+
+**Why it matters**
+Having a clean, well-organised foundation makes everything that comes after easier. It's much harder to untangle a messy backend later than it is to set it up properly from the start.
+
+---
+
+## Day 26 (18/03/2026)
+
+### Created listing database schema
+
+**What I did**
+I designed and wrote the database schema for listings — defining the fields, data types, and relationships the listings table will need.
+
+**Why it matters**
+The schema is the backbone of the listings feature. Getting this right early means the API endpoints and frontend can be built around a solid, predictable data structure rather than having to refactor the database down the line.
