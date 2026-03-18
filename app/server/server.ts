@@ -7,6 +7,8 @@ import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
+import supabase from './src/config/supabase.ts';
+
 const app = express();
 const PORT = process.env.PORT || 3000
 
@@ -33,6 +35,16 @@ app.get('/api/test', (req, res) => {
     res.json({message: "It's working, Time to restress"})
 })
 
+async function testConnection() {
+    const { data, error } = await supabase.rpc('version')
+    if (error) {
+        console.log('Connection failed:', error.message)
+    } else {
+        console.log('Supabase connected successfully!')
+    }
+}
+
 app.listen(PORT, () => {
     console.log(`Server running on Port ${PORT}`)
+    testConnection()
 })
