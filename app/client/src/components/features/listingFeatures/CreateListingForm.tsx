@@ -9,11 +9,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/forms/checkbox'
 import { Label } from '@/components/ui/forms/label'
 import { useEffect, useState } from 'react'
-import { ListingObj } from '@/data/ListingData'
 import { useDispatch, useSelector } from 'react-redux'
-import { createListing, updateListing } from '@/state/listings/listingsSlice'
+import { updateListing } from '@/state/listings/listingsSlice'
 import type { AppDispatch, RootState } from '@/state/store'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
 const formSchema = z.object({
     title: z.string().min(1, 'Title is required'),
@@ -112,7 +112,7 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
         }
     }, [previews])
 
-    const onSubmit = (values: FormValues) => {
+    const onSubmit = async (values: FormValues) => {
         // new image files converted to URLs, merged with existing string URLs
         const newImageUrls = images.map(file => URL.createObjectURL(file))
         const allImages = [
@@ -130,25 +130,23 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
             dispatch(updateListing(updatedListing))
             navigate(`/listings/${existingListing.id}`)
         } else {
-            // create new listing
-            const newListing = new ListingObj(
-                crypto.randomUUID(),
-                values.title,
-                values.price,
-                values.location,
-                values.city,
-                values.state,
-                values.propertyType,
-                values.bedrooms,
-                values.bathrooms,
-                values.sizeSqft,
-                allImages,
-                values.description,
-                values.features,
-                values.status,
-                new Date().toISOString(),
-            )
-            dispatch(createListing(newListing))
+           
+             await axios.post('http://localhost:3000/api/listings', {
+                title: values.title,
+                price: values.price,
+                location: values.location,
+                city: values.city,
+                state: values.state,
+                propertyType: values.propertyType,
+                bedrooms: values.bedrooms,
+                bathrooms: values.bathrooms,
+                sizeSqft: values.sizeSqft,
+                images: allImages,
+                description: values.description,
+                features: values.features,
+                status: values.status,
+            })
+
             resetForm()
         }
     }

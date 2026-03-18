@@ -10,7 +10,6 @@ import { Button } from '@/components/ui/Buttons/button'
 
 const HomePage = () => {
 
-
     const filteredListings = useSelector(selectFilteredListings)
 
     return(
