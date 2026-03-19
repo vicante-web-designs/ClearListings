@@ -1,5 +1,5 @@
 import express from 'express';
-import { createListing, getAllListings } from '../services/listingService.ts';
+import { createListing, getAllListings, getOneListing } from '../services/listingService.ts';
 
 const router = express.Router()
 
@@ -16,6 +16,16 @@ router.get('/', async (req, res) => {
         res.json(listings)
     } catch(error: any){
         res.status(500).json({error: error.message})
+    }
+})
+
+// Get one listing
+router.get('/:id', async (req, res) => {
+    try {
+        const listing = await getOneListing(req.params.id)
+        res.json(listing)
+    } catch (error: any) {
+        res.status(500).json({ error: error.message })
     }
 })
 

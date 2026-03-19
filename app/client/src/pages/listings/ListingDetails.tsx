@@ -4,29 +4,47 @@ import { formatPrice } from '../../utils/formatPrice';
 import { MapPin, Bed, Bath, Maximize, Home, ArrowLeft, Pencil } from 'lucide-react'
 import Footer from '../../layouts/Footer';
 import IconSet from '../../components/ui/IconSet';
-import { useSelector } from 'react-redux'
-import type { RootState } from '../../state/store'
 import { Button } from '@/components/ui/Buttons/button';
 import DeleteListingsModal from '@/components/features/listingFeatures/DeleteListingsModal';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const ListingDetails = () => {
-    const listings = useSelector((state: RootState) => state.listings.listingValue);
-    
     const navigate = useNavigate();
-    const { listingId } = useParams();
+    const { listingId } = useParams(); //unique Id for listing
 
-    const listing = listings.find((listing: Listing) => listing.id.toString() === listingId);
-    
+    const [listing, setListing] = useState<Listing>()
+    const [loading, setLoading] = useState<boolean>(true)    
+
+    // Fetching Listing
+    useEffect(() => {
+        const fetchListing = async () => {
+            try {
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/listings/${listingId}`);
+
+                setListing(data)
+            
+            } catch (error) {
+                console.log(error)
+                navigate('/listings') // redirect if listing not found
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchListing();
+    }, [listingId, navigate])
+
+    // Image thumbnails
     const [mainImage, setMainImage] = useState<number>(0)
-
     const getCurrentImage = () => listing && listing.images[mainImage];
 
   return (
     <section className='flex flex-col mt-20'>
 
         {
-            listing ? (
+            !loading ? (
+                listing ? (
                 <section className='max-w-[90%] mx-auto flex flex-col gap-8'>
 
                     <button
@@ -174,9 +192,10 @@ const ListingDetails = () => {
                 </section>
             ) : (
                 <p>
-                    Listing does not exist
+                    Listing not found
                 </p>
             )
+            ) : <h2>Loading ...</h2>
         }
 
         <Footer />
