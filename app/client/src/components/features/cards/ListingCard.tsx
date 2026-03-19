@@ -53,7 +53,7 @@ function ListingCard({id, images, title, location, city, state, price }: Listing
                         <div className='flex justify-center *:w-full'>
                             <Button variant='secondary' type='button'
                             >
-                                Explore Listings
+                                View Property
                             </Button>
                         </div>
                     </div>
