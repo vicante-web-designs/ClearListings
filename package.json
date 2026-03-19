@@ -5,7 +5,11 @@
     "app/*",
     "packages/*"
   ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=app/client\" \"npm run dev --workspace=app/server\""
+  },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "markdownlint": "^0.40.0"
   },
   "dependencies": {
