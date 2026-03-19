@@ -25,14 +25,3 @@ export interface Listing{
     
     createdAt: string;
 }
-
-export interface ListingContextType{
-    listings: Listing[];
-    setListings: React.Dispatch<React.SetStateAction<Listing[]>>;
-}
-
-export type ListingCardProps = Partial<Listing>
-
-export interface DeleteListingModalProps {
-    listingId: string
-}
