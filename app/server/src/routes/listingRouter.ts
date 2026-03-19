@@ -13,12 +13,14 @@ router.post('/', async (req, res) => {
 // Get all listings + filtering
 router.get('/', async (req, res) => {
     try {
-        const { city, status, minPrice, maxPrice, propertyType } = req.query; // filter parameters
+        const { title, city, state, location, status, minPrice, maxPrice, propertyType } = req.query; // filter parameters
 
         let query = supabase.from('listings').select('*') // get all listings
 
-        
+        if (title) query = query.eq('title', title)
         if (city) query = query.eq('city', city)
+        if (state) query = query.eq('state', state)
+        if (location) query = query.eq('location', location)
         if (status) query = query.eq('status', status)
         if (propertyType) query = query.eq('propertyType', propertyType)
         if (minPrice) query = query.gte('price', Number(minPrice))

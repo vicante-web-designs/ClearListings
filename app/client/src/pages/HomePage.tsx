@@ -8,18 +8,24 @@ import { Button } from '@/components/ui/Buttons/button'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import type { Listing } from '@/types/Listing'
+import { useSelector } from 'react-redux'
+import type { RootState } from '@/state/store'
 
 const HomePage = () => {
+    const filters = useSelector((state: RootState) => state.filters.filterValues);
+
     const [listings, setListings ] = useState<Listing[]>()
     
     useEffect(() => {
-        async function getData(){
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/listings`);
-            setListings(data)
-        }
+    async function fetchListings() {
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/listings`, {
+            params: filters
+        })
+        setListings(data)
+    }
 
-        getData()
-    }, [])
+    fetchListings()
+}, [filters])
 
     return(
         <main className='flex flex-col gap-40'>
