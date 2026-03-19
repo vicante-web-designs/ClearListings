@@ -13,18 +13,18 @@ router.post('/', async (req, res) => {
 // Get all listings + filtering
 router.get('/', async (req, res) => {
     try {
-        const { title, city, state, location, status, minPrice, maxPrice, propertyType } = req.query; // filter parameters
+        const { title, city, state, location, status, minPrice, maxPrice, propertyType } = req.query;
 
-        let query = supabase.from('listings').select('*') // get all listings
+        let query = supabase.from('listings').select('*')
 
-        if (title) query = query.eq('title', title)
-        if (city) query = query.eq('city', city)
-        if (state) query = query.eq('state', state)
-        if (location) query = query.eq('location', location)
-        if (status) query = query.eq('status', status)
-        if (propertyType) query = query.eq('propertyType', propertyType)
+        if (title) query = query.ilike('title', `%${title}%`)
+        if (city) query = query.ilike('city', `%${city}%`)
+        if (state) query = query.ilike('state', `%${state}%`)
+        if (location) query = query.ilike('location', `%${location}%`)
+        if (status) query = query.ilike('status', `%${status}%`)
+        if (propertyType) query = query.ilike('propertyType', `%${propertyType}%`)
         if (minPrice) query = query.gte('price', Number(minPrice))
-        if (maxPrice) query = query.lte('price', Number(maxPrice)) //Filter logic
+        if (maxPrice) query = query.lte('price', Number(maxPrice))
 
         const { data, error } = await query
 

@@ -10,13 +10,10 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '../../ui/Buttons/button'
-import { deleteListing } from '@/state/listings/listingsSlice'
-import { useDispatch } from 'react-redux'
 import type { DeleteListingModalProps } from '@/types/Listing'
 import { Trash2Icon } from 'lucide-react'
 
 const DeleteListingsModal = ({ listingId }: DeleteListingModalProps) => {
-    const dispatch = useDispatch();
   return (
       <AlertDialog>
         <AlertDialogTrigger asChild>
@@ -34,7 +31,7 @@ const DeleteListingsModal = ({ listingId }: DeleteListingModalProps) => {
             </AlertDialogHeader>
             <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={() => dispatch(deleteListing(listingId))}>
+                <AlertDialogAction>
                     Yes, Delete this listing
                 </AlertDialogAction>
             </AlertDialogFooter>

@@ -9,9 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/forms/checkbox'
 import { Label } from '@/components/ui/forms/label'
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { updateListing } from '@/state/listings/listingsSlice'
-import type { AppDispatch, RootState } from '@/state/store'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
@@ -49,7 +47,6 @@ interface CreateListingFormProps {
 }
 
 const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
-    const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
 
     // if listingId is provided, find the existing listing from Redux
@@ -127,8 +124,8 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
                 ...values,
                 images: allImages.length > 0 ? allImages : existingListing.images,
             }
-            dispatch(updateListing(updatedListing))
-            navigate(`/listings/${existingListing.id}`)
+            // dispatch(updateListing(updatedListing))
+            // navigate(`/listings/${existingListing.id}`)
         } else {
            
              await axios.post('http://localhost:3000/api/listings', {
