@@ -4,7 +4,7 @@ dotenv.config()
 import express from 'express';
 import cors from 'cors';
 
-import listingRouter from './src/routes/listingRouter.ts'
+import listingRouter from './src/routes/listingRouter.js'
 
 const app = express();
 const PORT = process.env.PORT || 3000

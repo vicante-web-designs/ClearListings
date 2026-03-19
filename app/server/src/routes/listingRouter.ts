@@ -1,6 +1,6 @@
 import express from 'express';
-import { createListing, getOneListing } from '../services/listingService.ts';
-import supabase from '../config/supabase.ts';
+import { createListing, getOneListing } from '../services/listingService.js';
+import supabase from '../config/supabase.js';
 
 const router = express.Router()
 

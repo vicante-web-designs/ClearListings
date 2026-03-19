@@ -1,5 +1,5 @@
-import supabase from '../config/supabase.ts';
-import type { Listing } from './../../../client/src/types/Listing.ts';
+import supabase from '../config/supabase.js';
+import type { Listing } from '../types/Listing.js';
 
 // Create Listing
 export async function createListing(listing: Omit<Listing, 'id' | 'createdAt'>){
