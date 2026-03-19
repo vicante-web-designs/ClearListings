@@ -16,3 +16,12 @@ export async function getAllListings(){
     if (error) throw error
     return data as Listing[]
 }
+
+// Get one Listing
+export async function getOneListing(id: string){
+    const { data, error } = await supabase.from('listings').select('*').eq('id', id).single()
+
+    if (error) throw error
+
+    return data as Listing
+}
