@@ -1,5 +1,6 @@
 import express from 'express';
-import { createListing, getAllListings, getOneListing } from '../services/listingService.ts';
+import { createListing, getOneListing } from '../services/listingService.ts';
+import supabase from '../config/supabase.ts';
 
 const router = express.Router()
 
@@ -9,13 +10,25 @@ router.post('/', async (req, res) => {
     res.json(listing)
 })
 
-// Get all Listings
+// Get all listings + filtering
 router.get('/', async (req, res) => {
     try {
-        const listings = await getAllListings();
-        res.json(listings)
-    } catch(error: any){
-        res.status(500).json({error: error.message})
+        const { city, status, minPrice, maxPrice, propertyType } = req.query;
+
+        let query = supabase.from('listings').select('*')
+
+        if (city) query = query.eq('city', city)
+        if (status) query = query.eq('status', status)
+        if (propertyType) query = query.eq('propertyType', propertyType)
+        if (minPrice) query = query.gte('price', Number(minPrice))
+        if (maxPrice) query = query.lte('price', Number(maxPrice))
+
+        const { data, error } = await query
+
+        if (error) throw error
+        res.json(data)
+    } catch (error: any) {
+        res.status(500).json({ error: error.message })
     }
 })
 
