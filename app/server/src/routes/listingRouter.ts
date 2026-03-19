@@ -11,8 +11,12 @@ router.post('/', async (req, res) => {
 
 // Get all Listings
 router.get('/', async (req, res) => {
-    const listings = await getAllListings()
-    res.json(listings)
+    try {
+        const listings = await getAllListings();
+        res.json(listings)
+    } catch(error: any){
+        res.status(500).json({error: error.message})
+    }
 })
 
 export default router;
