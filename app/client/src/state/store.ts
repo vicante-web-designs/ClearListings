@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import listingReducer from './listings/listingsSlice';
+import filterReducer from './filters/filterSlice';
 export const store = configureStore({
     reducer: {
-        listings: listingReducer
+        filters: filterReducer
     }
 });
 

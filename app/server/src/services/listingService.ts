@@ -9,14 +9,6 @@ export async function createListing(listing: Omit<Listing, 'id' | 'createdAt'>){
     return data as Listing
 }
 
-// Get all Listings
-export async function getAllListings(){
-    const { data, error } = await supabase.from('listings').select('*');
-
-    if (error) throw error
-    return data as Listing[]
-}
-
 // Get one Listing
 export async function getOneListing(id: string){
     const { data, error } = await supabase.from('listings').select('*').eq('id', id).single()

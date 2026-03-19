@@ -1,8 +1,6 @@
 import { Search, ChevronDown, MapPin } from 'lucide-react'
 import { useDispatch } from 'react-redux';
-import { setSearchTerm, setPriceFilter, setLocationFilter } from '@/state/listings/listingsSlice';
-import type { PriceFilterKey } from '@/types/filter';
-
+import { setFilter } from '@/state/filters/filterSlice';
 
 const SearchPanel = () => {
     const dispatch = useDispatch();
@@ -20,7 +18,7 @@ const SearchPanel = () => {
                         className='w-full outline-0'
                         placeholder='Search by name'
                         onChange={(e) => {
-                            dispatch(setSearchTerm(e.target.value))
+                            dispatch(setFilter({ key: 'title', value: e.target.value.toLowerCase() }))
                         }}
                     />
                 </div>
@@ -32,17 +30,18 @@ const SearchPanel = () => {
                     <div className='relative'>
             
                         <select
-                            name="price" id="price" title='price' className='bg-white shadow-lg py-4 px-6 rounded-md appearance-none text-neutral-600'
+                            name="minPrice" id="minPrice" title='minPrice' className='bg-white shadow-lg py-4 px-6 rounded-md appearance-none text-neutral-600'
                             onChange={(e) => {
-                                dispatch(setPriceFilter(e.target.value as PriceFilterKey))
-                            }}
+                                dispatch(setFilter({ key: 'minPrice', value: e.target.value}))
+                        }}
                         >
-                            <option value="">All Prices</option>
+                            <option value="">Min. Price</option>
                             <option value="under-10m">Less than 10M</option>
                             <option value="10m-20m">10M - 20M</option>
                             <option value="20m-30m">20M - 30M</option>
                             <option value="above-30m">Above 30M</option>
-                        </select>
+                        </select> 
+                        {/* TODO: Add maxPrice */}
 
                         {/* Custom caret */}
                         <div className='absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-text-secondary'>
@@ -60,8 +59,9 @@ const SearchPanel = () => {
                             placeholder='Enter location' 
                             className='w-full outline-0'
                             onChange={(e) => {
-                                dispatch(setLocationFilter(e.target.value))
+                                    dispatch(setFilter({ key: 'location', value: e.target.value }))
                             }}
+                            
                         />
                     </div>
 
