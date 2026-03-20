@@ -11,3 +11,8 @@ export interface Filters {
     minPrice: string,
     maxPrice: string,
 }
+
+export interface PriceFilterProps {
+    label: string, 
+    filterKey: 'minPrice' | 'maxPrice',
+}

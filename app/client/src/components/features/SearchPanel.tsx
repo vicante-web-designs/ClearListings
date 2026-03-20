@@ -1,6 +1,7 @@
-import { Search, ChevronDown, MapPin } from 'lucide-react'
+import { Search, MapPin } from 'lucide-react'
 import { useDispatch } from 'react-redux';
 import { setFilter } from '@/state/filters/filterSlice';
+import PriceFilter from './priceFilter';
 
 const SearchPanel = () => {
     const dispatch = useDispatch();
@@ -10,7 +11,7 @@ const SearchPanel = () => {
             <div className='flex flex-col gap-4 w-[80%] max-w-7xl items-center'>
 
                 {/* Search Bar */}
-                <div className='flex items-center gap-16 rounded-md w-full bg-white shadow-lg py-4 px-6 hover:outline'>
+                <div className='flex items-center gap-4 rounded-md w-full bg-white shadow-lg py-4 p-6 hover:outline'>
                     <Search color='gray' size={32} />
                     <input
                         type="text"
@@ -18,36 +19,13 @@ const SearchPanel = () => {
                         className='w-full outline-0'
                         placeholder='Search by name'
                         onChange={(e) => {
-                            dispatch(setFilter({ key: 'title', value: e.target.value.toLowerCase() }))
+                            dispatch(setFilter({ key: 'title', value: e.target.value }))
                         }}
                     />
                 </div>
 
                 {/* Filter Panel */}
-                <section className='flex items-start gap-16 w-full'>
-                    
-                    {/* Price Filter */}
-                    <div className='relative'>
-            
-                        <select
-                            name="minPrice" id="minPrice" title='minPrice' className='bg-white shadow-lg py-4 px-6 rounded-md appearance-none text-neutral-600'
-                            onChange={(e) => {
-                                dispatch(setFilter({ key: 'minPrice', value: e.target.value}))
-                        }}
-                        >
-                            <option value="">Min. Price</option>
-                            <option value="under-10m">Less than 10M</option>
-                            <option value="10m-20m">10M - 20M</option>
-                            <option value="20m-30m">20M - 30M</option>
-                            <option value="above-30m">Above 30M</option>
-                        </select> 
-                        {/* TODO: Add maxPrice */}
-
-                        {/* Custom caret */}
-                        <div className='absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-text-secondary'>
-                            <ChevronDown color='gray' size={24} />
-                        </div>
-                    </div>
+                <section className='flex  flex-col items-start gap-4 w-full'>                   
 
                     {/* Location Filter */}
                     <div className='bg-white shadow-lg flex items-center  py-4 px-6 rounded-md w-full gap-4 hover:outline'>
@@ -63,6 +41,29 @@ const SearchPanel = () => {
                             }}
                             
                         />
+                    </div>
+
+                    {/* All Price filters */}
+                    <div className='flex gap-4'>
+
+                        {/* Min Price Filter */}
+                        <div>
+                            <p className='text-md text-primary'>Min. Price</p>
+
+                            <PriceFilter 
+                                label='Enter Minimum Price'
+                                filterKey='minPrice'
+                            />
+                        </div>
+
+                        {/* Max Price Filter */}
+                        <div>
+                            <p className='text-md text-primary'>Max. Price</p>
+                            <PriceFilter 
+                            label='Enter Maximum Price'
+                            filterKey='maxPrice'
+                        />
+                        </div>
                     </div>
 
                 </section>
