@@ -5,19 +5,24 @@ import PageLink from '../../components/ui/links/PageLink'
 import { useEffect, useState } from 'react'
 import type { Listing } from '@/types/Listing'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
+import type { RootState } from '@/state/store'
 
 const ListingsPage = () => {
     const [listings, setListings] = useState<Listing[]>([]);
+    const filters = useSelector((state: RootState) => state.filters.filterValues);
 
     useEffect(() => {
         const fetchListings = async () => {
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/listings`);
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/listings`, {
+                params: filters
+            });
 
             setListings(data)
         }
 
         fetchListings();
-    }, [])
+    }, [filters])
 
   return (
     <section className='mt-42 flex flex-col gap-48 items-center'>
