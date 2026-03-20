@@ -549,3 +549,21 @@ The deploy kept crashing at startup because Render had no idea what my environme
 
 **Why it matters**
 This is one of those things that will come up on every project that touches a real database or external service. The rule is simple: secrets live in the environment, not in the codebase. Each platform — Render, Vercel, AWS, whatever — needs to be told its own secrets separately.
+
+## Day 28 (20/03/2026)
+
+### Hooked up Create Listing to the Backend
+
+**What I did**
+I connected the existing create listing form to the backend, getting data to actually flow from the frontend into the database. Debugged a 500 error along the way that came down to missing error handling on the POST route and an RLS policy blocking inserts.
+
+**Why it matters**
+The form existed before but was just sitting there doing nothing. Now it's live, a user fills it out, hits submit, and the listing lands in the database. Tracing the error also taught me how to debug across layers, from reading server logs to understanding how Supabase's RLS can silently block operations without an obvious reason.
+
+**Next Steps — Authentication**
+The next major piece is auth. Right now anyone can create a listing with no concept of ownership, and RLS is wide open as a temporary measure. Adding auth will mean:
+
+* Users can sign up and log in
+* Each listing gets tied to the user who created it
+* Only the owner can edit or delete their listing
+* RLS policies can be properly locked down
