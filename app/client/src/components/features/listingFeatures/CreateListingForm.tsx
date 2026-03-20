@@ -9,9 +9,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/forms/checkbox'
 import { Label } from '@/components/ui/forms/label'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import type { Listing } from '@/types/Listing'
 
 const formSchema = z.object({
     title: z.string().min(1, 'Title is required'),
@@ -48,39 +48,22 @@ interface CreateListingFormProps {
 
 const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
     const navigate = useNavigate()
-
-    // if listingId is provided, find the existing listing from Redux
-    const existingListing = useSelector((state: RootState) =>
-        listingId ? state.listings.listingValue.find(l => l.id === listingId) : undefined
-    )
+    const [existingListing, setExistingListing] = useState<Listing | null>(null)
 
     const isEditMode = !!existingListing
 
     const [images, setImages] = useState<File[]>([])
-    const [previews, setPreviews] = useState<string[]>(
-        existingListing?.images ?? [] // pre-fill previews with existing images
-    )
+    const [previews, setPreviews] = useState<string[]>([])
 
     const { register, handleSubmit, formState: { errors }, setValue, control, reset } = useForm<FormValues>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            title: existingListing?.title ?? '',
-            description: existingListing?.description ?? '',
-            location: existingListing?.location ?? '',
-            city: existingListing?.city ?? '',
-            state: existingListing?.state ?? '',
-            propertyType: existingListing?.propertyType ?? '',
-            bedrooms: existingListing?.bedrooms ?? 0,
-            bathrooms: existingListing?.bathrooms ?? 0,
-            sizeSqft: existingListing?.sizeSqft ?? 0,
-            price: existingListing?.price ?? 0,
-            status: existingListing?.status as 'For Sale' | 'For Rent' ?? 'For Sale',
-            features: existingListing?.features ?? [],
-        }
+        resolver: zodResolver(formSchema)
     })
 
+    // Selected Elements Logic
     const selectedFeatures = useWatch({ control, name: 'features' })
     const current = selectedFeatures ?? []
+    const selectedPropertyType = useWatch({ control, name: 'propertyType' })
+    const selectedStatus = useWatch({ control, name: 'status' })
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || [])
@@ -103,12 +86,47 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
         setPreviews([])
     }
 
+   
+    useEffect(() => {
+        if (!listingId) return // Skip fetch if there's no Id
+
+        // if listingId is provided, find the existing listing from the database
+        const fetchExistingListing = async (id: string) => {
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/listings/${id}`);
+
+            setExistingListing(data)
+            setPreviews(data.images ?? [])
+
+            reset({
+            title: data.title ?? '',
+            description: data.description ?? '',
+            location: data.location ?? '',
+            city: data.city ?? '',
+            state: data.state ?? '',
+            propertyType: data.propertyType ?? '',
+            bedrooms: data.bedrooms ?? 0,
+            bathrooms: data.bathrooms ?? 0,
+            sizeSqft: data.sizeSqft ?? 0,
+            price: data.price ?? 0,
+            status: data.status ?? 'For Sale',
+            features: data.features ?? [],
+        })
+            
+        }
+
+        fetchExistingListing(listingId)
+    }, [listingId, reset])
+    
+
+    // Image preview logic
     useEffect(() => {
         return () => {
             previews.forEach(url => URL.revokeObjectURL(url))
         }
-    }, [previews])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
+    // Submission logic
     const onSubmit = async (values: FormValues) => {
         // new image files converted to URLs, merged with existing string URLs
         const newImageUrls = images.map(file => URL.createObjectURL(file))
@@ -124,11 +142,9 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
                 ...values,
                 images: allImages.length > 0 ? allImages : existingListing.images,
             }
-            // dispatch(updateListing(updatedListing))
-            // navigate(`/listings/${existingListing.id}`)
         } else {
            
-             await axios.post('http://localhost:3000/api/listings', {
+             await axios.post(`${import.meta.env.VITE_API_URL}/api/listings`, {
                 title: values.title,
                 price: values.price,
                 location: values.location,
@@ -148,6 +164,7 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
         }
     }
 
+    // The actual Form
     return (
         <div className='w-full max-w-7xl mx-auto py-12 px-6'>
 
@@ -197,7 +214,7 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
                     <FieldLabel>Property Type</FieldLabel>
                     <Select
                         onValueChange={(val) => setValue('propertyType', val)}
-                        defaultValue={existingListing?.propertyType}
+                        value={selectedPropertyType}
                     >
                         <SelectTrigger>
                             <SelectValue placeholder="Select property type" />
@@ -239,7 +256,7 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
                     <FieldLabel>Status</FieldLabel>
                     <Select
                         onValueChange={(val) => setValue('status', val as 'For Sale' | 'For Rent')}
-                        defaultValue={existingListing?.status ?? 'For Sale'}
+                        value={selectedStatus ?? 'For Sale'}
                     >
                         <SelectTrigger>
                             <SelectValue placeholder="Select status" />
