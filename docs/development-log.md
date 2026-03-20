@@ -531,3 +531,21 @@ I designed and wrote the database schema for listings — defining the fields, d
 
 **Why it matters**
 The schema is the backbone of the listings feature. Getting this right early means the API endpoints and frontend can be built around a solid, predictable data structure rather than having to refactor the database down the line.
+
+## Day 27 (19/03/2026)
+
+### Deployed backend on Render
+
+**What I did**
+I deployed the backend server to Render and debugged the errors that came up in production.
+
+**Why it matters**
+Getting the backend live is a big step, it means the server is no longer just running on my laptop but is actually accessible on the internet. Debugging in production is also a different skill from local debugging; reading deploy logs and understanding the difference between build failures and runtime crashes is something you only really learn by doing it.
+
+### Fixed production bugs
+
+**What I did**
+The deploy kept crashing at startup because Render had no idea what my environment variables were. Locally I use a `.env` file, but that file never gets pushed to GitHub, so Render was starting the server with no Supabase credentials at all. I added `SUPABASE_URL` and `SUPABASE_ANON_KEY` directly in Render's environment settings and redeployed.
+
+**Why it matters**
+This is one of those things that will come up on every project that touches a real database or external service. The rule is simple: secrets live in the environment, not in the codebase. Each platform — Render, Vercel, AWS, whatever — needs to be told its own secrets separately.
