@@ -13,15 +13,17 @@ import type { RootState } from '@/state/store'
 
 const HomePage = () => {
     const filters = useSelector((state: RootState) => state.filters.filterValues);
-
-    const [listings, setListings ] = useState<Listing[]>()
+    const [isLoading, setIsLoading] = useState(true);
+    const [listings, setListings ] = useState<Listing[]>([])
     
     useEffect(() => {
     async function fetchListings() {
+        setIsLoading(true)
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/listings`, {
             params: filters
         })
         setListings(data)
+        setIsLoading(false)
     }
 
     fetchListings()
@@ -36,10 +38,11 @@ const HomePage = () => {
 
             <section className='flex flex-col gap-48 items-center'>
                 <section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 w-full max-w-7xl mx-auto px-6 place-items-center py-16'>
-                    {
-                        listings && listings.length !== 0 ? (
-                            listings.map(listing => (
-                            <ListingCard 
+                    {isLoading ? (
+                        <ListingLoadingState />
+                    ) : listings.length !== 0 ? (
+                        listings.map(listing => (
+                            <ListingCard
                                 key={listing.id}
                                 id={listing.id}
                                 images={listing.images}
@@ -51,23 +54,14 @@ const HomePage = () => {
                                 description={listing.description}
                             />
                         ))
-                        ) : (
-                            <div className='flex flex-col'>
-                               <div>
-                                 <h3>You haven't created any listings yet</h3>
-
-                                 <Button
-                                    variant='default'
-                                    type='button'
-                                 >
-                                    Create new listing
-                                 </Button>
-                               </div>
-
-                                <ListingLoadingState />
-                            </div>
-                        )
-                    }
+                    ) : (
+                        <div className='col-span-3 flex flex-col items-center gap-4'>
+                            <h3>You haven't created any listings yet</h3>
+                            <Button variant='default' type='button'>
+                                Create new listing
+                            </Button>
+                        </div>
+                    )}
                 </section>
 
                 <PageLink to='/listings' children={'View all Listings'} />
