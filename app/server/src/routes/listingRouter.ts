@@ -1,6 +1,7 @@
 import express from 'express';
 import { createListing, getOneListing } from '../services/listingService.js';
 import supabase from '../config/supabase.js';
+import parsePrice from '../utils/parsePriceFilter.js';
 
 const router = express.Router()
 
@@ -13,7 +14,7 @@ router.post('/', async (req, res) => {
 // Get all listings + filtering
 router.get('/', async (req, res) => {
     try {
-        const { title, city, state, location, status, minPrice, maxPrice, propertyType } = req.query;
+        const { title, city, state, location, status, minPrice, maxPrice, propertyType } = req.query as Record<string, string>;
 
         let query = supabase.from('listings').select('*')
 
@@ -23,8 +24,8 @@ router.get('/', async (req, res) => {
         if (location) query = query.ilike('location', `%${location}%`)
         if (status) query = query.ilike('status', `%${status}%`)
         if (propertyType) query = query.ilike('propertyType', `%${propertyType}%`)
-        if (minPrice) query = query.gte('price', Number(minPrice))
-        if (maxPrice) query = query.lte('price', Number(maxPrice))
+        if (minPrice) query = query.gte('price', parsePrice(minPrice))
+        if (maxPrice) query = query.lte('price', parsePrice(maxPrice))
 
         const { data, error } = await query
 
