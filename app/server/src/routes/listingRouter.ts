@@ -7,8 +7,12 @@ const router = express.Router()
 
 // Create listings
 router.post('/', async (req, res) => {
-    const listing = await createListing(req.body);
-    res.json(listing)
+    try {
+        const listing = await createListing(req.body);
+        res.json(listing)
+    } catch (error: any) {
+        res.status(500).json({ error: error.message })
+    }
 })
 
 // Get all listings + filtering
