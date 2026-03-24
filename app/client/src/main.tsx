@@ -13,6 +13,7 @@ import ListingsPage from './pages/listings/ListingsPage.tsx';
 import AboutPage from './pages/AboutPage.tsx';
 import CreateListingPage from './pages/listings/CreateListingPage.tsx'
 import EditListing from './components/features/listingFeatures/EditListing.tsx'
+import App from './App.tsx'
 
 const router = createBrowserRouter([
   {
@@ -23,8 +24,9 @@ const router = createBrowserRouter([
       </MainLayout>
     ),
     children: [
-      { index: true, element: <HomePage />},
+      { index: true, element: <App />},
       { index: false, path: '/listings', element: <ListingsPage />},
+      { index: false, path: '/home', element: <HomePage />},
       { index: false, path: '/about', element: <AboutPage />},
       { index: false, path: '/createListing', element: <CreateListingPage />}
 
