@@ -21,7 +21,7 @@ const App = () => {
         })
 
         //Listen for login/logout events
-        const { data: { subscription } } = supabase.auth.onAuthStateChange( async(event, session) => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange( async(_event, session) => {
             if(session?.user){
                 const { data: profile } = await supabase.from('profiles').select('role').eq('id', session.user.id).single()
 

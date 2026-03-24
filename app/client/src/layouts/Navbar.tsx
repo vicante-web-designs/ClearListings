@@ -1,4 +1,3 @@
-import Logo from '../../public/Images/Logo/ClearListing_Logo.png'
 import { Button } from '@/components/ui/Buttons/button'
 import NavLink from '../components/ui/links/NavLink'
 import { useState, useEffect } from 'react'
@@ -27,9 +26,11 @@ const Navbar = () => {
                 : 'mb-20'
             }`}>
 
-                <img src={Logo} alt='ClearListing Logo' className='h-12 w-auto rounded-full'/>
-
-                <NavLink children='home' to='/' />
+                <NavLink to={'/'}>
+                    <h3 className='text-primary font-serif underline underline-offset-8 decoration-secondary border-t-2 border-primary border-x-2 pl-2 pr-2.5'>
+                        LS
+                    </h3>
+                </NavLink>
 
                 <NavLink children='listings' to='/listings' />
                 
