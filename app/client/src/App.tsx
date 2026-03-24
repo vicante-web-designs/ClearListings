@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { supabase } from './config/supabase'
-import { setUser, clearUser, setLoading } from './state/slices/auth/authSlice'
+import { setUser, clearUser } from './state/slices/auth/authSlice'
 import { Analytics } from '@vercel/analytics/react'
 import HomePage from './pages/HomePage'
 
