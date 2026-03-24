@@ -32,13 +32,22 @@ const router = createBrowserRouter([
       { index: false, path: '/home', element: <HomePage />},
       { index: false, path: '/about', element: <AboutPage />},
       { index: false, path: '/createListing', element: <CreateListingPage />},
-      { index: false, path: '/signup', element: <SignUpPage />},
-      { index: false, path: '/login', element: <LoginPage />},
-      { index: false, path: '/agent/login', element: <AgentLoginPage />}
-
     ],
     errorElement: <NotFound />
   },
+
+  // Auth pages
+  {
+    path: '/signup', element: <SignUpPage />
+  },
+  {
+    path: '/login', element: <LoginPage />
+  },
+  {
+    path: '/agent/login', element: <AgentLoginPage />
+  },
+
+  // Listing pages
   {
     path: 'listings/:listingId', element: <ListingDetails />
   },
