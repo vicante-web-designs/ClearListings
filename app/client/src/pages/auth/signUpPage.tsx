@@ -41,7 +41,7 @@ const SignUpPage = () => {
 
         if (error) {
             setServerError(error.message)
-            return
+            return;
         }
 
         setSuccess(true) // show confirmation message instead of redirecting
