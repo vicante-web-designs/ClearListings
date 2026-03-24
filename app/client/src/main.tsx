@@ -14,6 +14,9 @@ import AboutPage from './pages/AboutPage.tsx';
 import CreateListingPage from './pages/listings/CreateListingPage.tsx'
 import EditListing from './components/features/listingFeatures/EditListing.tsx'
 import App from './App.tsx'
+import SignUpPage from './pages/auth/SignUpPage'
+import LoginPage from './pages/auth/LoginPage.tsx'
+import AgentLoginPage from './pages/auth/AgentLoginPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -28,7 +31,10 @@ const router = createBrowserRouter([
       { index: false, path: '/listings', element: <ListingsPage />},
       { index: false, path: '/home', element: <HomePage />},
       { index: false, path: '/about', element: <AboutPage />},
-      { index: false, path: '/createListing', element: <CreateListingPage />}
+      { index: false, path: '/createListing', element: <CreateListingPage />},
+      { index: false, path: '/signup', element: <SignUpPage />},
+      { index: false, path: '/login', element: <LoginPage />},
+      { index: false, path: '/agent/login', element: <AgentLoginPage />}
 
     ],
     errorElement: <NotFound />
