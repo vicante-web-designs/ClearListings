@@ -183,8 +183,8 @@ const ListingDetails = () => {
 
                     {
                         role === 'admin' || role === 'agent' ? (
-                            <div>
-                                <Button variant='outline' type='button' onClick={() => navigate(`/listings/${listingId}/edit`)}
+                            <div className='flex gap-4'>
+                                <Button variant='secondary' type='button' onClick={() => navigate(`/listings/${listingId}/edit`)}
                                 >
                                     Edit
                                     <Pencil color='black' size={18} />

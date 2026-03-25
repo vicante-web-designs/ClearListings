@@ -9,6 +9,7 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const handleUserSession = async (session: any) => {
             if(session?.user){
                     const { data: profile } = await supabase
