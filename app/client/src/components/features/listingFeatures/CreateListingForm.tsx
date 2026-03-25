@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import type { Listing } from '@/types/Listing'
+import { supabase } from '@/config/supabase'
 
 const formSchema = z.object({
     title: z.string().min(1, 'Title is required'),
@@ -72,6 +73,30 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
         setPreviews(prev => [...prev, ...newPreviews])
     }
 
+    const uploadImage = async (file: File) => {
+        const { data: userData } = await supabase.auth.getUser()
+        const user = userData.user
+
+        if (!user) return null
+
+        const fileName = `${user.id}-${Date.now()}-${file.name}`
+
+        const { error } = await supabase.storage
+            .from('listing-images')
+            .upload(fileName, file)
+
+        if (error) {
+            console.error(error)
+            return null
+        }
+
+        const { data } = supabase.storage
+            .from('listing-images')
+            .getPublicUrl(fileName)
+
+        return data.publicUrl
+    }
+
     const removeImage = (index: number) => {
         setImages(prev => prev.filter((_, i) => i !== index))
         setPreviews(prev => {
@@ -121,46 +146,53 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
     // Image preview logic
     useEffect(() => {
         return () => {
-            previews.forEach(url => URL.revokeObjectURL(url))
+            previews.forEach(url => {
+                if (url.startsWith('blob:')) {
+                    URL.revokeObjectURL(url)
+                }
+            })
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [previews])
 
     // Submission logic
     const onSubmit = async (values: FormValues) => {
-        // new image files converted to URLs, merged with existing string URLs
-        const newImageUrls = images.map(file => URL.createObjectURL(file))
-        const allImages = [
-            ...previews.filter(p => typeof p === 'string' && !p.startsWith('blob:')), // keep existing non-blob URLs
-            ...newImageUrls
-        ]
+        try {
+            // 1. Upload all new images to Supabase
+            const uploadedImageUrls = await Promise.all(
+                images.map(file => uploadImage(file))
+            )
 
-        if (isEditMode && existingListing) {
-            // update existing listing
-            const updatedListing = {
-                ...existingListing,
-                ...values,
-                images: allImages.length > 0 ? allImages : existingListing.images,
+            // remove failed uploads (nulls)
+            const validUploadedUrls = uploadedImageUrls.filter(Boolean) as string[]
+
+            // Keep existing images (only real URLs, not blob)
+            const existingUrls = previews.filter(p => !p.startsWith('blob:'))
+
+            // Merge both
+            const allImages = [...existingUrls, ...validUploadedUrls]
+
+            if (isEditMode && existingListing) {
+                await axios.put(
+                    `${import.meta.env.VITE_API_URL}/api/listings/${existingListing.id}`,
+                    {
+                        ...values,
+                        images: allImages
+                    }
+                )
+            } else {
+                await axios.post(
+                    `${import.meta.env.VITE_API_URL}/api/listings`,
+                    {
+                        ...values,
+                        images: allImages
+                    }
+                )
             }
-        } else {
-           
-             await axios.post(`${import.meta.env.VITE_API_URL}/api/listings`, {
-                title: values.title,
-                price: values.price,
-                location: values.location,
-                city: values.city,
-                state: values.state,
-                propertyType: values.propertyType,
-                bedrooms: values.bedrooms,
-                bathrooms: values.bathrooms,
-                sizeSqft: values.sizeSqft,
-                images: allImages,
-                description: values.description,
-                features: values.features,
-                status: values.status,
-            })
 
             resetForm()
+            navigate('/admin') // or wherever
+        } catch (err) {
+            console.error(err)
         }
     }
 

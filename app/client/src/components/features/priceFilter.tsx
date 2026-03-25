@@ -1,7 +1,7 @@
 import type { PriceFilterProps } from '@/types/filter';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setFilter } from '@/state/filters/filterSlice';
+import { setFilter } from '@/state/slices/filters/filterSlice';
 
 // Reusable component for one price filter
 const PriceFilter = ({ label, filterKey }: PriceFilterProps) => {

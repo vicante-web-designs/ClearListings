@@ -1,6 +1,6 @@
 import { Search, MapPin } from 'lucide-react'
 import { useDispatch } from 'react-redux';
-import { setFilter } from '@/state/filters/filterSlice';
+import { setFilter } from '@/state/slices/filters/filterSlice';
 import PriceFilter from './priceFilter';
 
 const SearchPanel = () => {

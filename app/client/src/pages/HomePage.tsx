@@ -2,7 +2,6 @@ import HeroSection from '../layouts/HeroSection'
 import ListingCard from '@/components/features/cards/ListingCard'
 import SearchPanel from '../components/features/SearchPanel'
 import ListingLoadingState from '../components/ui/LoadingStates/ListingLoadingState'
-import { Analytics } from '@vercel/analytics/react'
 import PageLink from '../components/ui/links/PageLink'
 import { Button } from '@/components/ui/Buttons/button'
 import { useState, useEffect } from 'react'
@@ -66,7 +65,6 @@ const HomePage = () => {
 
                 <PageLink to='/listings' children={'View all Listings'} />
             </section>
-            < Analytics />
         </main>
     )
 }
