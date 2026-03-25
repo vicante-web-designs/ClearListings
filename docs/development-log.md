@@ -567,3 +567,5 @@ The next major piece is auth. Right now anyone can create a listing with no conc
 * Each listing gets tied to the user who created it
 * Only the owner can edit or delete their listing
 * RLS policies can be properly locked down
+
+## Day 29
