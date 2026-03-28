@@ -9,19 +9,30 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+      let cancelled = false;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const handleUserSession = async (session: any) => {
-            if(session?.user){
-                    const { data: profile } = await supabase
+            console.log('session:', session)
+            console.log('session.user:', session?.user)
+            if(session.user){
+                    const { data: profile, error } = await supabase
                     .from('profiles')
                     .select('role')
                     .eq('id', session.user.id)
                     .single()
 
-                    dispatch(setUser({ user: session.user, role: profile?.role ?? 'user'}))
+                    console.log('user id:', session.user.id)
+                    console.log('profile:', profile)
+                    console.log('error:', error)
+
+                    if(!cancelled){
+                      dispatch(setUser({ user: session.user, role: profile?.role ?? 'user'}))
+                    } 
                 } else {
-                    dispatch(clearUser())
-                }
+                    if(!cancelled){
+                      dispatch(clearUser())
+                    }
+                }                
         }
 
         //check if there's already a session when the app loads
@@ -31,8 +42,12 @@ const App = () => {
         const { data: { subscription } } = supabase.auth.onAuthStateChange( async(_event, session) => handleUserSession(session) )
 
         //cleanup listener when app unmounts
-        return () => subscription.unsubscribe()
+        return () => {
+          cancelled = true;
+          subscription.unsubscribe()
+        }
     }, [dispatch])
+
   return (
     <>
       <HomePage />

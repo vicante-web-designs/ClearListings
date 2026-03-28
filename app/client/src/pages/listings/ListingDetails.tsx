@@ -13,7 +13,6 @@ import { selectRole } from '@/selectors/authSelectors';
 
 const ListingDetails = () => {
     const role = useSelector(selectRole);
-    console.log(role)
     const navigate = useNavigate();
     const { listingId } = useParams(); //unique Id for listing
 
