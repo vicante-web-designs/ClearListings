@@ -53,41 +53,44 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
 
     const isEditMode = !!existingListing
 
-    const [images, setImages] = useState<File[]>([])
-    const [previews, setPreviews] = useState<string[]>([])
+    // Separate tracking for new files vs existing URLs
+    const [newImages, setNewImages] = useState<File[]>([])  // Files to upload
+    const [existingUrls, setExistingUrls] = useState<string[]>([])  // Already uploaded
+    const [newPreviews, setNewPreviews] = useState<string[]>([])  // Preview of new files
 
     const { register, handleSubmit, formState: { errors }, setValue, control, reset } = useForm<FormValues>({
         resolver: zodResolver(formSchema)
     })
 
-    // Selected Elements Logic
     const selectedFeatures = useWatch({ control, name: 'features' })
     const current = selectedFeatures ?? []
     const selectedPropertyType = useWatch({ control, name: 'propertyType' })
     const selectedStatus = useWatch({ control, name: 'status' })
 
+    // Handle new image uploads
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || [])
-        setImages(prev => [...prev, ...files])
-        const newPreviews = files.map(file => URL.createObjectURL(file))
-        setPreviews(prev => [...prev, ...newPreviews])
+        setNewImages(prev => [...prev, ...files])
+        
+        const previews = files.map(file => URL.createObjectURL(file))
+        setNewPreviews(prev => [...prev, ...previews])
     }
 
+    // Upload image - simplified
     const uploadImage = async (file: File) => {
         const { data: userData } = await supabase.auth.getUser()
         const user = userData.user
 
         if (!user) return null
-
-        const getFileName = (file: File) => `${user.id}-${Date.now()}-${file.name}`
-        const fileName = getFileName(file)
+        
+        const fileName = `${user.id}-${crypto.randomUUID()}-${file.name}`
 
         const { error } = await supabase.storage
             .from('listing-images')
             .upload(fileName, file)
 
         if (error) {
-            console.error(error)
+            console.error('Upload failed:', error)
             return null
         }
 
@@ -98,109 +101,99 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
         return data.publicUrl
     }
 
-    const removeImage = (index: number) => {
-        setImages(prev => prev.filter((_, i) => i !== index))
-        setPreviews(prev => {
-            URL.revokeObjectURL(prev[index])
-            return prev.filter((_, i) => i !== index)
-        })
+    // Remove images correctly
+    const removeExistingImage = (url: string) => {
+        setExistingUrls(prev => prev.filter(u => u !== url))
+    }
+
+    const removeNewImage = (index: number) => {
+        setNewImages(prev => prev.filter((_, i) => i !== index))
+        
+        // Clean up the preview blob URL
+        URL.revokeObjectURL(newPreviews[index])
+        setNewPreviews(prev => prev.filter((_, i) => i !== index))
     }
 
     const resetForm = () => {
         reset()
-        setImages([])
-        setPreviews([])
+        setNewImages([])
+        setNewPreviews([])
+        setExistingUrls([])
     }
 
-   
+    // Load existing listing data
     useEffect(() => {
-        if (!listingId) return // Skip fetch if there's no Id
+        if (!listingId) return
 
-        // if listingId is provided, find the existing listing from the database
         const fetchExistingListing = async (id: string) => {
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/listings/${id}`);
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/listings/${id}`)
 
             setExistingListing(data)
-            setPreviews(data.images ?? [])
+            setExistingUrls(data.images ?? [])  // Store existing image URLs
 
             reset({
-            title: data.title ?? '',
-            description: data.description ?? '',
-            location: data.location ?? '',
-            city: data.city ?? '',
-            state: data.state ?? '',
-            propertyType: data.propertyType ?? '',
-            bedrooms: data.bedrooms ?? 0,
-            bathrooms: data.bathrooms ?? 0,
-            sizeSqft: data.sizeSqft ?? 0,
-            price: data.price ?? 0,
-            status: data.status ?? 'For Sale',
-            features: data.features ?? [],
-        })
-            
+                title: data.title ?? '',
+                description: data.description ?? '',
+                location: data.location ?? '',
+                city: data.city ?? '',
+                state: data.state ?? '',
+                propertyType: data.propertyType ?? '',
+                bedrooms: data.bedrooms ?? 0,
+                bathrooms: data.bathrooms ?? 0,
+                sizeSqft: data.sizeSqft ?? 0,
+                price: data.price ?? 0,
+                status: data.status ?? 'For Sale',
+                features: data.features ?? [],
+            })
         }
 
         fetchExistingListing(listingId)
     }, [listingId, reset])
-    
 
-    // Image preview logic
+    // Clean up preview URLs when component unmounts
     useEffect(() => {
         return () => {
-            previews.forEach(url => {
-                if (url.startsWith('blob:')) {
-                    URL.revokeObjectURL(url)
-                }
-            })
+            newPreviews.forEach(url => URL.revokeObjectURL(url))
         }
-    }, [previews])
+    }, [newPreviews])
 
-    // Submission logic
+    // Submit form
     const onSubmit = async (values: FormValues) => {
         try {
-            // 1. Upload all new images to Supabase
-            const uploadedImageUrls = await Promise.all(
-                images.map(file => uploadImage(file))
-            )
+            // 1. Upload new images
+            const uploadPromises = newImages.map(file => uploadImage(file))
+            const uploadedUrls = await Promise.all(uploadPromises)
 
-            // remove failed uploads (nulls)
-            const validUploadedUrls = uploadedImageUrls.filter(Boolean) as string[]
+            // 2. Remove any failed uploads (null values)
+            const successfulUploads = uploadedUrls.filter(url => url !== null) as string[]
 
-            // Keep existing images (only real URLs, not blob)
-            const existingUrls = previews.filter(p => !p.startsWith('blob:'))
+            // 3. Combine existing URLs + new uploads
+            const allImages = [...existingUrls, ...successfulUploads]
 
-            // Merge both
-            const allImages = [...existingUrls, ...validUploadedUrls]
-
+            // 4. Save to backend
             if (isEditMode && existingListing) {
                 await axios.put(
                     `${import.meta.env.VITE_API_URL}/api/listings/${existingListing.id}`,
-                    {
-                        ...values,
-                        images: allImages
-                    }
+                    { ...values, images: allImages }
                 )
             } else {
                 await axios.post(
                     `${import.meta.env.VITE_API_URL}/api/listings`,
-                    {
-                        ...values,
-                        images: allImages
-                    }
+                    { ...values, images: allImages }
                 )
             }
 
             resetForm()
-            navigate('/admin') // or wherever
+            navigate('/admin')
         } catch (err) {
-            console.error(err)
+            console.error('Error saving listing:', err)
+            alert('Failed to save. Please try again.')
         }
     }
 
-    // The actual Form
+    // The form JSX - UPDATE THE IMAGES SECTION
     return (
         <div className='w-full max-w-7xl mx-auto py-12 px-6'>
-
             <article className='text-center flex flex-col items-center gap-2 mb-12'>
                 <h2>{isEditMode ? 'Edit Listing' : 'List Your Property'}</h2>
                 <p className='max-w-6xl'>
@@ -212,7 +205,8 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
             </article>
 
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-8'>
-
+                {/* ... all your other fields stay the same ... */}
+                
                 <Field>
                     <FieldLabel>Title</FieldLabel>
                     <Input placeholder="e.g. Luxury 4-Bedroom Duplex" {...register('title')} />
@@ -327,6 +321,7 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
                     <FieldError errors={[errors.features]} />
                 </Field>
 
+                {/* UPDATED IMAGES SECTION */}
                 <Field>
                     <FieldLabel>Images</FieldLabel>
                     <div className='border border-dashed border-border p-8 text-center hover:border-secondary transition-colors duration-300'>
@@ -343,24 +338,53 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
                         </label>
                     </div>
 
-                    {previews.length > 0 && (
-                        <div className='flex flex-wrap gap-3 mt-2'>
-                            {previews.map((preview, index) => (
-                                <div key={index} className='relative w-24 h-24'>
-                                    <img
-                                        src={preview}
-                                        alt={`preview ${index}`}
-                                        className='w-full h-full object-cover'
-                                    />
-                                    <button
-                                        type='button'
-                                        onClick={() => removeImage(index)}
-                                        className='absolute -top-2 -right-2 bg-primary text-white w-5 h-5 text-xs flex items-center justify-center'
-                                    >
-                                        ✕
-                                    </button>
-                                </div>
-                            ))}
+                    {/* Show existing images */}
+                    {existingUrls.length > 0 && (
+                        <div className='mt-4'>
+                            <p className='text-xs text-muted-foreground mb-2'>Existing Images:</p>
+                            <div className='flex flex-wrap gap-3'>
+                                {existingUrls.map((url, index) => (
+                                    <div key={`existing-${index}`} className='relative w-24 h-24'>
+                                        <img
+                                            src={url}
+                                            alt={`existing ${index}`}
+                                            className='w-full h-full object-cover'
+                                        />
+                                        <button
+                                            type='button'
+                                            onClick={() => removeExistingImage(url)}
+                                            className='absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 text-xs flex items-center justify-center rounded-full'
+                                        >
+                                            ✕
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Show new image previews */}
+                    {newPreviews.length > 0 && (
+                        <div className='mt-4'>
+                            <p className='text-xs text-muted-foreground mb-2'>New Images:</p>
+                            <div className='flex flex-wrap gap-3'>
+                                {newPreviews.map((preview, index) => (
+                                    <div key={`new-${index}`} className='relative w-24 h-24'>
+                                        <img
+                                            src={preview}
+                                            alt={`new preview ${index}`}
+                                            className='w-full h-full object-cover'
+                                        />
+                                        <button
+                                            type='button'
+                                            onClick={() => removeNewImage(index)}
+                                            className='absolute -top-2 -right-2 bg-primary text-white w-5 h-5 text-xs flex items-center justify-center rounded-full'
+                                        >
+                                            ✕
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     )}
                 </Field>
@@ -376,11 +400,10 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
                             Cancel
                         </Button>
                     )}
-                    <Button variant='default' type='submit' className=' mt-4'>
+                    <Button variant='default' type='submit' className='mt-4'>
                         {isEditMode ? 'Save Changes' : 'Publish Listing'}
                     </Button>
                 </div>
-
             </form>
         </div>
     )
