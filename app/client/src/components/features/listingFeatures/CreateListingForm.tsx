@@ -79,7 +79,8 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
 
         if (!user) return null
 
-        const fileName = `${user.id}-${Date.now()}-${file.name}`
+        const getFileName = (file: File) => `${user.id}-${Date.now()}-${file.name}`
+        const fileName = getFileName(file)
 
         const { error } = await supabase.storage
             .from('listing-images')
