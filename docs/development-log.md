@@ -568,4 +568,35 @@ The next major piece is auth. Right now anyone can create a listing with no conc
 * Only the owner can edit or delete their listing
 * RLS policies can be properly locked down
 
-## Day 29
+## Day 29 (13/04/2026)
+
+### Fixing Production Deployment Bugs
+
+**What I did**
+Returned from a 2-week break and spent the session getting back up to speed with the codebase before diving into the backlog of production deployment issues. Traced through a series of Vercel build failures that had been blocking deployment before the break.
+
+Bugs fixed today:
+
+*-* Resolved a missing `SignUpPage` import in `main.tsx` that was causing the initial build to fail
+
+*-* Fixed `@supabase/supabase-js` not resolving in production — it had been installed from GitHub under the wrong package alias (`@supabase-js/source`) instead of from npm
+
+*-* Corrected a TypeScript deprecation warning around `baseUrl` in `tsconfig.json`
+
+*-* Fixed an ESLint `parserOptions.project` mismatch where `vite.config.ts` wasn't included in `tsconfig.app.json` — resolved by adding a separate ESLint config block pointing `vite.config.ts` at `tsconfig.node.json`
+
+**Why it matters**
+None of these were feature bugs — they were infrastructure bugs, the kind that silently block everything else. A broken build means nothing ships, so clearing this backlog was the right first move before touching any new features. Also good practice in reading build logs and tracing errors across layers (Rollup, TypeScript, ESLint, Vercel).
+
+**What I relearned coming back**
+*-* The project structure has the client living in `app/client/`, which affects how Vercel resolves dependencies
+
+*-* Supabase auth is the next major feature — RLS is currently wide open as a temporary measure
+
+*-* The create listing form is wired up and writing to the database, but has no concept of ownership yet
+
+**Next Steps — Authentication**
+Back to where things were headed before the break:
+*-* Implement sign up and log in
+*-* Tie listings to the authenticated user who created them
+*-* Lock down RLS policies so only owners can edit or delete their listings
