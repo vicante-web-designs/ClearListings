@@ -8,12 +8,12 @@ export default tseslint.config(
   { ignores: ['dist'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
+    files: ['src/**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
       parserOptions: {
-        tsconfigRootDir: import.meta.dirname,  // ← add this line
+        tsconfigRootDir: import.meta.dirname,
         project: ['./tsconfig.app.json'],
       },
     },
@@ -27,6 +27,15 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+    },
+  },
+  {
+    files: ['vite.config.ts'],
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: import.meta.dirname,
+        project: ['./tsconfig.node.json'],
+      },
     },
   },
 )
