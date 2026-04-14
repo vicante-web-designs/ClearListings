@@ -14,7 +14,7 @@ import AboutPage from './pages/AboutPage.tsx';
 import CreateListingPage from './pages/listings/CreateListingPage.tsx'
 import EditListing from './components/features/listingFeatures/EditListing.tsx'
 import App from './App.tsx'
-import SignUpPage from './pages/auth/SignUpPage'
+import SignUpPage from './pages/auth/SignUpPage.tsx'
 import LoginPage from './pages/auth/LoginPage.tsx'
 import AgentLoginPage from './pages/auth/AgentLoginPage.tsx'
 
