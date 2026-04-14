@@ -18,7 +18,7 @@ const HomePage = () => {
     useEffect(() => {
     async function fetchListings() {
         setIsLoading(true)
-        const { data } = await axios.get(`${import.meta.env.API_URL}/api/listings`, {
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/listings`, {
             params: filters
         })
         setListings(data)

@@ -126,7 +126,7 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
         if (!listingId) return
 
         const fetchExistingListing = async (id: string) => {
-            const { data } = await axios.get(`${import.meta.env.API_URL}/api/listings/${id}`)
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/listings/${id}`)
 
             setExistingListing(data)
             setExistingUrls(data.images ?? [])  // Store existing image URLs
@@ -173,12 +173,12 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
             // 4. Save to backend
             if (isEditMode && existingListing) {
                 await axios.put(
-                    `${import.meta.env.API_URL}/api/listings/${existingListing.id}`,
+                    `${import.meta.env.VITE_API_URL}/api/listings/${existingListing.id}`,
                     { ...values, images: allImages }
                 )
             } else {
                 await axios.post(
-                    `${import.meta.env.API_URL}/api/listings`,
+                    `${import.meta.env.VITE_API_URL}/api/listings`,
                     { ...values, images: allImages }
                 )
             }
