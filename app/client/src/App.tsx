@@ -4,26 +4,20 @@ import { supabase } from './config/supabase'
 import { setUser, clearUser } from './state/slices/auth/authSlice'
 import { Analytics } from '@vercel/analytics/react'
 import HomePage from './pages/HomePage'
+import type { Session } from '@supabase/supabase-js'
 
 const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
       let cancelled = false;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const handleUserSession = async (session: any) => {
-            console.log('session:', session)
-            console.log('session.user:', session?.user)
-            if(session.user){
-                    const { data: profile, error } = await supabase
+        const handleUserSession = async (session: Session | null) => {
+            if(session?.user){
+                    const { data: profile } = await supabase
                     .from('profiles')
                     .select('role')
                     .eq('id', session.user.id)
                     .single()
-
-                    console.log('user id:', session.user.id)
-                    console.log('profile:', profile)
-                    console.log('error:', error)
 
                     if(!cancelled){
                       dispatch(setUser({ user: session.user, role: profile?.role ?? 'user'}))

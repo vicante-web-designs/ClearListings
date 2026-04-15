@@ -9,12 +9,14 @@ import axios from 'axios'
 import type { Listing } from '@/types/Listing'
 import { useSelector } from 'react-redux'
 import type { RootState } from '@/state/store'
+import { selectRole, selectIsUser } from '@/selectors/authSelectors'
 
 const HomePage = () => {
     const filters = useSelector((state: RootState) => state.filters.filterValues);
     const [isLoading, setIsLoading] = useState(true);
     const [listings, setListings ] = useState<Listing[]>([])
     
+    // TODO: Role based access => console.log()
     useEffect(() => {
     async function fetchListings() {
         setIsLoading(true)
