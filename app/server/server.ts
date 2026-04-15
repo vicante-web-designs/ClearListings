@@ -1,13 +1,12 @@
+// Imports
 import dotenv from 'dotenv';
-dotenv.config()
-
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
-
-import listingRouter from './src/routes/listingRouter.js'
+import listingRouter from './src/routes/listingRouter.js';
 
 const app = express();
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 5000
 
 const allowedOrigins = [
     'http://localhost:5173', //development origin
@@ -25,6 +24,7 @@ app.use(cors({
 }));
 app.use(express.json())
 
+//Routes
 app.use('/api/listings', listingRouter)
 
 app.listen(PORT, () => {
