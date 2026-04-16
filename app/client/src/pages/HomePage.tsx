@@ -9,26 +9,30 @@ import axios from 'axios'
 import type { Listing } from '@/types/Listing'
 import { useSelector } from 'react-redux'
 import type { RootState } from '@/state/store'
-import { selectRole, selectIsUser } from '@/selectors/authSelectors'
 
 const HomePage = () => {
     const filters = useSelector((state: RootState) => state.filters.filterValues);
     const [isLoading, setIsLoading] = useState(true);
     const [listings, setListings ] = useState<Listing[]>([])
-    
-    // TODO: Role based access => console.log()
-    useEffect(() => {
-    async function fetchListings() {
-        setIsLoading(true)
-        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/listings`, {
-            params: filters
-        })
-        setListings(data)
-        setIsLoading(false)
-    }
 
-    fetchListings()
-}, [filters])
+    useEffect(() => {
+        async function fetchListings(){
+            setIsLoading(true)
+
+            try {            
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/listings`, {
+                    params: filters
+                })
+                setListings(data)
+            } catch (error) {
+                console.log(`Error fetching listings: ${error}`)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+            
+        fetchListings()
+    }, [filters])
 
     return(
         <main className='flex flex-col gap-40'>

@@ -3,13 +3,12 @@ import NavLink from '../components/ui/links/NavLink'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectIsAdmin, selectIsAgent, selectIsUser, selectRole } from '@/selectors/authSelectors'
+import { selectIsAdmin, selectIsAgent, selectIsUser } from '@/selectors/authSelectors'
 
 const Navbar = () => {
     const isUser = useSelector(selectIsUser)
     const isAdmin = useSelector(selectIsAdmin)
     const isAgent = useSelector(selectIsAgent)
-    const role = useSelector(selectRole)
 
     const navigate = useNavigate();
     const [isSticky, setIsSticky] = useState(false)
@@ -54,13 +53,19 @@ const Navbar = () => {
 
                     {
                         (isUser || isAdmin || isAgent) ? (
-                            //show profile
-                        <div>
-                            <p>{role}</p>
-                        </div>
-                        // if agent or admin... show createListings and profile
-
-                        //If user... show just profile
+                            isUser ? (
+                                <div>
+                                    User
+                                </div>
+                            ) : isAdmin ? (
+                                <Button variant='outline' type='button' onClick={() => navigate('/createListing')}>
+                                    Create New Listing
+                                </Button>
+                            ) : (
+                                <div>
+                                    User
+                                </div>
+                            )
                         ) : (
                             <Button variant='outline' type='button' onClick={() => navigate('/login')}>
                                 Log In
