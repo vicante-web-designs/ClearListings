@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectIsAdmin, selectIsAgent, selectIsUser } from '@/selectors/authSelectors'
+import ProfileMenu from '@/components/features/profile/ProfileMenu'
 
 const Navbar = () => {
     const isUser = useSelector(selectIsUser)
@@ -53,19 +54,7 @@ const Navbar = () => {
 
                     {
                         (isUser || isAdmin || isAgent) ? (
-                            isUser ? (
-                                <div>
-                                    User
-                                </div>
-                            ) : isAdmin ? (
-                                <Button variant='outline' type='button' onClick={() => navigate('/createListing')}>
-                                    Create New Listing
-                                </Button>
-                            ) : (
-                                <div>
-                                    User
-                                </div>
-                            )
+                            <ProfileMenu />
                         ) : (
                             <Button variant='outline' type='button' onClick={() => navigate('/login')}>
                                 Log In
