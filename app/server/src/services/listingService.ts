@@ -6,6 +6,7 @@ export async function createListing(listing: Omit<Listing, 'id' | 'createdAt'>){
     const { data, error } = await supabase.from('listings').insert(listing).select().single();
 
     if (error) throw error
+    
     return data as Listing
 }
 

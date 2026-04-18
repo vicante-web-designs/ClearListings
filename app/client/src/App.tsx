@@ -13,14 +13,10 @@ const App = () => {
       let cancelled = false;
         const handleUserSession = async (session: Session | null) => {
             if(session?.user){
-                    const { data: profile } = await supabase
-                    .from('profiles')
-                    .select('role')
-                    .eq('id', session.user.id)
-                    .single()
+                    const role = session.user.app_metadata?.user_role ?? 'user'
 
                     if(!cancelled){
-                      dispatch(setUser({ user: session.user, role: profile?.role ?? 'user'}))
+                      dispatch(setUser({ user: session.user, role }))
                     } 
                 } else {
                     if(!cancelled){

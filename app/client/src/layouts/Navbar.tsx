@@ -3,16 +3,21 @@ import NavLink from '../components/ui/links/NavLink'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectIsAdmin, selectIsAgent, selectIsUser } from '@/selectors/authSelectors'
+import { selectIsAdmin, selectIsAgent, selectIsLoading, selectIsUser } from '@/selectors/authSelectors'
 import ProfileMenu from '@/components/features/profile/ProfileMenu'
 
 const Navbar = () => {
     const isUser = useSelector(selectIsUser)
     const isAdmin = useSelector(selectIsAdmin)
     const isAgent = useSelector(selectIsAgent)
+    const isLoading = useSelector(selectIsLoading)
+
+    console.log(`Loading: ${isLoading}, User: ${isUser}, Admin: ${isAdmin}, Agent: ${isAgent}`)
 
     const navigate = useNavigate();
     const [isSticky, setIsSticky] = useState(false)
+
+    const isAuthenticated = !isLoading && (isAdmin || isAgent || isUser)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -53,7 +58,7 @@ const Navbar = () => {
                     <NavLink children='listings' to='/listings' />
 
                     {
-                        (isUser || isAdmin || isAgent) ? (
+                        isLoading ? null : isAuthenticated ? (
                             <ProfileMenu />
                         ) : (
                             <Button variant='outline' type='button' onClick={() => navigate('/login')}>
