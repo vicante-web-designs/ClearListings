@@ -7,17 +7,17 @@ import { selectIsAdmin, selectIsAgent, selectIsLoading, selectIsUser } from '@/s
 import ProfileMenu from '@/components/features/profile/ProfileMenu'
 
 const Navbar = () => {
+    // Auth roles
     const isUser = useSelector(selectIsUser)
     const isAdmin = useSelector(selectIsAdmin)
     const isAgent = useSelector(selectIsAgent)
     const isLoading = useSelector(selectIsLoading)
+    const isAuthenticated = !isLoading && (isAdmin || isAgent || isUser)
 
-    console.log(`Loading: ${isLoading}, User: ${isUser}, Admin: ${isAdmin}, Agent: ${isAgent}`)
-
+    // Navigation
     const navigate = useNavigate();
     const [isSticky, setIsSticky] = useState(false)
 
-    const isAuthenticated = !isLoading && (isAdmin || isAgent || isUser)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -57,15 +57,16 @@ const Navbar = () => {
                 <div className='w-1/3 flex justify-between items-center'>
                     <NavLink children='listings' to='/listings' />
 
-                    {
-                        isLoading ? null : isAuthenticated ? (
-                            <ProfileMenu />
-                        ) : (
-                            <Button variant='outline' type='button' onClick={() => navigate('/login')}>
-                                Log In
-                            </Button>
-                        )
-                    }
+                    {isLoading ? (
+                        // show a placeholder that matches the button size
+                        <div className='h-9 w-20 rounded-md bg-neutral-200 animate-pulse' />
+                    ) : isAuthenticated ? (
+                        <ProfileMenu />
+                    ) : (
+                        <Button variant='outline' onClick={() => navigate('/login')}>
+                            Log In
+                        </Button>
+                    )}
                 </div>
 
             </nav>

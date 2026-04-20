@@ -12,18 +12,26 @@ const App = () => {
     useEffect(() => {
       let cancelled = false;
         const handleUserSession = async (session: Session | null) => {
-            if(session?.user){
-                    const role = session.user.app_metadata?.user_role ?? 'user'
+          if (session?.user) {
 
-                    if(!cancelled){
-                      dispatch(setUser({ user: session.user, role }))
-                    } 
-                } else {
-                    if(!cancelled){
-                      dispatch(clearUser())
-                    }
-                }                
-        }
+              const { data: profile } = await supabase
+                  .from('profiles')
+                  .select('role')
+                  .eq('id', session.user.id)
+                  .single()
+
+              if (!cancelled) {
+                  dispatch(setUser({ 
+                      user: session.user, 
+                      role: profile?.role ?? 'user'
+                  }))
+              }
+          } else {
+              if (!cancelled) {
+                  dispatch(clearUser())
+              }
+          }
+      }
 
         //check if there's already a session when the app loads
         supabase.auth.getSession().then(async ({data: { session }}) => handleUserSession(session))

@@ -10,12 +10,13 @@ const ProfileMenu = () => {
     const isAdmin = useSelector(selectIsAdmin)
     const isAgent = useSelector(selectIsAgent)
     console.log(isAdmin)
+    
   return (
     <DropdownMenu>
         {/* Avatar acts as the trigger */}
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="rounded-full p-0">
-          <Avatar  className='bg-amber-600 '>
+        <Button variant="default" className="rounded-full">
+          <Avatar>
             <AvatarImage src="/images/profile.jpg" alt="@victory" />
             <AvatarFallback>VC</AvatarFallback>
           </Avatar>
