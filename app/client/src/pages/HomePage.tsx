@@ -9,11 +9,14 @@ import axios from 'axios'
 import type { Listing } from '@/types/Listing'
 import { useSelector } from 'react-redux'
 import type { RootState } from '@/state/store'
+import { useNavigate } from 'react-router-dom'
 
 const HomePage = () => {
     const filters = useSelector((state: RootState) => state.filters.filterValues);
     const [isLoading, setIsLoading] = useState(true);
     const [listings, setListings ] = useState<Listing[]>([])
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         async function fetchListings(){
@@ -62,7 +65,7 @@ const HomePage = () => {
                     ) : (
                         <div className='col-span-3 flex flex-col items-center gap-4'>
                             <h3>You haven't created any listings yet</h3>
-                            <Button variant='default' type='button'>
+                            <Button variant='default' type='button' onClick={() => navigate('/createListing')}>
                                 Create new listing
                             </Button>
                         </div>

@@ -59,9 +59,13 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
     const [newPreviews, setNewPreviews] = useState<string[]>([])  // Preview of new files
 
     const { register, handleSubmit, formState: { errors }, setValue, control, reset } = useForm<FormValues>({
-        resolver: zodResolver(formSchema)
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            status: 'For Sale',
+            features: []
+        }
     })
-
+    
     const selectedFeatures = useWatch({ control, name: 'features' })
     const current = selectedFeatures ?? []
     const selectedPropertyType = useWatch({ control, name: 'propertyType' })
@@ -159,16 +163,23 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
 
     // Submit form
     const onSubmit = async (values: FormValues) => {
+        console.log('1. submit fired', values)
         try {
+            console.log('2. uploading images...')
             // 1. Upload new images
             const uploadPromises = newImages.map(file => uploadImage(file))
             const uploadedUrls = await Promise.all(uploadPromises)
+
+            console.log('3. uploaded urls:', uploadedUrls)
 
             // 2. Remove any failed uploads (null values)
             const successfulUploads = uploadedUrls.filter(url => url !== null) as string[]
 
             // 3. Combine existing URLs + new uploads
             const allImages = [...existingUrls, ...successfulUploads]
+
+            console.log('4. all images:', allImages)
+        console.log('5. API URL:', import.meta.env.VITE_API_URL)
 
             // 4. Save to backend
             if (isEditMode && existingListing) {
@@ -177,14 +188,17 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
                     { ...values, images: allImages }
                 )
             } else {
+                console.log('6. posting listing...')
                 await axios.post(
                     `${import.meta.env.VITE_API_URL}/api/listings`,
                     { ...values, images: allImages }
                 )
             }
 
+            console.log('7. success, navigating...')
+
             resetForm()
-            navigate('/admin')
+            navigate('/')
         } catch (err) {
             console.error('Error saving listing:', err)
             alert('Failed to save. Please try again.')
@@ -400,7 +414,7 @@ const CreateListingForm = ({ listingId }: CreateListingFormProps) => {
                             Cancel
                         </Button>
                     )}
-                    <Button variant='default' type='submit' className='mt-4'>
+                    <Button variant='default' type='submit' className='mt-4 active:bg-blue-500'>
                         {isEditMode ? 'Save Changes' : 'Publish Listing'}
                     </Button>
                 </div>
