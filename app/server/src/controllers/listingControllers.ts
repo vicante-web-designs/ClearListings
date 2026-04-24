@@ -56,5 +56,17 @@ export async function createListing(req: Request, res: Response){
 }
 
 // Update one listing
-// Create one listing
+export const updateListing = async (req: Request, res: Response) => {
+    const { id } = req.params
+    const updates: Partial<Omit<Listing, 'id' | 'createdAt' >> = req.body
+
+    const { data, error } = await supabase.from('listings').update(updates).eq('id', id).select().single()
+
+    if(error){
+        return res.status(500).json({ error: error.message })
+    }
+
+    res.json(data)
+}
+
 // Delete one listing
