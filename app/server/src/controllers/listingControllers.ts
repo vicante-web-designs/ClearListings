@@ -70,3 +70,14 @@ export const updateListing = async (req: Request, res: Response) => {
 }
 
 // Delete one listing
+export const deleteOneListing = async (req: Request, res: Response) => {
+  const { id } = req.params
+  
+  const { error } = await supabase.from('listings').delete().eq('id', id)
+
+  if(error) {
+    return res.status(500).json({ error: error.message })
+  }
+
+  res.status(200).json({ message: 'Listing deleted successfully'})
+}
