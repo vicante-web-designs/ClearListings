@@ -6,14 +6,24 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev": "nodemon server.ts"
+    "dev": "nodemon server.ts",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
+
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": ["**/__tests__/**/*.test.ts"]
+  },
+
   "dependencies": {
     "@supabase/supabase-js": "^2.99.2",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1"
   },
+  
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
