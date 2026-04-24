@@ -1,5 +1,5 @@
 import express from 'express';
-import { createListing, getOneListing,getAllListings } from '../controllers/listingControllers.js';
+import { createListing, getOneListing,getAllListings, updateListing, deleteOneListing } from '../controllers/listingControllers.js';
 
 const router = express.Router()
 
@@ -11,5 +11,11 @@ router.get('/', getAllListings)
 
 // Get one listing
 router.get('/:id', getOneListing)
+
+// Update listing
+router.put('/:id', updateListing)
+
+// Delete one listing
+router.delete('/:id', deleteOneListing)
 
 export default router;
