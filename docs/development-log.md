@@ -600,3 +600,5 @@ Back to where things were headed before the break:
 *-* Implement sign up and log in
 *-* Tie listings to the authenticated user who created them
 *-* Lock down RLS policies so only owners can edit or delete their listings
+
+## Day 30 (15/04/2026)
